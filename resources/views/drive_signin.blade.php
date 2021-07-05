@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ $links['css'] }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive sign in</title>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+           <div class="display-flex">
+                <span class="material-icons-outlined">
+                apartment
+                </span>
+                <span class="app-name">InterCityRides</span>
+           </div>
+        </div>
+        <span class="material-icons-outlined" onclick="redirectBack()">
+        arrow_back
+        </span><br>
+        <p>
+            <div class="text-align-center">
+                <span class="title-small">Tip: Get rated most stars by cleaning your ride always</span>
+            </div>
+        </p>
+        <p>
+            <img class="welcome-page-banner-1" src="https://image.freepik.com/free-vector/man-searching-car-rent_74855-7610.jpg" alt="">
+        </p>
+        <div class="curved-top">
+            <p>
+                <div class="text-align-center">
+                    <span class="title">Signing to drive</span>
+                </div>
+            </p>
+            <p>
+                <form action="/drive/signin" method="POST">
+                    @csrf
+                    @method("POST")
+                    <p>
+                        <span>First name</span><br>
+                        <input type="text" id="firstname" placeholder="Enter First name" name="firstname" required>
+                    </p>
+                    <p>
+                        <span>Last name</span><br>
+                        <input type="text" id="lastname" placeholder="Enter Last name" name="lastname" required>
+                    </p>
+                    <p>
+                        <span>Password</span><br>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+                    </p>
+                    <p>
+                        <button>Sign in</button>
+                    </p>
+                </form>
+            </p>
+        </div>
+    </div>
+    <script src="{{ $links['js'] }}"></script>
+</body>
+</html>
