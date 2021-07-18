@@ -12,7 +12,7 @@
     <div class="container">
         <div class="logo" id="logo">
             <div class="text-align-center">
-                <span class="material-icons-outlined app-icon">
+                <span class="material-icons-round app-icon">
                 apartment
                 </span><br>
                 <span class="title">InterCityRides</span><br>
@@ -21,7 +21,7 @@
         </div>
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>

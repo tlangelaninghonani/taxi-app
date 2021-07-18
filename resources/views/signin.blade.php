@@ -12,7 +12,7 @@
     <div class="container">
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
@@ -26,7 +26,7 @@
                 <p>
                     <a class="choose-ride-drive-a" href="/drive/signin">
                         <div class="choose-ride-drive-item">
-                            <span class="material-icons-outlined choose-ride-drive">
+                            <span class="material-icons-round choose-ride-drive">
                             local_taxi
                             </span>
                         </div>
@@ -38,7 +38,7 @@
                 <p>
                     <a class="choose-ride-drive-a" href="/ride/signin">
                         <div class="choose-ride-drive-item">
-                            <span class="material-icons-outlined choose-ride-drive">
+                            <span class="material-icons-round choose-ride-drive">
                             directions_walk
                             </span>
                         </div>

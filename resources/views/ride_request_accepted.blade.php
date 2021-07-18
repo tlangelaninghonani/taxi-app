@@ -12,16 +12,16 @@
     <div class="container">
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-outlined items-menu-icon">
+           <span class="material-icons-round items-menu-icon">
             more_vert
             </span>
         </div>
-        <span class="material-icons-outlined" onclick="redirectBack()">
+        <span class="material-icons-round" onclick="redirectBack()">
         arrow_back
         </span><br>
         <p>
@@ -34,12 +34,13 @@
                 </div>
             </div>
         </p>
-        <p>
-            <div class="text-align-center">
-                <span class="title">Charged R{{ $charges }}</span><br>
-                <span>Balance (Prior) R{{ $rideData->ride_balance }}</span>
-            </div>
-        </p>
+        <div id="tripinfo" class="text-align-center ">
+            <p>
+                <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>
+                <span>Estimated time <strong id="triptime">{{ $rideRequest["ride_time"] }}</strong></span><br>
+                <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideRequest["ride_charges"] }}</strong></span>
+            </p>
+        </div>
         <div class="curved-top">
             <div>
                 @if($rideData->pick_up_requested == true)

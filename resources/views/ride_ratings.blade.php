@@ -12,12 +12,12 @@
     <div class="container">
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-outlined items-menu-icon">
+           <span class="material-icons-round items-menu-icon">
             more_vert
             </span>
         </div>
@@ -47,7 +47,7 @@
                     </p>
                     <p>
                         <span>Comment</span><br>
-                        <input type="text" placeholder="We'd love to see your feedback">
+                        <input type="text" placeholder="We'd love your feedback">
                     </p>
                     <p>
                         <button>Rate</button>

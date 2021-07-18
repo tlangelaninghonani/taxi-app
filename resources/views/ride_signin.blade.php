@@ -12,13 +12,13 @@
     <div class="container">
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
         </div>
-        <span class="material-icons-outlined" onclick="redirectBack()">
+        <span class="material-icons-round" onclick="redirectBack()">
         arrow_back
         </span><br>
         <p>
@@ -27,7 +27,7 @@
         <div class="curved-top">
             <p>
                 <div class="text-align-center">
-                    <span class="title">Signing to ride</span>
+                    <span class="title-large">Signing to ride</span>
                 </div>
             </p>
             <p>

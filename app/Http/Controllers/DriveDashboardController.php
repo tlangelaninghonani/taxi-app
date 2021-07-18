@@ -22,11 +22,22 @@ class DriveDashboardController extends Controller
 
         $rideData = new RideData();
 
+        $rideRequest = null;
+        foreach($rideData::all() as $ride){
+            foreach(json_decode($ride->ride_requests, true) as $driveId => $requestData){
+                if($driveId == $driveAuth->id){
+                    $rideRequest = json_decode($ride->ride_requests, true)[$driveId];
+                    break;
+                }
+            }
+        }
+
         return view("drive_dashboard", [
             "driveAuth" => $driveAuth,
             "driveData" => $driveData,
             "rideAuth" => new RideAuth(),
             "rideData" => new RideData(),
+            "rideRequest" => $rideRequest
         ]);
     }
 }

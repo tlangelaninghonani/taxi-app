@@ -35,12 +35,20 @@ class DataController extends Controller
             return redirect("/signin");
         }
 
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
+
         $rideAuth = RideAuth::find($id);
         $rideData = RideData::where("ride_id", $rideAuth->id)->first();
+
+        $rideRequest = json_decode($rideData->ride_requests, true)[$driveAuth->id];
 
         return view("drive_request", [
             "rideAuth" => $rideAuth,
             "rideData" => $rideData,
+            "rideRequest" => $rideRequest
         ]);
     }
 
@@ -53,24 +61,11 @@ class DataController extends Controller
         $driveAuth = DriveAuth::findorfail($drive_id);
         $driveData = DriveData::where("drive_id", $drive_id)->first();
 
-        $driveData->ride_accepted = true;
+        $rideRequest = json_decode($rideData->ride_requests, true);
+        $rideRequest[$driveAuth->id]["ride_accepted"] = true;
 
-        $driveData->on_trip_ride_id = $rideAuth->id;
+        $rideData->ride_requests = json_encode($rideRequest);
 
-        $charges = json_decode($driveData->trip_charge, true);
-
-        $charges[$rideAuth->id] = $req->charge;
-        
-        $driveData->trip_charge = json_encode($charges);
-
-        $driveData->save();
-
-        $driveData->ride_from = $rideData->ridefrom;
-        $driveData->ride_to = $rideData->rideto;
-
-        $rideData->drive_accepted = true;
-
-        $rideData->on_trip_drive_id = $driveAuth->id;
 
         $rideData->save();
 
@@ -123,10 +118,10 @@ class DataController extends Controller
         $driveAuth = DriveAuth::findorfail($drive_id);
         $driveData = DriveData::where("drive_id", $drive_id)->first();
 
-        $rideData->on_trip = true;
+        $rideData->ride_on_trip = true;
         $driveData->on_trip = true;
 
-        $rideData->on_trip_drive_id = $driveAuth->id;
+        $rideData->ride_on_trip_drive_id = $driveAuth->id;
         $driveData->on_trip_ride_id = $rideAuth->id;
 
         $rideData->ride_balance -= intval($req->charges);
@@ -153,17 +148,18 @@ class DataController extends Controller
         $driveData->on_trip = false;
         $driveData->ride_accepted = false;
         $driveData->confirm_pickup = false;
+        $driveData->ride_accepted = false;
 
         $rideRequests = json_decode($driveData->ride_requests, true);
 
-        $updatedRideRquests = array();
+        $updatedrideRequests = array();
         foreach($rideRequests as $rideRequestID){
             if($rideRequestID != $rideAuth->id){
-                $updatedRideRquests[] = $rideRequestID;
+                $updatedrideRequests[] = $rideRequestID;
             }
         }
 
-        $driveData->ride_requests = json_encode($updatedRideRquests);
+        $driveData->ride_requests = json_encode($updatedrideRequests);
 
         $allHistory = json_decode($driveData->drive_history_ride_id, true);
 
@@ -183,14 +179,14 @@ class DataController extends Controller
         
         $rideRequests = json_decode($rideData->drive_requests, true);
 
-        $updatedRideRquests = array();
+        $updatedrideRequests = array();
         foreach($rideRequests as $rideRequestID){
             if($rideRequestID != $driveAuth->id){
-                $updatedRideRquests[] = $rideRequestID;
+                $updatedrideRequests[] = $rideRequestID;
             }
         }
 
-        $rideData->drive_requests = json_encode($updatedRideRquests);
+        $rideData->drive_requests = json_encode($updatedrideRequests);
 
         $allHistory = json_decode($rideData->ride_history_drive_id, true);
 
@@ -394,17 +390,18 @@ class DataController extends Controller
         $rideData = RideData::where("ride_id", $ride_id)->first();
 
         $driveData->on_trip = false;
+        $driveData->ride_accepted = false;
 
         $rideRequests = json_decode($driveData->ride_requests, true);
 
-        $updatedRideRquests = array();
+        $updatedrideRequests = array();
         foreach($rideRequests as $rideRequestID){
             if($rideRequestID != $rideAuth->id){
-                $updatedRideRquests[] = $rideRequestID;
+                $updatedrideRequests[] = $rideRequestID;
             }
         }
 
-        $driveData->ride_requests = json_encode($updatedRideRquests);
+        $driveData->ride_requests = json_encode($updatedrideRequests);
 
         $allHistory = json_decode($driveData->drive_history_ride_id, true);
 
@@ -427,15 +424,15 @@ class DataController extends Controller
 
         $rideRequests = json_decode($rideData->drive_requests, true);
     
-        $updatedRideRquests = array();
+        $updatedrideRequests = array();
         foreach($rideRequests as $rideRequestID){
             if($rideRequestID != $driveAuth->id){
-                $updatedRideRquests[] = $rideRequestID;
+                $updatedrideRequests[] = $rideRequestID;
             }
         }
 
 
-        $rideData->drive_requests = json_encode($updatedRideRquests);
+        $rideData->drive_requests = json_encode($updatedrideRequests);
 
         $rideData->save();
 
@@ -472,20 +469,14 @@ class DataController extends Controller
         $rideAuth = RideAuth::findorfail($ride_id);
         $rideData = RideData::where("ride_id", $ride_id)->first();
 
-        $charges = 0;
-
-        foreach(json_decode($driveData->trip_charge) as $k => $v){
-            if($k == $rideAuth->id){
-                $charges = $v;
-            }
-        }
+        $rideRequest = json_decode($rideData->ride_requests, true)[$driveAuth->id];
 
         return view("ride_request_accepted", [
             "driveAuth" => $driveAuth,
             "driveData" => $driveData,
             "rideAuth" => $rideAuth,
             "rideData" => $rideData,
-            "charges" => $charges,
+            "rideRequest" => $rideRequest
         ]);
     }
 
@@ -510,12 +501,15 @@ class DataController extends Controller
             }
         }
 
+        $rideRequest = json_decode($rideData->ride_requests, true)[$driveAuth->id];
+
         return view("drive_request_accepted", [
             "driveAuth" => $driveAuth,
             "driveData" => $driveData,
             "rideAuth" => $rideAuth,
             "rideData" => $rideData,
             "charges" => $charges,
+            "rideRequest" => $rideRequest
         ]);
     }
 
@@ -560,20 +554,20 @@ class DataController extends Controller
         $rideAuth = RideAuth::findorfail($ride_id);
         $rideData = RideData::where("ride_id", $ride_id)->first();
 
-        $driveRequests = json_decode($rideData->drive_requests, true);
-        $driveRequests[] = $driveAuth->id;
+        $rideRequests = json_decode($rideData->ride_requests, true);
+        $rideRequests[$driveAuth->id] = array(
+            "ride_id" => $rideAuth->id,
+            "ride_from" => ucwords($req->ridefrom),
+            "ride_to" => ucwords($req->rideto),
+            "ride_from_coords" => $req->ridefromcoords,
+            "ride_to_coords" => $req->ridetocoords,
+            "ride_distance" => $req->ridedistance,
+            "ride_time" => $req->ridetime,
+            "ride_charges" => $req->ridecharges,
+            "ride_accepted" => false
+        );
 
-        $rideData->drive_requests = json_encode($driveRequests);
-
-        $rideRequests = json_decode($driveData->ride_requests, true);
-        $rideRequests[] = $ride_id;
-
-        $driveData->ride_requests = json_encode($rideRequests);
-
-        $driveData->save();
-
-        $rideData->ride_from = ucwords($req->ridefrom);
-        $rideData->ride_to = ucwords($req->rideto);
+        $rideData->ride_requests = json_encode($rideRequests);
 
         $rideData->save();
 

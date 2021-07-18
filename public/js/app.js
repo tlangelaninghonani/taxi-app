@@ -1,6 +1,6 @@
 var googleIcons = document.createElement("link");
 googleIcons.rel = "stylesheet";
-googleIcons.href = "https://fonts.googleapis.com/icon?family=Material+Icons+Outlined";
+googleIcons.href = "https://fonts.googleapis.com/icon?family=Material+Icons+Round";
 
 document.getElementsByTagName("head")[0].appendChild(googleIcons);
 var elementPrev = {};
@@ -61,10 +61,31 @@ function nextPlanEnd(hide, show){
     document.querySelector("#"+show).style.display = "block";
 }
 
-
-
-
-
+function initMapCurrentLoc() {
+let map;
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -23.30246, lng: 30.71868},
+    zoom: 9,
+    mapId: "4cce301a9d6797df"
+  });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          const myLocation = new google.maps.Marker({
+            position: {lat: position.coords.latitude, lng: position.coords.longitude},
+            map: map,
+            title: "Me",
+        });
+        },
+      );
+    } else {
+        console.log("Browser doesn't support Geolocation");
+    }
+}
 
 
 

@@ -20,7 +20,6 @@ class DriveTestSeeder extends Seeder
         $driveAuth->drive_first_name = ucwords("james");
         $driveAuth->drive_last_name = ucwords("atikinson");
         $driveAuth->drive_password = Hash::make("0783938959");
-
         $driveAuth->save();
 
         $driveData = new DriveData();
@@ -29,9 +28,7 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_profile_image = "https://www.avoo.uk/images/home/profile-3.jpg";
         $driveData->drive_vehicle_type = ucwords("sedan");
         $driveData->drive_ratings = 3.5;
-
         $driveData->save();
-
 
 
 
@@ -39,7 +36,6 @@ class DriveTestSeeder extends Seeder
         $driveAuth->drive_first_name = ucwords("rowan");
         $driveAuth->drive_last_name = ucwords("bond");
         $driveAuth->drive_password = Hash::make("0783938959");
-
         $driveAuth->save();
 
         $driveData = new DriveData();
@@ -48,10 +44,7 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_profile_image = "https://st.depositphotos.com/1269204/1219/i/600/depositphotos_12196477-stock-photo-smiling-men-isolated-on-the.jpg";
         $driveData->drive_vehicle_type = ucwords("minivan");
         $driveData->drive_ratings = 2.1;
-
         $driveData->save();
-
-
 
 
 
@@ -59,7 +52,6 @@ class DriveTestSeeder extends Seeder
         $driveAuth->drive_first_name = ucwords("marry");
         $driveAuth->drive_last_name = ucwords("smith");
         $driveAuth->drive_password = Hash::make("0783938959");
-
         $driveAuth->save();
 
         $driveData = new DriveData();
@@ -68,7 +60,22 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_profile_image = "https://ichef.bbci.co.uk/news/976/cpsprodpb/FD27/production/_101970846_aubreyblanche.jpg";
         $driveData->drive_vehicle_type = ucwords("Pick-up Truck");
         $driveData->drive_ratings = 2.1;
+        $driveData->save();
 
+
+
+        $driveAuth = new DriveAuth();
+        $driveAuth->drive_first_name = ucwords("patrick");
+        $driveAuth->drive_last_name = ucwords("jablonsky");
+        $driveAuth->drive_password = Hash::make("0826203223");
+        $driveAuth->save();
+
+        $driveData = new DriveData();
+        $driveData->drive_id = $driveAuth->id;
+        $driveData->drive_vehicle = ucwords("toyota prius");
+        $driveData->drive_profile_image = "https://i2.wp.com/www.thenewsnigeria.com.ng/wp-content/uploads/2020/09/Ray-Brown.jpeg?ssl=1";
+        $driveData->drive_vehicle_type = ucwords("electric hatchback");
+        $driveData->drive_ratings = 4.9;
         $driveData->save();
     }
 }

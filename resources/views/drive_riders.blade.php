@@ -18,43 +18,28 @@
     <div class="container">
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
         </div>
-        
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
-                <span class="material-icons-outlined" onclick="closePopup('menu')">
+                <span class="material-icons-round" onclick="closePopup('menu')">
                 close
                 </span>
             </div>
-            <table>
-                <td>
-                    <span class="material-icons-outlined">
-                    account_circle
-                    </span>
-                </td>
-                <td>
-                    <span>Profile</span>
-                </td>
-            </table>
-            <a href="/signout">
-                <table>
-                    <td>
-                        <span class="material-icons-outlined">
-                        arrow_back
-                        </span>
-                    </td>
-                    <td>
+            <p>
+                <span>Profile</span>
+            </p>
+            <p>
+                <a href="/signout">
                     <span> Sign out</span>
-                    </td>
-                </table>
-            </a>
+                </a>
+            </p>
         </div>
-        <span class="material-icons-outlined items-menu-icon" onclick="closePopup('menu')">
+        <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
         more_vert
         </span>
         <p>
@@ -115,7 +100,7 @@
     <div class="bottom-controls">
         <div class="bottom-controls-item">
             <a href="/drive/dashboard">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 home
                 </span><br>
                 <span>Home</span>
@@ -123,15 +108,15 @@
         </div>
         <div class="bottom-controls-item">
             <a href="/drive/history">
-                <span class="material-icons-outlined">
-                history
+                <span class="material-icons-round">
+                watch_later
                 </span><br>
                 <span>History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 public
                 </span><br>
                 <span>Plans</span>
@@ -139,7 +124,7 @@
         </div>
         <div class="bottom-controls-item">
             <a href="/drive/riders">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 directions_walk
                 </span><br>
                 <span>Riders</span>
@@ -147,7 +132,7 @@
         </div>
         <div class="bottom-controls-item">
             <a href="">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 local_offer
                 </span><br>
                 <span>Offers</span>

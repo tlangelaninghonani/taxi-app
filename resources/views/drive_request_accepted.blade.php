@@ -12,59 +12,47 @@
     <div class="container">
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-outlined items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
-                <span class="material-icons-outlined" onclick="closePopup('menu')">
+                <span class="material-icons-round" onclick="closePopup('menu')">
                 close
                 </span>
             </div>
-            <table>
-                <td>
-                    <span class="material-icons-outlined">
-                    account_circle
-                    </span>
-                </td>
-                <td>
-                    <span>Profile</span>
-                </td>
-            </table>
-            <a href="/signout">
-                <table>
-                    <td>
-                        <span class="material-icons-outlined">
-                        arrow_back
-                        </span>
-                    </td>
-                    <td>
+            <p>
+                <span>Profile</span>
+            </p>
+            <p>
+                <a href="/signout">
                     <span> Sign out</span>
-                    </td>
-                </table>
-            </a>
+                </a>
+            </p>
         </div>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
                     <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
-                    <span>From {{ $rideData->ride_from }}</span><br>
-                    <span>To {{ $rideData->ride_to }}</span>
+                    <span>From <strong>{{ $rideRequest["ride_from"] }}</strong></span><br>
+                    <span>To <strong>{{ $rideRequest["ride_to"] }}</strong></span>
                 </div>
             </div>
         </p>
-        <p>
-            <div class="text-align-center">
-                <span class="title">Charged R{{ $charges }}</span>
-            </div>
-        </p>
+        <div id="tripinfo" class="text-align-center ">
+            <p>
+                <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>
+                <span>Estimated time <strong id="triptime">{{ $rideRequest["ride_time"] }}</strong></span><br>
+                <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideRequest["ride_charges"] }}</strong></span>
+            </p>
+        </div>
         <div class="curved-top">
             
             @if($rideData->pick_up_requested == true)

@@ -16,43 +16,29 @@
 </style>
 <body>
     <div class="container">
-    <div class="menu display-none" id="menu">
+        <div class="menu display-none" id="menu">
             <div class="text-align-right">
-                <span class="material-icons-outlined" onclick="closePopup('menu')">
+                <span class="material-icons-round" onclick="closePopup('menu')">
                 close
                 </span>
             </div>
-            <table>
-                <td>
-                    <span class="material-icons-outlined">
-                    account_circle
-                    </span>
-                </td>
-                <td>
-                    <span>Profile</span>
-                </td>
-            </table>
-            <a href="/signout">
-                <table>
-                    <td>
-                        <span class="material-icons-outlined">
-                        arrow_back
-                        </span>
-                    </td>
-                    <td>
+            <p>
+                <span>Profile</span>
+            </p>
+            <p>
+                <a href="/signout">
                     <span> Sign out</span>
-                    </td>
-                </table>
-            </a>
+                </a>
+            </p>
         </div>
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-outlined items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
@@ -64,7 +50,7 @@
                 <p>
                     <div class="display-flex">
                         <div>
-                            <span class="material-icons-outlined plan-icon">
+                            <span class="material-icons-round plan-icon">
                             schedule
                             </span>
                         </div>
@@ -86,25 +72,23 @@
             </p>
         </div>
         <div id="newplan" class="display-none">
-            <p>
+            <div class="curved-top">
                 <div class="text-align-right">
-                    <span class="material-icons-outlined newplan" onclick="openClosePlan('newplan')">
+                    <span class="material-icons-round newplan" onclick="openClosePlan('newplan')">
                     close
                     </span>
                 </div>
-            </p>
-            <p>
-                <div>
-                    <img class="welcome-page-banner-1" src="https://image.freepik.com/free-vector/man-holding-clock-time-management-concept_23-2148823171.jpg" alt="">
-                </div>
-            </p>
-            <div class="curved-top">
+                <p>
+                    <span class="title">Where are you going later?</span>
+                </p>
+                <p>
+                    <div>
+                        <img class="welcome-page-banner-1" src="https://image.freepik.com/free-vector/man-holding-clock-time-management-concept_23-2148823171.jpg" alt="">
+                    </div>
+                </p>
                 <form action="/ride/plans" method="POST">
                     @csrf
                     @method("POST")
-                     <p>
-                        <span class="title">Where are you going later?</span>
-                    </p>
                     <p>
                         <span>From</span><br>
                         <input type="text" name="ridinglaterfrom" id="ridinglaterfrom" placeholder="Pick-up place" required>
@@ -137,7 +121,7 @@
         <div class="bottom-controls">
             <div class="bottom-controls-item">
                 <a href="/ride/dashboard">
-                    <span class="material-icons-outlined">
+                    <span class="material-icons-round">
                     home
                     </span><br>
                     <span>Home</span>
@@ -145,15 +129,15 @@
             </div>
             <div class="bottom-controls-item">
                 <a href="/ride/history">
-                    <span class="material-icons-outlined">
-                    history
+                    <span class="material-icons-round">
+                    watch_later
                     </span><br>
                     <span>History</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
                 <a href="/ride/plans">
-                    <span class="material-icons-outlined">
+                    <span class="material-icons-round">
                     public
                     </span><br>
                     <span>Plans</span>
@@ -161,7 +145,7 @@
             </div>
             <div class="bottom-controls-item">
                 <a href="/ride/drivers">
-                    <span class="material-icons-outlined">
+                    <span class="material-icons-round">
                     directions_car
                     </span><br>
                     <span>Drivers</span>
@@ -169,7 +153,7 @@
             </div>
             <div class="bottom-controls-item">
                 <a href="/ride/offers">
-                    <span class="material-icons-outlined">
+                    <span class="material-icons-round">
                     local_offer
                     </span><br>
                     <span>Offers</span>

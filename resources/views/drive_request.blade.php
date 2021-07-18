@@ -12,45 +12,31 @@
     <div class="container">
         <div class="nav">
            <div class="display-flex">
-                <span class="material-icons-outlined">
+                <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-outlined items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
-                <span class="material-icons-outlined" onclick="closePopup('menu')">
+                <span class="material-icons-round" onclick="closePopup('menu')">
                 close
                 </span>
             </div>
-            <table>
-                <td>
-                    <span class="material-icons-outlined">
-                    account_circle
-                    </span>
-                </td>
-                <td>
-                    <span>Profile</span>
-                </td>
-            </table>
-            <a href="/signout">
-                <table>
-                    <td>
-                        <span class="material-icons-outlined">
-                        arrow_back
-                        </span>
-                    </td>
-                    <td>
+            <p>
+                <span>Profile</span>
+            </p>
+            <p>
+                <a href="/signout">
                     <span> Sign out</span>
-                    </td>
-                </table>
-            </a>
+                </a>
+            </p>
         </div>
-        <span class="material-icons-outlined" onclick="redirectBack()">
+        <span class="material-icons-round" onclick="redirectBack()">
         arrow_back
         </span><br>
         <p>
@@ -61,23 +47,29 @@
                 </div>
             </div>
         </p>
-        <div class="curved-top">
+        <div class="curved-top padding-none">
+            <div id="map"></div>
+            <input type="hidden" id="ridefrom" value="{{ $rideData->ride_from }}">
+            <input type="hidden" id="rideto" value="{{ $rideData->ride_to }}">
+
             <form action="/drive/{{ $rideAuth->id }}/request/accept" method="POST">
                 @csrf
                 @method("POST")
                 <p>
                     <span class="title">Pick-up place</span><br>
-                    <span>{{ $rideData->ride_from }}</span>
+                    <span>{{ $rideRequest["ride_from"] }}</span>
                 </p>
                 <p>
                     <span class="title">Destination</span><br>
-                    <span>{{ $rideData->ride_to }}</span>
+                    <span>{{ $rideRequest["ride_to"] }}</span>
                 </p>
-                <p>
-                    <span class="title">How much you charging for this trip?</span><br>
-                    <span>(In rand)</span><br>
-                    <input type="number" placeholder="Enter amount you charging for this trip" name="charge">
-                </p> 
+                <div id="tripinfo" class="text-align-center ">
+                    <p>
+                        <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>
+                        <span>Estimated time <strong id="triptime">{{ $rideRequest["ride_time"] }}</strong></span><br>
+                        <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideRequest["ride_charges"] }}</strong></span>
+                    </p>
+                </div>
                 <p>
                     <button>Accept</button>
                 </p>
@@ -85,5 +77,49 @@
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+    function drawLine(){
+        const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -33.8688, lng: 151.2195 },
+        zoom: 13,
+        mapId: "4cce301a9d6797df"
+        });
+
+        let directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map); // Existing map object displays directions
+        // Create route from existing points used for markers
+        const route = {
+            origin: {lat: parseFloat("{{ json_decode($rideRequest['ride_from_coords'], true)['lat'] }}"), lng: parseFloat("{{ json_decode($rideRequest['ride_from_coords'], true)['lng'] }}")},
+            destination: {lat: parseFloat("{{ json_decode($rideRequest['ride_to_coords'], true)['lat'] }}"), lng: parseFloat("{{ json_decode($rideRequest['ride_to_coords'], true)['lng'] }}")},
+            travelMode: 'DRIVING'
+        }
+
+        directionsService.route(route,
+            function(response, status) { // anonymous function to capture directions
+            if (status !== 'OK') {
+                window.alert('Directions request failed due to ' + status);
+                return;
+            } else {
+                directionsRenderer.setDirections(response); // Add route to the map
+                var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                if (!directionsData) {
+                window.alert('Directions request failed');
+                return;
+                }
+                else {
+                    document.querySelector("#tripinfo").style.display = "block";
+                    document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
+                    document.querySelector("#triptime").innerHTML = directionsData.duration.text;
+                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 2.50).toFixed(2);
+                }
+            }
+        });
+    }
+    </script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=drawLine&libraries=places&v=weekly"
+    async
+    ></script>
 </body>
 </html>
