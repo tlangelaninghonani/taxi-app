@@ -23,8 +23,11 @@ class RideDashboardController extends Controller
 
         $driveAuths = DriveAuth::all();
         $driveData = new DriveData(); 
-
-        $rideRequest = json_decode($rideData->ride_requests, true)[$rideData->ride_on_trip_drive_id];
+        
+        $rideRequest = null;
+        if(sizeof(json_decode($rideData->ride_requests, true)) > 0){
+            $rideRequest = json_decode($rideData->ride_requests, true)[$rideData->ride_on_trip_drive_id];
+        }
 
         return view("ride_dashboard", [
             "rideAuth" => $rideAuth,

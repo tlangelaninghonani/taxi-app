@@ -148,24 +148,22 @@ class DataController extends Controller
         $driveData->on_trip = false;
         $driveData->ride_accepted = false;
         $driveData->confirm_pickup = false;
-        $driveData->ride_accepted = false;
 
-        $rideRequests = json_decode($driveData->ride_requests, true);
+        $rideRequests = json_decode($rideData->ride_requests, true);
 
         $updatedrideRequests = array();
-        foreach($rideRequests as $rideRequestID){
-            if($rideRequestID != $rideAuth->id){
-                $updatedrideRequests[] = $rideRequestID;
+        foreach($rideRequests as $driveId => $requestData){
+            if($driveId != $driveAuth->id){
+                $updatedrideRequests[$driveId] = $rideRequests[$driveId];
             }
         }
-
-        $driveData->ride_requests = json_encode($updatedrideRequests);
+        $rideData->ride_requests = json_encode($updatedrideRequests);
 
         $allHistory = json_decode($driveData->drive_history_ride_id, true);
 
         $allHistory[$rideAuth->id] = array(
-            "ride_from" => $rideData->ride_from,
-            "ride_to" => $rideData->ride_to,
+            "ride_from" => $rideRequests[$driveAuth->id]["ride_from"],
+            "ride_to" => $rideRequests[$driveAuth->id]["ride_to"],
         );
 
         $driveData->drive_history_ride_id = json_encode($allHistory);
@@ -173,11 +171,11 @@ class DataController extends Controller
 
         $driveData->save();
 
-        $rideData->on_trip = false;
-        $rideData->drive_accepted = false;
+        $rideData->ride_on_trip = false;
+        $rideData->ride_on_trip_drive_id = 0;
         $rideData->pick_up_requested = false;
         
-        $rideRequests = json_decode($rideData->drive_requests, true);
+        $rideRequests = json_decode($rideData->ride_requests, true);
 
         $updatedrideRequests = array();
         foreach($rideRequests as $rideRequestID){
@@ -186,7 +184,7 @@ class DataController extends Controller
             }
         }
 
-        $rideData->drive_requests = json_encode($updatedrideRequests);
+        $rideData->ride_requests = json_encode($updatedrideRequests);
 
         $allHistory = json_decode($rideData->ride_history_drive_id, true);
 
@@ -391,17 +389,17 @@ class DataController extends Controller
 
         $driveData->on_trip = false;
         $driveData->ride_accepted = false;
+        $driveData->confirm_pickup = false;
 
-        $rideRequests = json_decode($driveData->ride_requests, true);
+        $rideRequests = json_decode($rideData->ride_requests, true);
 
         $updatedrideRequests = array();
-        foreach($rideRequests as $rideRequestID){
-            if($rideRequestID != $rideAuth->id){
-                $updatedrideRequests[] = $rideRequestID;
+        foreach($rideRequests as $driveId => $requestData){
+            if($driveId != $driveAuth->id){
+                $updatedrideRequests[$driveId] = $rideRequests[$driveId];
             }
         }
-
-        $driveData->ride_requests = json_encode($updatedrideRequests);
+        $rideData->ride_requests = json_encode($updatedrideRequests);
 
         $allHistory = json_decode($driveData->drive_history_ride_id, true);
 
@@ -414,25 +412,14 @@ class DataController extends Controller
 
         $driveData->save();
 
-        $rideData->on_trip = false;
+        $rideData->ride_on_trip = false;
+        $driveData->pick_up_requested = false;
 
         $allHistory = json_decode($rideData->ride_history_drive_id, true);
 
         $allHistory[] = $driveAuth->id;
 
         $rideData->ride_history_drive_id = json_encode($allHistory);
-
-        $rideRequests = json_decode($rideData->drive_requests, true);
-    
-        $updatedrideRequests = array();
-        foreach($rideRequests as $rideRequestID){
-            if($rideRequestID != $driveAuth->id){
-                $updatedrideRequests[] = $rideRequestID;
-            }
-        }
-
-
-        $rideData->drive_requests = json_encode($updatedrideRequests);
 
         $rideData->save();
 
@@ -568,6 +555,8 @@ class DataController extends Controller
         );
 
         $rideData->ride_requests = json_encode($rideRequests);
+
+        $rideData->ride_on_trip_drive_id = $driveAuth->id;
 
         $rideData->save();
 

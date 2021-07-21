@@ -117,6 +117,14 @@
                 <span>Offers</span>
             </a>
         </div>
+        <div class="bottom-controls-item">
+            <a href="/ride/profile">
+                <span class="material-icons-round">
+                account_circle
+                </span><br>
+                <span>Profile</span>
+            </a>
+        </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
 </body>

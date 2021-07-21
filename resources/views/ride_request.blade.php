@@ -46,18 +46,18 @@
                 @method("POST")
                 <input type="hidden" value="{{  $driveAuth->id }}" name="rideid" id="rideid">
                 <p>
-                    <span class="title">From</span><br>
+                    <span class="title">Pick-up place</span><br>
                     <input type="text" name="ridefrom" id="ridefrom" placeholder="Pick-up place" required>
                 </p>
                 <p>
-                    <span class="title">To</span><br>
+                    <span class="title">Destination</span><br>
                     <input type="text" name="rideto" id="rideto" placeholder="Your destination"  required>
                 </p>
                 <div id="tripinfo" class="text-align-center display-none">
                     <p>
                         <span>Distance <strong id="tripdistance"></strong></span><br>
                         <span>Estimated time <strong id="triptime"></strong></span><br>
-                        <span>Charges R<strong id="tripcharges"></strong></span>
+                        <span class="title">Charges R<strong class="title" id="tripcharges"></strong></span>
                     </p>
                 </div>
                 <p>
@@ -219,9 +219,9 @@
                     document.querySelector("#requestbutton").style.display = "block";
                     document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
                     document.querySelector("#triptime").innerHTML = directionsData.duration.text;
-                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 2.50).toFixed(2);
+                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 2.50 + 10).toFixed(2);
                     
-                    document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * 2.50).toFixed(2);
+                    document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * 2.50 + 10).toFixed(2);
                     document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
                     document.querySelector("#ridetocoords").value = JSON.stringify(destination);
                     document.querySelector("#ridedistance").value = directionsData.distance.text;

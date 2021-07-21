@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ $links['css'] }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ $links['js'] }}"></script>
     <title>Drive</title>
 </head>
 <style>
@@ -54,49 +55,106 @@
         </p>
         @if($driveData->on_trip == false)
             <span class="display-none">{{ $totalRequestsFromRiders = 0 }}</span>
-             <p>
-                <span class="title border-bottom" onclick="displayComp(this, 'requests')">Requests</span>
-                <span class="title f-right" onclick="displayComp(this, 'requestsaccepted')">Accepted</span>
-            </p>
-            <div class="curved-top">
-                <div id="requests">
-                    <div class="display-none">
-                    {{ $requests_count = 0 }}
-                    </div>
-                    <p>
-                        <div class="display-flex-justify-center">
-                            <div>
-                                <span class="material-icons-round">
-                                waving_hand
-                                </span>
-                            </div>
-                            <div>
-                                <span class="title">Requests from riders</span>
-                            </div>
+            @if($rideRequest)
+                <p>
+                    <span class="title border-bottom" onclick="displayComp(this, 'requests')">Requests</span>
+                    <span class="title f-right" onclick="displayComp(this, 'requestsaccepted')">Accepted</span>
+                </p>
+                <div class="curved-top">
+                    <div id="requests">
+                        <div class="display-none">
+                        {{ $requests_count = 0 }}
                         </div>
-                    </p>
-                    <p>
+                        <p>
+                            <div class="display-flex-justify-center">
+                                <div>
+                                    <span class="material-icons-round">
+                                    waving_hand
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="title">Requests from riders</span>
+                                </div>
+                            </div>
+                        </p>
+                        <p>
+                            @foreach($rideData::all() as $ride)
+                                @if(sizeof(json_decode($ride->ride_requests, true)) > 0)
+                                    @foreach(json_decode($ride->ride_requests, true) as $driveId => $requestData)
+                                        @if($driveId == $driveAuth->id)
+                                            @if($requestData["ride_accepted"] == false)
+                                                <span class="display-none">{{ $totalRequestsFromRiders++ }}</span>    
+                                                <div class="display-none">
+                                                    {{ $requests_count++ }}
+                                                    {{ $ride_first_name = $rideAuth->find($ride->ride_id)->ride_first_name }}
+                                                    {{ $ride_last_name = $rideAuth->find($ride->ride_id)->ride_last_name }}
+                                                </div>
+                                                <p>
+                                                    <a class="display-flex" href="/drive/{{ $ride->ride_id }}/request">
+                                                        <div>
+                                                            <div>
+                                                                <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
+                                                            </div>
+                                                            <div class="trunc-text">
+                                                                <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
+                                                                <span>From <strong>{{ $requestData["ride_from"] }}</strong></span><br>
+                                                                <span>To <strong>{{ $requestData["ride_to"] }}</strong></span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </p>
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        </p>
+                        <p>
+                            @if($requests_count == 0)
+                                <div class="text-align-center">
+                                    <span>No requests</span>
+                                </div>
+                            @endif
+                        </p>
+                    </div>
+                    <div id="requestsaccepted" class="display-none">
+                        <div class="display-none">
+                        {{ $accepted_requests_count = 0 }}
+                        </div>
+                        <p>
+                            <div class="display-flex-justify-center">
+                                <div>
+                                    <span class="material-icons-round">
+                                    check_circle
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="title">Accepted requests</span>
+                                </div>
+                            </div>
+                        </p>
+                        <p>
                         @foreach($rideData::all() as $ride)
                             @if(sizeof(json_decode($ride->ride_requests, true)) > 0)
                                 @foreach(json_decode($ride->ride_requests, true) as $driveId => $requestData)
                                     @if($driveId == $driveAuth->id)
-                                        @if($requestData["ride_accepted"] == false)
-                                            <span class="display-none">{{ $totalRequestsFromRiders++ }}</span>    
+                                        @if($requestData["ride_accepted"] == true)
+                                            <span class="display-none">{{ $totalRequestsFromRiders++ }}</span> 
                                             <div class="display-none">
-                                                {{ $requests_count++ }}
+                                                {{ $accepted_requests_count++ }}
                                                 {{ $ride_first_name = $rideAuth->find($ride->ride_id)->ride_first_name }}
                                                 {{ $ride_last_name = $rideAuth->find($ride->ride_id)->ride_last_name }}
                                             </div>
                                             <p>
-                                                <a class="display-flex" href="/drive/{{ $ride->ride_id }}/request">
+                                                <a class="display-flex" href="/drive/{{ $ride->ride_id }}/request/accepted">
                                                     <div>
                                                         <div>
                                                             <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
                                                         </div>
                                                         <div class="trunc-text">
                                                             <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
-                                                            <span>From {{ $requestData["ride_from"] }}</span><br>
-                                                            <span>To {{ $requestData["ride_to"] }}</span>
+                                                            <span>From <strong>{{ $requestData["ride_from"] }}</strong></span><br>
+                                                            <span>To <strong>{{ $requestData["ride_to"] }}</strong></span>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -106,72 +164,17 @@
                                 @endforeach
                             @endif
                         @endforeach
-                    </p>
-                    <p>
-                        @if($requests_count == 0)
-                            <div class="text-align-center">
-                                <span>No requests</span>
-                            </div>
-                        @endif
-                    </p>
-                </div>
-                <div id="requestsaccepted" class="display-none">
-                    <div class="display-none">
-                    {{ $accepted_requests_count = 0 }}
+                        </p>
+                        <p>
+                            @if($accepted_requests_count == 0)
+                                <div class="text-align-center">
+                                    <span>No accepted requests</span>
+                                </div>
+                            @endif
+                        </p>
                     </div>
-                    <p>
-                        <div class="display-flex-justify-center">
-                            <div>
-                                <span class="material-icons-round">
-                                check_circle
-                                </span>
-                            </div>
-                            <div>
-                                <span class="title">Accepted requests</span>
-                            </div>
-                        </div>
-                    </p>
-                    <p>
-                    @foreach($rideData::all() as $ride)
-                        @if(sizeof(json_decode($ride->ride_requests, true)) > 0)
-                            @foreach(json_decode($ride->ride_requests, true) as $driveId => $requestData)
-                                @if($driveId == $driveAuth->id)
-                                    @if($requestData["ride_accepted"] == true)
-                                        <span class="display-none">{{ $totalRequestsFromRiders++ }}</span> 
-                                        <div class="display-none">
-                                            {{ $accepted_requests_count++ }}
-                                            {{ $ride_first_name = $rideAuth->find($ride->ride_id)->ride_first_name }}
-                                            {{ $ride_last_name = $rideAuth->find($ride->ride_id)->ride_last_name }}
-                                        </div>
-                                        <p>
-                                            <a class="display-flex" href="/drive/{{ $ride->ride_id }}/request/accepted">
-                                                <div>
-                                                    <div>
-                                                        <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
-                                                    </div>
-                                                    <div class="trunc-text">
-                                                        <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
-                                                        <span>From {{ $requestData["ride_from"] }}</span><br>
-                                                        <span>To {{ $requestData["ride_to"] }}</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </p>
-                                    @endif
-                                @endif
-                            @endforeach
-                        @endif
-                    @endforeach
-                    </p>
-                    <p>
-                        @if($accepted_requests_count == 0)
-                            <div class="text-align-center">
-                                <span>No accepted requests</span>
-                            </div>
-                        @endif
-                    </p>
                 </div>
-            </div>
+            @endif
             @if($totalRequestsFromRiders == 0)
                 <div class="curved-top padding-none">
                     <div id="map"></div>
@@ -300,7 +303,14 @@
                 <span>Offers</span>
             </a>
         </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/profile">
+                <span class="material-icons-round">
+                account_circle
+                </span><br>
+                <span>Profile</span>
+            </a>
+        </div>
     </div>
-    <script src="{{ $links['js'] }}"></script>
 </body>
 </html>
