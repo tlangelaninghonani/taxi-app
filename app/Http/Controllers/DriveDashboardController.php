@@ -31,13 +31,15 @@ class DriveDashboardController extends Controller
                 }
             }
         }
+        $driveTrip = json_decode($driveData->drive_trip, true);
 
         return view("drive_dashboard", [
             "driveAuth" => $driveAuth,
             "driveData" => $driveData,
             "rideAuth" => new RideAuth(),
             "rideData" => new RideData(),
-            "rideRequest" => $rideRequest
+            "rideRequest" => $rideRequest,
+            "driveTrip" => $driveTrip
         ]);
     }
 }

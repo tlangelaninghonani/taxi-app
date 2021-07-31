@@ -18,14 +18,6 @@
                 <span class="app-name">InterCityRides</span>
            </div>
         </div>
-        <span class="material-icons-round" onclick="redirectBack()">
-        arrow_back
-        </span><br>
-        <p>
-            <div class="text-align-center">
-                <span class="title-small">Tip: Get rated most stars by cleaning your ride always</span>
-            </div>
-        </p>
         <p>
             <img class="welcome-page-banner-1" src="https://image.freepik.com/free-vector/man-searching-car-rent_74855-7610.jpg" alt="">
         </p>

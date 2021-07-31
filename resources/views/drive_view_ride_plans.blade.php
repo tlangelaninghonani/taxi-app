@@ -17,7 +17,7 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
@@ -36,9 +36,6 @@
                 </a>
             </p>
         </div>
-         <span class="material-icons-round" onclick="redirectBack()">
-        arrow_back
-        </span><br>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -49,37 +46,39 @@
         </p>
         <p>
             <div class="display-flex-scroll">
-                @foreach(json_decode($rideData->ride_plans, true) as $k => $v) 
-                    @if($k < 2)      
-                        <div class="curved-top position-relative" id="plan-{{ $k }}">
-                            <p>
-                                <div class="display-flex-justify-center">
-                                    <div>
-                                        <span class="material-icons-round">
-                                        schedule
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span class="title">Plans</span>
-                                    </div>
-                                </div>
-                            </p>
+                <div class="display-none">
+                    {{ $counter = 0 }}
+                </div>
+                @foreach(json_decode($rideData->ride_plans, true) as $ridePlans) 
+                    <div class="display-none">
+                        {{ $counter++ }}
+                    </div>
+                    @if($counter < 2)     
+                        <div class="curved-top position-relative padding-none" id="plan-{{ $counter }}">
+                            <div id="map{{ $counter }}" class="map"></div>
                             <span class="title">Pick-up place</span><br>
-                            <span>{{ $v["riding_later_from"] }}</span><br>
+                            <span>{{ $ridePlans["ride_from"] }}</span><br>
                             <span class="title">Destination</span><br>
-                            <span>{{ $v["riding_later_to"] }}</span><br>
-                            <span class="title">Date and Time</span><br>
-                            <span>{{ $v["riding_later_date"] }}</span>
-                            <span>{{ $v["riding_later_time"] }}</span>
-                            <span>{{ $v["riding_later_meridiem"] }}</span>
+                            <span>{{ $ridePlans["ride_to"] }}</span><br>
+                            <span class="title">Date</span><br>
+                            <span>{{ $ridePlans["ride_date"] }}</span><br>
+                            <span class="title">Time</span><br>
+                            <span>{{ $ridePlans["ride_time"] }}</span>
+                            <span>{{ $ridePlans["ride_meridiem"] }}</span>
+                            <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
+                                <p>
+                                    <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
+                                    <span>Estimated time <strong id="triptime{{ $counter }}"></strong></span><br>
+                                    <span class="title">Charges R<strong class="title" id="tripcharges{{ $counter }}"></strong></span>
+                                </p>
+                            </div>
                             <p>
-                                <form action="/drive/{{ $rideAuth->id }}/offer" method="POST">
+                                <form action="/drive/{{ $rideAuth->id }}/{{ $counter }}/offer" method="POST">
                                     @csrf
                                     @method("POST")
-                                    <input type="hidden" name="ridefrom" value="{{ $v['riding_later_from'] }}">
-                                    <input type="hidden" name="rideto" value="{{ $v['riding_later_to'] }}">
-                                    <input type="hidden" name="ridedatetime" value="{{ $v['riding_later_date'] }} {{ $v['riding_later_time'] }} {{ $v['riding_later_meridiem'] }}">
-                                    <input type="hidden" name="planid" value="{{ $k }}">
+                                    <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
+                                    <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
+                                    <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
                                     @foreach(json_decode($driveData->ride_offers, true) as $rideofferid)
                                         @if($rideofferid == $k)
                                         <input type="hidden" name="action" value="cancel">
@@ -94,48 +93,50 @@
                                         @endif
                                     @endforeach
                                     @if(sizeof(json_decode($driveData->ride_offers, true)) == 0)
-                                        <input type="hidden" name="action" value="new">    
+                                        <input type="hidden" name="action" value="offer">    
                                         <button>Offer</button>
                                     @endif
                                 </form>
                             </p>
                             @if(sizeof(json_decode($rideData->ride_plans, true)) != 1)
-                                <span class="material-icons-round next-plan" onclick="nextPlan('plan-{{ $k }}', 'plan-{{ $k + 1 }}')">
+                                <div class="display-none">
+                                    {{ $originLat = $ridePlansData[$counter + 1]["originLat"] }}
+                                    {{ $originLng = $ridePlansData[$counter + 1]["originLng"] }}
+                                    {{ $destLat = $ridePlansData[$counter + 1]["destLat"] }}
+                                    {{ $destLng = $ridePlansData[$counter + 1]["destLng"] }}
+                                </div>
+                                <span class="material-icons-round next-plan" onclick="nextPlan('plan-{{ $counter }}', 'plan-{{ $counter + 1 }}', '{{ $originLat }}', '{{ $originLng  }}', '{{ $destLat }}', '{{ $destLng }}', 'map{{ $counter + 1 }}')">
                                 arrow_forward
                                 </span>
                             @endif
                         </div>
                     @else
-                        @if($k < sizeof(json_decode($rideData->ride_plans, true)))
-                            <div class="curved-top position-relative display-none" id="plan-{{ $k }}">
-                                <p>
-                                    <div class="display-flex-justify-center">
-                                        <div>
-                                            <span class="material-icons-round">
-                                            schedule
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span class="title">Plans</span>
-                                        </div>
-                                    </div>
-                                </p>
+                        @if($counter < sizeof(json_decode($rideData->ride_plans, true))) 
+                            <div class="curved-top position-relative display-none padding-none" id="plan-{{ $counter }}">
+                                <div id="map{{ $counter }}" class="map"></div>
                                 <span class="title">Pick-up place</span><br>
-                                <span>{{ $v["riding_later_from"] }}</span><br>
+                                <span>{{ $ridePlans["ride_from"] }}</span><br>
                                 <span class="title">Destination</span><br>
-                                <span>{{ $v["riding_later_to"] }}</span><br>
-                                <span class="title">Date and Time</span><br>
-                                <span>{{ $v["riding_later_date"] }}</span>
-                                <span>{{ $v["riding_later_time"] }}</span>
-                                <span>{{ $v["riding_later_meridiem"] }}</span>
+                                <span>{{ $ridePlans["ride_to"] }}</span><br>
+                                <span class="title">Date</span><br>
+                                <span>{{ $ridePlans["ride_date"] }}</span><br>
+                                <span class="title">Time</span><br>
+                                <span>{{ $ridePlans["ride_time"] }}</span>
+                                <span>{{ $ridePlans["ride_meridiem"] }}</span>
+                                <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
+                                    <p>
+                                        <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
+                                        <span>Estimated time <strong id="triptime{{ $counter }}"></strong></span><br>
+                                        <span class="title">Charges R<strong class="title" id="tripcharges{{ $counter }}"></strong></span>
+                                    </p>
+                                </div>
                                 <p>
-                                    <form action="/drive/{{ $rideAuth->id }}/offer" method="POST">
+                                    <form action="/drive/{{ $rideAuth->id }}/{{ $counter }}/offer" method="POST">
                                         @csrf
                                         @method("POST")
-                                        <input type="hidden" name="ridefrom" value="{{ $v['riding_later_from'] }}">
-                                        <input type="hidden" name="rideto" value="{{ $v['riding_later_to'] }}">
-                                        <input type="hidden" name="ridedatetime" value="{{ $v['riding_later_date'] }} {{ $v['riding_later_time'] }} {{ $v['riding_later_meridiem'] }}">
-                                        <input type="hidden" name="planid" value="{{ $k }}">
+                                        <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
+                                        <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
+                                        <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
                                         @foreach(json_decode($driveData->ride_offers, true) as $rideofferid)
                                             @if($rideofferid == $k)
                                             <input type="hidden" name="action" value="cancel">
@@ -146,6 +147,7 @@
                                                 </div>
                                                 @break
                                             @else
+                                                <input type="hidden" name="action" value="offer"> 
                                                 <button>Offer</button>
                                             @endif
                                         @endforeach
@@ -155,43 +157,51 @@
                                         @endif
                                     </form>
                                 </p>
-                                <span class="material-icons-round next-plan-back" onclick="nextPlanEnd('plan-{{ $k }}', 'plan-{{ $k - 1 }}')">
+                                <div class="display-none">
+                                    {{ $originLatNext = $ridePlansData[$counter + 1]["originLat"] }}
+                                    {{ $originLngNext = $ridePlansData[$counter + 1]["originLng"] }}
+                                    {{ $destLatNext = $ridePlansData[$counter + 1]["destLat"] }}
+                                    {{ $destLngNext = $ridePlansData[$counter + 1]["destLng"] }}
+                                </div>
+                                <div class="display-none">
+                                    {{ $originLatPrev = $ridePlansData[$counter - 1]["originLat"] }}
+                                    {{ $originLngPrev = $ridePlansData[$counter - 1]["originLng"] }}
+                                    {{ $destLatPrev = $ridePlansData[$counter - 1]["destLat"] }}
+                                    {{ $destLngPrev = $ridePlansData[$counter - 1]["destLng"] }}
+                                </div>
+                                <span class="material-icons-round next-plan-back" onclick="nextPlanEnd('plan-{{ $counter }}', 'plan-{{ $counter - 1 }}', '{{ $originLatPrev }}', '{{ $originLngPrev }}', '{{ $destLatPrev }}', '{{ $destLngPrev }}', 'map{{ $counter - 1 }}')">
                                 arrow_back
                                 </span>
-                                <span class="material-icons-round next-plan" onclick="nextPlan('plan-{{ $k }}', 'plan-{{ $k + 1 }}')">
+                                <span class="material-icons-round next-plan" onclick="nextPlan('plan-{{ $counter }}', 'plan-{{ $counter + 1 }}', '{{ $originLatNext }}', '{{ $originLngNext  }}', '{{ $destLatNext }}', '{{ $destLngNext }}', 'map{{ $counter + 1 }}')">
                                 arrow_forward
                                 </span>
                             </div>
                         @else
-                            <div class="curved-top position-relative display-none" id="plan-{{ $k }}">
-                                <p>
-                                    <div class="display-flex-justify-center">
-                                        <div>
-                                            <span class="material-icons-round">
-                                            schedule
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span class="title">Plans</span>
-                                        </div>
-                                    </div>
-                                </p>    
+                            <div class="curved-top position-relative display-none padding-none" id="plan-{{ $counter }}">
+                                <div id="map{{ $counter }}" class="map"></div>
                                 <span class="title">Pick-up place</span><br>
-                                <span>{{ $v["riding_later_from"] }}</span><br>
+                                <span>{{ $ridePlans["ride_from"] }}</span><br>
                                 <span class="title">Destination</span><br>
-                                <span>{{ $v["riding_later_to"] }}</span><br>
-                                <span class="title">Date and Time</span><br>
-                                <span>{{ $v["riding_later_date"] }}</span>
-                                <span>{{ $v["riding_later_time"] }}</span>
-                                <span>{{ $v["riding_later_meridiem"] }}</span>
+                                <span>{{ $ridePlans["ride_to"] }}</span><br>
+                                <span class="title">Date</span><br>
+                                <span>{{ $ridePlans["ride_date"] }}</span><br>
+                                <span class="title">Time</span><br>
+                                <span>{{ $ridePlans["ride_time"] }}</span>
+                                <span>{{ $ridePlans["ride_meridiem"] }}</span>
+                                <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
+                                    <p>
+                                        <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
+                                        <span>Estimated time <strong id="triptime{{ $counter }}"></strong></span><br>
+                                        <span class="title">Charges R<strong class="title" id="tripcharges{{ $counter }}"></strong></span>
+                                    </p>
+                                </div>
                                 <p>
-                                    <form action="/drive/{{ $rideAuth->id }}/offer" method="POST">
+                                    <form action="/drive/{{ $rideAuth->id }}/{{ $counter }}/offer" method="POST">
                                         @csrf
                                         @method("POST")
-                                        <input type="hidden" name="ridefrom" value="{{ $v['riding_later_from'] }}">
-                                        <input type="hidden" name="rideto" value="{{ $v['riding_later_to'] }}">
-                                        <input type="hidden" name="ridedatetime" value="{{ $v['riding_later_date'] }} {{ $v['riding_later_time'] }} {{ $v['riding_later_meridiem'] }}">
-                                        <input type="hidden" name="planid" value="{{ $k }}">
+                                        <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
+                                        <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
+                                        <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
                                         @foreach(json_decode($driveData->ride_offers, true) as $rideofferid)
                                             @if($rideofferid == $k)
                                             <input type="hidden" name="action" value="cancel">
@@ -202,6 +212,7 @@
                                                 </div>
                                                 @break
                                             @else
+                                                <input type="hidden" name="action" value="offer"> 
                                                 <button>Offer</button>
                                             @endif
                                         @endforeach
@@ -211,7 +222,13 @@
                                         @endif
                                     </form>
                                 </p>
-                                <span class="material-icons-round next-plan-back" onclick="nextPlanEnd('plan-{{ $k }}', 'plan-{{ $k - 1 }}')">
+                                <div class="display-none">
+                                    {{ $originLatPrev = $ridePlansData[$counter - 1]["originLat"] }}
+                                    {{ $originLngPrev = $ridePlansData[$counter - 1]["originLng"] }}
+                                    {{ $destLatPrev = $ridePlansData[$counter - 1]["destLat"] }}
+                                    {{ $destLngPrev = $ridePlansData[$counter - 1]["destLng"] }}
+                                </div>
+                                <span class="material-icons-round next-plan-back" onclick="nextPlanEnd('plan-{{ $counter }}', 'plan-{{ $counter - 1 }}', '{{ $originLatPrev }}', '{{ $originLngPrev }}', '{{ $destLatPrev }}', '{{ $destLngPrev }}', 'map{{ $counter - 1 }}')">
                                 arrow_back
                                 </span>
                             </div>
@@ -222,5 +239,75 @@
         </p>
     </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+    function drawLine(originLat, originLng, destLat, destLng, mapId){
+
+        if(! originLat && ! originLng){
+            var originLat = parseFloat("{{ $ridePlansData[1]['originLat'] }}");
+            var originLng = parseFloat("{{ $ridePlansData[1]['originLng'] }}");
+
+            var destLat = parseFloat("{{ $ridePlansData[1]['destLat']  }}");
+            var destLng = parseFloat("{{ $ridePlansData[1]['destLng']  }}");
+
+            var mapId = "map1";
+        }else{
+            var originLat = parseFloat(originLat);
+            var originLng = parseFloat(originLng);
+
+            var destLat = parseFloat(destLat);
+            var destLng = parseFloat(destLng);
+        }
+
+        tripInfoId = mapId.substr(3, 1);
+
+        
+        const map = new google.maps.Map(document.getElementById(mapId), {
+        center: { lat: -33.8688, lng: 151.2195 },
+        zoom: 2,
+        mapId: "4cce301a9d6797df",
+        disableDefaultUI: true,
+        });
+
+
+        let directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map); // Existing map object displays directions
+        // Create route from existing points used for markers
+        const route = {
+            origin: { lat: originLat, lng: originLng },
+            destination: { lat: destLat, lng: destLng },
+            travelMode: 'DRIVING'
+        }
+        
+
+        directionsService.route(route,
+            function(response, status) { // anonymous function to capture directions
+            if (status !== 'OK') {
+                window.alert('Directions request failed due to ' + status);
+                return;
+            } else {
+                directionsRenderer.setDirections(response); // Add route to the map
+                var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                if (!directionsData) {
+                window.alert('Directions request failed');
+                return;
+                }
+                else {
+                    
+                    document.querySelector("#tripinfo"+tripInfoId).style.display = "block";
+                    document.querySelector("#tripdistance"+tripInfoId).innerHTML = directionsData.distance.text;
+                    document.querySelector("#triptime"+tripInfoId).innerHTML = directionsData.duration.text;
+                    document.querySelector("#tripcharges"+tripInfoId).innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
+                
+                }
+            }
+        });
+        
+    }
+    </script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=drawLine&libraries=places&v=weekly"
+    async
+    ></script>
 </body>
 </html>

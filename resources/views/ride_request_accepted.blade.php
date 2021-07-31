@@ -17,13 +17,11 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon">
+           <span class="material-icons-round ">
             more_vert
             </span>
         </div>
-        <span class="material-icons-round" onclick="redirectBack()">
-        arrow_back
-        </span><br>
+
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -78,11 +76,6 @@
                 </p>
                 @endif
             </div>
-            <p>
-                <div class="text-align-center">
-                    <span>This offer will expire within 24 hours</span>
-                </div>
-            </p>
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>

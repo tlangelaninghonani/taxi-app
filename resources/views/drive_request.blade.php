@@ -17,7 +17,7 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
@@ -36,9 +36,6 @@
                 </a>
             </p>
         </div>
-        <span class="material-icons-round" onclick="redirectBack()">
-        arrow_back
-        </span><br>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -81,8 +78,9 @@
     function drawLine(){
         const map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: -33.8688, lng: 151.2195 },
-        zoom: 13,
-        mapId: "4cce301a9d6797df"
+        zoom: 12,
+        mapId: "4cce301a9d6797df",
+        disableDefaultUI: true,
         });
 
         let directionsService = new google.maps.DirectionsService();
@@ -111,7 +109,7 @@
                     document.querySelector("#tripinfo").style.display = "block";
                     document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
                     document.querySelector("#triptime").innerHTML = directionsData.duration.text;
-                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 2.50).toFixed(2);
+                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
                 }
             }
         });

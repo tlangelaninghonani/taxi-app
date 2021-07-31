@@ -16,7 +16,7 @@
                 apartment
                 </span><br>
                 <span class="title">InterCityRides</span><br>
-                <span class="cl-silver logo-marketing">App from DevOpsFactory</span>
+                <span class="cl-silver logo-marketing title-small">App from DevOpsFactory</span>
            </div>
         </div>
         <div class="nav">
@@ -42,11 +42,11 @@
                 <a href="/signin">
                     <button>Sign in</button>
                 </a>
-            </div>
-        </p>
-         <p>
-            <div class="text-align-center">
-                <span class="cl-silver">App from DevOpsFactory</span>
+                <p>
+                    <div class="text-align-center">
+                        <span class="cl-silver title-small">App from DevOpsFactory</span>
+                    </div>
+                </p>
             </div>
         </p>
     </div>

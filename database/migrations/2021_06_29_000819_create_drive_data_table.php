@@ -20,18 +20,11 @@ class CreateDriveDataTable extends Migration
             $table->text("drive_vehicle");
             $table->text("drive_vehicle_type");
             $table->decimal("drive_ratings", 4, 2)->default(0.0);
-            $table->text("ride_requests")->default("[]");
             $table->text("ride_offers")->default("[]");
-            $table->boolean("on_trip")->default(false);
-            $table->integer("on_trip_ride_id")->default(0);
-            $table->decimal("drive_charges", 4, 2)->default(0.0);
-            $table->text("ride_from")->nullable();
-            $table->text("ride_to")->nullable();
-            $table->boolean("ride_accepted")->default(false);
-            $table->text("trip_charge")->default("[]");
-            $table->text("drive_history_ride_id")->default("[]");
+            $table->text("drive_trip")->nullable();
+            $table->boolean("drive_on_trip")->default(false);
+            $table->text("drive_history")->default("[]");
             $table->boolean("confirm_pickup")->default(false);
-            
             $table->timestamps();
         });
     }

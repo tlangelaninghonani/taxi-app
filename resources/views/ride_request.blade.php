@@ -17,13 +17,10 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon">
+           <span class="material-icons-round ">
             more_vert
             </span>
         </div>
-        <span class="material-icons-round" onclick="redirectBack()">
-        arrow_back
-        </span><br>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -82,7 +79,8 @@
             const map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -33.8688, lng: 151.2195 },
             zoom: 13,
-            mapId: "4cce301a9d6797df"
+            mapId: "4cce301a9d6797df",
+            disableDefaultUI: true,
             });
 
             // Create the search box and link it to the UI element.
@@ -124,11 +122,11 @@
                 
                 // Create a marker for each place.
                 markers.push(
-                new google.maps.Marker({
-                    map,
-                    title: place.name,
-                    position: place.geometry.location,
-                })
+                    new google.maps.Marker({
+                        map,
+                        title: place.name,
+                        position: place.geometry.location,
+                    })
                 );
         
                 if (place.geometry.viewport) {
@@ -219,16 +217,13 @@
                     document.querySelector("#requestbutton").style.display = "block";
                     document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
                     document.querySelector("#triptime").innerHTML = directionsData.duration.text;
-                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 2.50 + 10).toFixed(2);
+                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
                     
-                    document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * 2.50 + 10).toFixed(2);
+                    document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
                     document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
                     document.querySelector("#ridetocoords").value = JSON.stringify(destination);
                     document.querySelector("#ridedistance").value = directionsData.distance.text;
                     document.querySelector("#ridetime").value = directionsData.duration.text;
-
-                    console.log(JSON.stringify(origin));
-                    console.log(JSON.stringify(destination));
                   }
                 }
             });

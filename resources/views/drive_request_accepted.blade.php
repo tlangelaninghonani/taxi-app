@@ -17,7 +17,7 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
@@ -66,7 +66,17 @@
                         <form action="/drive/{{ $rideAuth->id }}/request/trip/start" method="POST">
                             @csrf
                             @method("POST")
-                            <input type="hidden" name="charges" value="{{ $charges }}">
+                            <div class="display-none">
+                                <input type="hidden" name="ridefrom" value="{{ $rideRequest['ride_from'] }}">
+                                <input type="hidden" name="rideto" value="{{ $rideRequest['ride_to']  }}">
+                                <input type="hidden" name="ridefromlat" value="{{ json_decode($rideRequest['ride_from_coords'], true)['lat'] }}">
+                                <input type="hidden" name="ridefromlng" value="{{ json_decode($rideRequest['ride_from_coords'], true)['lng'] }}">
+                                <input type="hidden" name="ridetolat" value="{{ json_decode($rideRequest['ride_to_coords'], true)['lat'] }}">
+                                <input type="hidden" name="ridetolng" value="{{ json_decode($rideRequest['ride_to_coords'], true)['lng'] }}">
+                                <input type="hidden" name="ridedistance" value="{{ $rideRequest['ride_distance'] }}">
+                                <input type="hidden" name="rideduration" value="{{ $rideRequest['ride_time'] }}">
+                                <input type="hidden" name="ridecharges" value="{{ $rideRequest['ride_charges']  }}">
+                            </div>
                             <button>Drive</button>
                         </form>
                     </p>
@@ -92,11 +102,6 @@
                     </div>
                 </p>
             @endif
-            <p>
-                <div class="text-align-center">
-                    <span>This offer will expire within 24 hours</span>
-                </div>
-            </p>
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>

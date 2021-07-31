@@ -36,8 +36,9 @@ Route::get("/drive/{id}/request/accepted", [App\Http\Controllers\DataController:
 Route::post("/drive/{id}/request/pickup/confirm", [App\Http\Controllers\DataController::class, "driveConfirmPickup"]);
 Route::post("/drive/{id}/request/trip/start", [App\Http\Controllers\DataController::class, "driveOnTrip"]);
 Route::get("/drive/riders/{id}/plans", [App\Http\Controllers\DataController::class, "driveRidersPlansIndex"]);
-Route::post("/drive/{id}/offer", [App\Http\Controllers\DataController::class, "driveOfferIndex"]);
-Route::post("/drive/{id}/offer/accept", [App\Http\Controllers\DataController::class, "driveOfferAccept"]);
+Route::post("/drive/{id}/{planCounter}/offer", [App\Http\Controllers\DataController::class, "driveOffer"]);
+//Route::post("/drive/{id}/offer/accept", [App\Http\Controllers\DataController::class, "driveOfferAccept"]);
+Route::get("/drive/profile", [App\Http\Controllers\DataController::class, "driveProfile"]);
 
 Route::get("/ride/dashboard", [App\Http\Controllers\RideDashboardController::class, "index"]);
 Route::get("/ride/signin", [App\Http\Controllers\SigninController::class, "rideSigninIndex"]);

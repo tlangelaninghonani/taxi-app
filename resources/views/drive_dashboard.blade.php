@@ -24,6 +24,11 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
+           <div>
+            <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
@@ -40,9 +45,7 @@
                 </a>
             </p>
         </div>
-        <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
-        more_vert
-        </span>
+        
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -53,25 +56,21 @@
                 </div>
             </div>
         </p>
-        @if($driveData->on_trip == false)
+        @if($driveData->drive_on_trip == false)
             <span class="display-none">{{ $totalRequestsFromRiders = 0 }}</span>
             @if($rideRequest)
                 <p>
                     <span class="title border-bottom" onclick="displayComp(this, 'requests')">Requests</span>
                     <span class="title f-right" onclick="displayComp(this, 'requestsaccepted')">Accepted</span>
                 </p>
-                <div class="curved-top">
+                <div class="curved-top padding-none">
+                    <div id="map"></div>
                     <div id="requests">
                         <div class="display-none">
                         {{ $requests_count = 0 }}
                         </div>
                         <p>
                             <div class="display-flex-justify-center">
-                                <div>
-                                    <span class="material-icons-round">
-                                    waving_hand
-                                    </span>
-                                </div>
                                 <div>
                                     <span class="title">Requests from riders</span>
                                 </div>
@@ -124,11 +123,6 @@
                         <p>
                             <div class="display-flex-justify-center">
                                 <div>
-                                    <span class="material-icons-round">
-                                    check_circle
-                                    </span>
-                                </div>
-                                <div>
                                     <span class="title">Accepted requests</span>
                                 </div>
                             </div>
@@ -173,6 +167,10 @@
                             @endif
                         </p>
                     </div>
+                    <script
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initMapCurrentLoc&libraries=&v=weekly"
+                    async
+                    ></script>
                 </div>
             @endif
             @if($totalRequestsFromRiders == 0)
@@ -186,45 +184,41 @@
             @endif
         @else
             <div class="display-none">
-                {{ $rideAuth = $rideAuth::find($driveData->on_trip_ride_id) }}
+                {{ $rideAuth = $rideAuth::find($driveTrip["ride_id"]) }}
                 {{ $rideData = $rideData::where("ride_id", $rideAuth->id)->first() }}
             </div>
             <div class="curved-top padding-none">
-                
-                <p>
-                    <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116716.15173817966!2d29.381065563392927!3d-23.91160360229813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ec6d8401183307b%3A0xa720ddd4b18e4df7!2sPolokwane!5e0!3m2!1sen!2sza!4v1626522553343!5m2!1sen!2sza" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
-                    <div id="map"></div>
-                </p>
-                <p>
+                <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116716.15173817966!2d29.381065563392927!3d-23.91160360229813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ec6d8401183307b%3A0xa720ddd4b18e4df7!2sPolokwane!5e0!3m2!1sen!2sza!4v1626522553343!5m2!1sen!2sza" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
+                <div id="map"></div>
+                <div>
                     <div class="text-align-center">
                         <span class="title">On trip with {{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
                     </div>
                     <div id="tripinfo" class="text-align-center ">
                         <p>
-                            <span>From <strong>{{ $rideRequest["ride_from"] }}</strong></span><br>
-                            <span>To <strong>{{ $rideRequest["ride_to"] }}</strong></span>
+                            <span>From <strong>{{ $driveTrip["drive_from"] }}</strong></span><br>
+                            <span>To <strong>{{ $driveTrip["drive_to"] }}</strong></span>
                         </p>
                         <p>
-                            <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>
-                            <span>Estimated time <strong id="triptime">{{ $rideRequest["ride_time"] }}</strong></span><br>
-                            <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideRequest["ride_charges"] }}</strong></span>
+                            <span>Distance <strong id="tripdistance">{{ $driveTrip["drive_distance"] }}</strong></span><br>
+                            <span>Estimated time <strong id="triptime">{{ $driveTrip["drive_duration"] }}</strong></span><br>
+                            <span class="title">Charges R<strong class="title" id="tripcharges">{{ $driveTrip["drive_charges"] }}</strong></span>
                         </p>
                     </div>
-                </p>
-                <p>
-                    <form action="/drive/{{ $rideAuth->id }}/request/trip/end" method="POST">
+                    <form action="/drive/{{ $driveTrip['ride_id'] }}/request/trip/end" method="POST">
                         @csrf
                         @method("POST")
                         <button>End trip</button>
                     </form>
-                </p>
+                </div>
             </div>
             <script>
             function drawLine(){
                 const map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: -33.8688, lng: 151.2195 },
                 zoom: 13,
-                mapId: "4cce301a9d6797df"
+                mapId: "4cce301a9d6797df",
+                disableDefaultUI: true,
                 });
 
                 let directionsService = new google.maps.DirectionsService();
@@ -232,8 +226,8 @@
                 directionsRenderer.setMap(map); // Existing map object displays directions
                 // Create route from existing points used for markers
                 const route = {
-                    origin: {lat: parseFloat("{{ json_decode($rideRequest['ride_from_coords'], true)['lat'] }}"), lng: parseFloat("{{ json_decode($rideRequest['ride_from_coords'], true)['lng'] }}")},
-                    destination: {lat: parseFloat("{{ json_decode($rideRequest['ride_to_coords'], true)['lat'] }}"), lng: parseFloat("{{ json_decode($rideRequest['ride_to_coords'], true)['lng'] }}")},
+                    origin: {lat: parseFloat("{{ $driveTrip['drive_from_lat'] }}"), lng: parseFloat("{{ $driveTrip['drive_from_lng'] }}")},
+                    destination: {lat: parseFloat("{{ $driveTrip['drive_to_lat'] }}"), lng: parseFloat("{{ $driveTrip['drive_to_lng'] }}")},
                     travelMode: 'DRIVING'
                 }
 
@@ -268,7 +262,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-                <span>Home</span>
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -276,23 +270,23 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                <span>History</span>
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="">
                 <span class="material-icons-round">
-                public
+                travel_explore
                 </span><br>
-                <span>Plans</span>
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="/drive/riders">
                 <span class="material-icons-round">
-                directions_walk
+                hail
                 </span><br>
-                <span>Riders</span>
+                <span class="title-small">Riders</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -300,7 +294,7 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                <span>Offers</span>
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -308,7 +302,7 @@
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-                <span>Profile</span>
+                <span class="title-small">Profile</span>
             </a>
         </div>
     </div>

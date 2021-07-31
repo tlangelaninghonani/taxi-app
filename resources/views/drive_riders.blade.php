@@ -23,6 +23,11 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
+           <div>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
@@ -39,11 +44,9 @@
                 </a>
             </p>
         </div>
-        <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
-        more_vert
-        </span>
+        
         <p>
-            <span class="title">See people's plans</span>
+            <span class="title">See rider's plans</span>
         </p>
         <p>
             <input type="text" placeholder="Search riders">
@@ -52,15 +55,11 @@
             <div>
                 @foreach($rideAuths as $rideAuth)
                     <div style="display: none">
-                        {{ $rideAuth->ride_first_name = ucwords($rideAuth->ride_first_name) }}
-                        {{ $rideAuth->ride_last_name = ucwords($rideAuth->ride_last_name) }}
-
                         {{ $rideData = $rideData::find($rideAuth->id) }}
-                        {{ $rideData->ride_vehicle = ucwords($rideData->ride_vehicle) }}
                     </div>
-                    @if($rideData->riding_later == true)
+                    @if(sizeof(json_decode($rideData->ride_plans, true)) > 0)
                         @if(sizeof(json_decode($rideData->ride_plans, true)) == 1)
-                            @foreach(json_decode($rideData->ride_plans, true) as $k => $v)
+                            @foreach(json_decode($rideData->ride_plans, true) as $ridePlan)
                                 <p>
                                     <a class="display-flex" href="/drive/riders/{{ $rideAuth->id }}/plans">
                                         <div>
@@ -69,8 +68,9 @@
                                             </div>
                                             <div class="trunc-text">
                                                 <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br> 
-                                                <span>From {{ $v["riding_later_from"] }}</span><br>
-                                                <span>To {{ $v["riding_later_to"] }}</span><br>
+                                                <span>From <strong>{{ $ridePlan["ride_from"] }}</strong></span><br>
+                                                <span>To <strong>{{ $ridePlan["ride_to"] }}</strong></span><br>
+                                                <span>Charges <strong>R{{ $ridePlan["ride_charges"] }}</strong></span>
                                             </div>
                                         </div>
                                     </a>
@@ -103,7 +103,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-                <span>Home</span>
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -111,23 +111,23 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                <span>History</span>
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="">
                 <span class="material-icons-round">
-                public
+                travel_explore
                 </span><br>
-                <span>Plans</span>
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="/drive/riders">
                 <span class="material-icons-round">
-                directions_walk
+                hail
                 </span><br>
-                <span>Riders</span>
+                <span class="title-small">Riders</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -135,7 +135,7 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                <span>Offers</span>
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -143,7 +143,7 @@
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-                <span>Profile</span>
+                <span class="title-small">Profile</span>
             </a>
         </div>
     </div>

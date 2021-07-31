@@ -25,8 +25,19 @@ class RideDashboardController extends Controller
         $driveData = new DriveData(); 
         
         $rideRequest = null;
-        if(sizeof(json_decode($rideData->ride_requests, true)) > 0){
-            $rideRequest = json_decode($rideData->ride_requests, true)[$rideData->ride_on_trip_drive_id];
+
+        $rideTrip = json_decode($rideData->ride_trip, true);
+
+        if($rideData->ride_on_trip == true){
+            $driveAuth = DriveAuth::find($rideTrip["drive_id"]);
+            $driveData = DriveData::where("drive_id", $driveAuth->id)->first();
+
+            if($driveData->drive_on_trip == false){
+                return view("ride_ratings", [
+                    "driveAuth" => $driveAuth,
+                    "driveData" => $driveData,
+                ]);
+            }
         }
 
         return view("ride_dashboard", [
@@ -35,7 +46,8 @@ class RideDashboardController extends Controller
             "driveAuths" => $driveAuths,
             "driveData" => $driveData,
             "driveAuth" => new DriveAuth(),
-            "rideRequest" => $rideRequest
+            "rideRequest" => $rideRequest,
+            "rideTrip" => $rideTrip
         ]);
     }
 }

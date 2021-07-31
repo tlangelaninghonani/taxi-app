@@ -39,7 +39,7 @@
                     <a class="choose-ride-drive-a" href="/ride/signin">
                         <div class="choose-ride-drive-item">
                             <span class="material-icons-round choose-ride-drive">
-                            directions_walk
+                            hail
                             </span>
                         </div>
                         <div class="choose-ride-drive-div">

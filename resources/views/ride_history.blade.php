@@ -38,7 +38,7 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
@@ -46,22 +46,22 @@
             <span class="title">History</span>
         </p>
         <div class="padding-bottom-layout">
-            @if(sizeof(json_decode($rideData->ride_history_drive_id, true)) > 0)
-                @foreach(json_decode($rideData->ride_history_drive_id, true) as $driveRequestID)
+            @if(sizeof(json_decode($rideData->ride_history, true)) > 0)
+                @foreach(json_decode($rideData->ride_history, true) as $driveId => $rideHistory)
                     <div style="display: none">
-                        {{ $driveAuth = $driveAuth::find($driveRequestID) }}
-                        {{ $driveData = $driveData::where("drive_id", $driveRequestID)->first() }}
+                        {{ $driveA = $driveAuth::find($driveId) }}
+                        {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
                     </div>
                     <p>
-                        <a class="display-flex" href="/ride/{{ $driveAuth->id }}/request">
+                        <a class="display-flex" href="/ride/{{ $driveA->id }}/request">
                             <div>
                                 <div>
-                                    <img class="profile-image" src="{{ $driveData->drive_profile_image }}" alt="">
+                                    <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
                                 </div>
                                 <div class="trunc-text">
-                                    <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
-                                    <span>{{ $driveData->drive_vehicle }}</span><br>
-                                    <span>Rated {{ $driveData->drive_ratings }}</span>
+                                    <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
+                                    <span>{{ $driveD->drive_vehicle }}</span><br>
+                                    <span>Rated {{ $driveD->drive_ratings }}</span>
                                 </div>
                             </div>
                         </a>
@@ -75,7 +75,7 @@
                     <span class="material-icons-round">
                     home
                     </span><br>
-                    <span>Home</span>
+                    <span class="title-small">Home</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -83,23 +83,23 @@
                     <span class="material-icons-round">
                     watch_later
                     </span><br>
-                    <span>History</span>
+                    <span class="title-small">History</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
                 <a href="/ride/plans">
                     <span class="material-icons-round">
-                    public
+                    travel_explore
                     </span><br>
-                    <span>Plans</span>
+                    <span class="title-small">Plans</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
                 <a href="/ride/drivers">
                     <span class="material-icons-round">
-                    directions_car
+                    local_taxi
                     </span><br>
-                    <span>Drivers</span>
+                    <span class="title-small">Drivers</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -107,7 +107,7 @@
                     <span class="material-icons-round">
                     local_offer
                     </span><br>
-                    <span>Offers</span>
+                    <span class="title-small">Offers</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -115,7 +115,7 @@
                     <span class="material-icons-round">
                     account_circle
                     </span><br>
-                    <span>Profile</span>
+                    <span class="title-small">Profile</span>
                 </a>
             </div>
         </div>

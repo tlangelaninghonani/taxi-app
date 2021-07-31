@@ -38,7 +38,7 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
@@ -69,16 +69,16 @@
                                     @if($driveData->on_trip == true)
                                         <div class="status-driving">
                                             <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br> 
-                                            <span>{{ $driveData->drive_vehicle }}</span><br>
-                                            <span>Rated {{ $driveData->drive_ratings }}</span><br>
+                                            <span>Drives <strong>{{ $driveData->drive_vehicle }}</strong></span><br>
+                                            <span>Rated <strong>{{ $driveData->drive_ratings }}</strong></span><br>
                                             <span>Completing a trip</span>
                                         </div>
                                     @else
                                         <a href="/ride/{{ $driveAuth->id }}/request">
                                             <div>
                                                 <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br> 
-                                                <span>{{ $driveData->drive_vehicle }}</span><br>
-                                                <span>Rated {{ $driveData->drive_ratings }}</span><br>
+                                                <span>Drives <strong>{{ $driveData->drive_vehicle }}</strong></span><br>
+                                                <span>Rated <strong>{{ $driveData->drive_ratings }}</strong></span><br>
                                             </div>
                                         </a>
                                     @endif
@@ -96,7 +96,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-                <span>Home</span>
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -104,23 +104,23 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                <span>History</span>
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="/ride/plans">
                 <span class="material-icons-round">
-                public
+                travel_explore
                 </span><br>
-                <span>Plans</span>
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="/ride/drivers">
                 <span class="material-icons-round">
-                directions_car
+                local_taxi
                 </span><br>
-                <span>Drivers</span>
+                <span class="title-small">Drivers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -128,7 +128,7 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                <span>Offers</span>
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -136,7 +136,7 @@
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-                <span>Profile</span>
+                <span class="title-small">Profile</span>
             </a>
         </div>
     </div>

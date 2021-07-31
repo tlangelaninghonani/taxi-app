@@ -17,7 +17,7 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon">
+           <span class="material-icons-round ">
             more_vert
             </span>
         </div>
@@ -42,9 +42,25 @@
                         </div>
                     </p>
                     <p>
-                        <span>Rate your trip</span><br>
-                        <input type="number" step="0.1" name="ratings">
+                        <div class="rating-stars">
+                            <span id="star1" class="material-icons-round" style="color: orange" onclick="colorStar(this, 1)">
+                            star
+                            </span>
+                            <span id="star2" class="material-icons-round" onclick="colorStar(this, 2)">
+                            star
+                            </span>
+                            <span id="star3" class="material-icons-round" onclick="colorStar(this, 3)">
+                            star
+                            </span>
+                            <span id="star4" class="material-icons-round" onclick="colorStar(this, 4)">
+                            star
+                            </span>
+                            <span id="star5" class="material-icons-round" onclick="colorStar(this, 5)">
+                            star
+                            </span>
+                        </div>
                     </p>
+                        <input id="ratings" type="hidden" step="0.1" name="ratings" value="1">
                     <p>
                         <span>Comment</span><br>
                         <input type="text" placeholder="We'd love your feedback">

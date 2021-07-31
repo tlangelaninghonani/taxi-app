@@ -39,7 +39,7 @@
                 </a>
             </p>
         </div>
-        <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
+        <span class="material-icons-round " onclick="closePopup('menu')">
         more_vert
         </span>
     </div>
@@ -74,7 +74,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-                <span>Home</span>
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -82,23 +82,23 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                <span>History</span>
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="">
                 <span class="material-icons-round">
-                public
+                travel_explore
                 </span><br>
-                <span>Plans</span>
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="/drive/riders">
                 <span class="material-icons-round">
-                directions_walk
+                hail
                 </span><br>
-                <span>Riders</span>
+                <span class="title-small">Riders</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -106,7 +106,7 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                <span>Offers</span>
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -114,7 +114,7 @@
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-                <span>Profile</span>
+                <span class="title-small">Profile</span>
             </a>
         </div>
     </div>

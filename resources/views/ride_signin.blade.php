@@ -18,9 +18,6 @@
                 <span class="app-name">InterCityRides</span>
            </div>
         </div>
-        <span class="material-icons-round" onclick="redirectBack()">
-        arrow_back
-        </span><br>
         <p>
             <img class="welcome-page-banner-1" src="https://image.freepik.com/free-vector/online-ordering-taxi-car-rent-sharing-using-service-mobile-application_333239-96.jpg" alt="">
         </p>

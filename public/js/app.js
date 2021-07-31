@@ -51,9 +51,11 @@ function displayComp(self, id){
 
 }
 
-function nextPlan(hide, show){
+function nextPlan(hide, show, originLat, originLng, destLat, destLng, mapId){
     document.querySelector("#"+hide).style.display = "none";
     document.querySelector("#"+show).style.display = "block";
+
+    drawLine(originLat, originLng, destLat, destLng, mapId);
 }
 
 function nextPlanEnd(hide, show){
@@ -61,12 +63,26 @@ function nextPlanEnd(hide, show){
     document.querySelector("#"+show).style.display = "block";
 }
 
+function colorStar(span, starId){
+    for (let i = 1; i < 6; i++) {
+        const star = document.querySelector("#star"+i);
+        if(i <= starId){
+            star.setAttribute("style", "color: orange;");
+        }else{
+            star.setAttribute("style", "color: black;");
+        }
+        document.querySelector("#ratings").value = starId;
+    }
+    
+}
+
 function initMapCurrentLoc() {
 let map;
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -23.30246, lng: 30.71868},
-    zoom: 9,
-    mapId: "4cce301a9d6797df"
+    zoom: 12,
+    mapId: "4cce301a9d6797df",
+    disableDefaultUI: true,
   });
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -79,6 +95,7 @@ let map;
             position: {lat: position.coords.latitude, lng: position.coords.longitude},
             map: map,
             title: "Me",
+            
         });
         },
       );

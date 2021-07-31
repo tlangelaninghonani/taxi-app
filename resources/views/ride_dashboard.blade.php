@@ -44,7 +44,7 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round items-menu-icon" onclick="closePopup('menu')">
+           <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
@@ -64,18 +64,14 @@
                     <span class="title border-bottom" onclick="displayComp(this, 'requests')">Requests</span>
                     <span class="title f-right" onclick="displayComp(this, 'requestsaccepted')">Accepted</span>
                 </p>
-                <div class="curved-top">
+                <div class="curved-top padding-none">
+                    <div id="map"></div>
                     <div id="requests">
                         <div class="display-none">
                         {{ $requests_count = 0 }}
                         </div>
                         <p>
                             <div class="display-flex-justify-center">
-                                <div>
-                                    <span class="material-icons-round">
-                                    waving_hand
-                                    </span>
-                                </div>
                                 <div>
                                     <span class="title">Requests to drivers</span>
                                 </div>
@@ -128,11 +124,6 @@
                         <p>
                             <div class="display-flex-justify-center">
                                 <div>
-                                    <span class="material-icons-round">
-                                    check_circle
-                                    </span>
-                                </div>
-                                <div>
                                     <span class="title">Accepted requests</span>
                                 </div>
                             </div>
@@ -177,6 +168,10 @@
                             @endif
                         </p>
                     </div>
+                    <script
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initMapCurrentLoc&libraries=&v=weekly"
+                    async
+                    ></script>
                 </div>
             @endif
             @if($totalRequestsFromRiders == 0)
@@ -184,7 +179,7 @@
                     <div id="map"></div>
                     <p>
                         <div class="text-align-center">
-                            <span class="title-small">Hello {{ $rideAuth->ride_first_name }}, your balance looks good, where are you going today?</span>
+                            <span class="">Hello {{ $rideAuth->ride_first_name }}, your balance looks good, where are you going today?</span>
                         </div>
                     </p>
                     <p>
@@ -200,14 +195,12 @@
             @endif
         @else
             <div class="display-none">
-                {{ $driveAuth = $driveAuth::find($rideData->ride_on_trip_drive_id) }}
+                {{ $driveAuth = $driveAuth::find($rideTrip["drive_id"]) }}
                 {{ $driveData = $driveData::where("drive_id", $driveAuth->id)->first() }}
             </div>
             <div class="curved-top padding-none">
-                <p>
-                    <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116716.15173817966!2d29.381065563392927!3d-23.91160360229813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ec6d8401183307b%3A0xa720ddd4b18e4df7!2sPolokwane!5e0!3m2!1sen!2sza!4v1626522553343!5m2!1sen!2sza" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
-                    <div id="map"></div>
-                </p>
+                <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116716.15173817966!2d29.381065563392927!3d-23.91160360229813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ec6d8401183307b%3A0xa720ddd4b18e4df7!2sPolokwane!5e0!3m2!1sen!2sza!4v1626522553343!5m2!1sen!2sza" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
+                <div id="map"></div>
                 <div class="curved-top-padding">
                     <p>
                         <div class="text-align-center">
@@ -215,18 +208,18 @@
                         </div>
                         <div id="tripinfo" class="text-align-center ">
                             <p>
-                                <span>From <strong>{{ $rideRequest["ride_from"] }}</strong></span><br>
-                                <span>To <strong>{{ $rideRequest["ride_to"] }}</strong></span>
+                                <span>From <strong>{{ $rideTrip["ride_from"] }}</strong></span><br>
+                                <span>To <strong>{{ $rideTrip["ride_to"] }}</strong></span>
                             </p>
                             <p>
-                                <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>
-                                <span>Estimated time <strong id="triptime">{{ $rideRequest["ride_time"] }}</strong></span><br>
-                                <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideRequest["ride_charges"] }}</strong></span>
+                                <span>Distance <strong id="tripdistance">{{ $rideTrip["ride_distance"] }}</strong></span><br>
+                                <span>Estimated time <strong id="triptime">{{ $rideTrip["ride_duration"] }}</strong></span><br>
+                                <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideTrip["ride_charges"] }}</strong></span>
                             </p>
                         </div>
                     </p>
                     <p>
-                        <form action="/ride/{{ $driveData::find($rideData->ride_on_trip_drive_id)->id }}/request/trip/end" method="POST">
+                        <form action="/ride/{{ $rideTrip['drive_id'] }}/request/trip/end" method="POST">
                             @csrf
                             @method("POST")
                             <button>End trip</button>
@@ -247,8 +240,8 @@
                 directionsRenderer.setMap(map); // Existing map object displays directions
                 // Create route from existing points used for markers
                 const route = {
-                    origin: {lat: parseFloat("{{ json_decode($rideRequest['ride_from_coords'], true)['lat'] }}"), lng: parseFloat("{{ json_decode($rideRequest['ride_from_coords'], true)['lng'] }}")},
-                    destination: {lat: parseFloat("{{ json_decode($rideRequest['ride_to_coords'], true)['lat'] }}"), lng: parseFloat("{{ json_decode($rideRequest['ride_to_coords'], true)['lng'] }}")},
+                    origin: {lat: parseFloat("{{ $rideTrip['ride_from_lat'] }}"), lng: parseFloat("{{ $rideTrip['ride_from_lng'] }}")},
+                    destination: {lat: parseFloat("{{ $rideTrip['ride_to_lat'] }}"), lng: parseFloat("{{ $rideTrip['ride_to_lng'] }}")},
                     travelMode: 'DRIVING'
                 }
 
@@ -283,7 +276,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-                <span>Home</span>
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -291,15 +284,15 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                <span>History</span>
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
             <a href="/ride/plans">
                 <span class="material-icons-round">
-                public
+                travel_explore
                 </span><br>
-                <span>Plans</span>
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -307,7 +300,7 @@
                 <span class="material-icons-round">
                 local_taxi
                 </span><br>
-                <span>Drivers</span>
+                <span class="title-small">Drivers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -315,7 +308,7 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                <span>Offers</span>
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -323,7 +316,7 @@
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-                <span>Profile</span>
+                <span class="title-small">Profile</span>
             </a>
         </div>
     </div>
