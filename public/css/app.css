@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
 *{
-    font-size: 20px;
     font-family: "Montserrat", sans-serif;
 }
 
@@ -10,7 +9,7 @@ body{
 }
 :root{
     --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-    --padding: 2%;
+    --padding: 1%;
 }
 .container{
    display: none !important;
