@@ -22,7 +22,7 @@ class CreateRideDataTable extends Migration
             $table->boolean("ride_on_trip")->default(false);
             $table->text("ride_requests")->default("[]");
             $table->text("ride_offers")->default("[]");
-            $table->integer("ride_plans")->default("[]");
+            $table->text("ride_plans")->default("[]");
             $table->text("ride_history")->default("[]");
             $table->boolean("pick_up_requested")->default(false);
             $table->timestamps();
