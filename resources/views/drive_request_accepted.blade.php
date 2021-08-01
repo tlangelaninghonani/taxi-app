@@ -28,9 +28,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>

@@ -92,5 +92,6 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_vehicle_type = ucwords("electric hatchback");
         $driveData->drive_ratings = 4.9;
         $driveData->save();
+        
     }
 }

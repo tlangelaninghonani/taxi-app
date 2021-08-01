@@ -23,9 +23,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -67,6 +64,13 @@
                         </a>
                     </p>
                 @endforeach
+            @else
+                <div class="text-align-center">
+                    <span class="material-icons-round icon-large">
+                    watch_later
+                    </span><br>
+                    <span>No history</span>
+                </div>
             @endif
         </div>
         <div class="bottom-controls">

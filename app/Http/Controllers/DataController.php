@@ -471,6 +471,32 @@ class DataController extends Controller
         ]);;
     }
 
+    public function rideProfileIndex(Request $req){
+        $ride_id =  intval(Session::get("ride_id"));
+
+        $rideAuth = RideAuth::findorfail($ride_id);
+        $rideData = RideData::where("ride_id", $ride_id)->first();
+
+        return view("ride_profile", [
+            "rideAuth" => $rideAuth,
+            "rideData" => $rideData,
+        ]);
+    }
+
+    public function rideProfileUpdate(Request $req){
+        $ride_id =  intval(Session::get("ride_id"));
+
+        $rideAuth = RideAuth::findorfail($ride_id);
+        $rideData = RideData::where("ride_id", $ride_id)->first();
+
+        $rideAuth->ride_first_name = $req->firstname;
+        $rideAuth->ride_last_name = $req->lastname;
+        
+        $rideAuth->save();
+
+        return back();
+    }
+
     public function driveProfileIndex(Request $req){
         $drive_id =  intval(Session::get("drive_id"));
 

@@ -6,14 +6,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ $links['css'] }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
+    <title>Profile</title>
 </head>
-<style>
-    a{
-        text-decoration: none;
-        color: black;
-    }
-</style>
 <body>
     <div class="container">
         <div class="menu display-none" id="menu">
@@ -29,96 +23,94 @@
             </p>
         </div>
         <div class="nav">
-            <div class="display-flex">
+           <div class="display-flex">
                 <span class="material-icons-round">
                 apartment
                 </span>
                 <span class="app-name">InterCityRides</span>
-            </div>
-            <span class="material-icons-round " onclick="closePopup('menu')">
+           </div>
+           <span class="material-icons-round" onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
         <p>
-            <span class="title">History</span>
+            <span class="title">Profile</span>
         </p>
-        <div class="padding-bottom-layout">
-            @if(sizeof(json_decode($driveData->drive_history, true)) > 0)
-                @foreach(json_decode($driveData->drive_history, true) as $rideId => $driveHistory)
-                    <div style="display: none">
-                        {{ $rideA = $rideAuth::find($rideId) }}
-                        {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
-                    </div>
-                    <p>
-                        <div class="display-flex">
-                            <div>
-                                <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
-                            </div>
-                            <div class="trunc-text">
-                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
-                                <span>From <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
-                                <span>To <strong>{{ $driveHistory["drive_to"] }}</strong></span>
-                            </div>
-                        </div>
-                    </p>
-                @endforeach
-            @else
+        <p>
+            <div class="display-center">
                 <div class="text-align-center">
-                    <span class="material-icons-round icon-large">
-                    watch_later
-                    </span><br>
-                    <span>No history</span>
+                    <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
                 </div>
-            @endif
-        </div>
+            </div>
+        </p>
+        <p>
+            <div class="curved-top">
+                <form class="app-padding" action="/ride/profile/update" method="POST">
+                    @csrf
+                    @method("POST")
+                    <p>
+                        <span>First name</span><br>
+                        <input type="text" name="firstname" value="{{ $rideAuth->ride_first_name }}" placeholder="Enter First name">
+                    </p>
+                    <p>
+                        <span>Last name</span><br>
+                        <input type="text" name="lastname" value="{{ $rideAuth->ride_last_name }}" placeholder="Enter Last name">
+                    </p>
+                    <p>
+                        <button>Save</button>
+                    </p>
+                </form>
+            </div>
+        </p>
     </div>
     <div class="bottom-controls">
         <div class="bottom-controls-item">
-            <a href="/drive/dashboard">
+            <a href="/ride/dashboard">
                 <span class="material-icons-round">
                 home
                 </span><br>
-          
+                
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/history">
+            <a href="/ride/history">
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-             
+                
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/plans">
+            <a href="/ride/plans">
                 <span class="material-icons-round">
                 travel_explore
                 </span><br>
-  
+        
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/riders">
+            <a href="/ride/drivers">
                 <span class="material-icons-round">
-                hail
+                local_taxi
                 </span><br>
-         
+            
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/offer">
+            <a href="/ride/offers">
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-          
+            
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/profile">
+            <a href="/ride/profile">
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-             
+                
             </a>
         </div>
     </div>

@@ -5,11 +5,6 @@ googleIcons.href = "https://fonts.googleapis.com/icon?family=Material+Icons+Roun
 document.getElementsByTagName("head")[0].appendChild(googleIcons);
 var elementPrev = {};
 
-
-
-
-
-
 function closePopup(id){
     let toClosePopup = document.querySelector("#"+id);
     if(toClosePopup.style.display == "" || toClosePopup.style.display == "none"){
@@ -29,7 +24,9 @@ function openClosePlan(id){
         document.querySelector("#plans").style.display = "block";
     }
 }
-
+function redirectTo(path){
+    window.location.href = path;
+}
 function redirectBack(){
     window.history.back();
 }
@@ -56,6 +53,20 @@ function nextPlan(hide, show, originLat, originLng, destLat, destLng, mapId){
     document.querySelector("#"+show).style.display = "block";
 
     drawLine(originLat, originLng, destLat, destLng, mapId);
+}
+
+function search(containerId, itemsClass, keyword){
+    if(keyword !== ""){
+        let container = document.querySelector("#"+containerId);
+        let items = document.querySelectorAll("."+itemsClass);
+
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if(item.id.toLowerCase().includes(keyword.toLowerCase())){
+                container.prepend(item);
+            }
+        }
+    }
 }
 
 function nextPlanEnd(hide, show){

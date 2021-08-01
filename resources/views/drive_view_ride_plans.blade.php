@@ -28,9 +28,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -44,18 +41,18 @@
                 </div>
             </div>
         </p>
-        <p>
-            <div class="display-flex-scroll">
+        <div>
+            <div class="display-none">
+                {{ $counter = 0 }}
+            </div>
+            @foreach(json_decode($rideData->ride_plans, true) as $ridePlans) 
                 <div class="display-none">
-                    {{ $counter = 0 }}
+                    {{ $counter++ }}
                 </div>
-                @foreach(json_decode($rideData->ride_plans, true) as $ridePlans) 
-                    <div class="display-none">
-                        {{ $counter++ }}
-                    </div>
-                    @if($counter < 2)     
-                        <div class="curved-top position-relative padding-none" id="plan-{{ $counter }}">
-                            <div id="map{{ $counter }}" class="map"></div>
+                @if($counter < 2)     
+                    <div class="curved-top" id="plan-{{ $counter }}">
+                        <div id="map{{ $counter }}" class="map"></div>
+                        <div class="app-padding">
                             <span class="title">Pick-up place</span><br>
                             <span>{{ $ridePlans["ride_from"] }}</span><br>
                             <span class="title">Destination</span><br>
@@ -110,133 +107,133 @@
                                 </span>
                             @endif
                         </div>
+                    </div>
+                @else
+                    @if($counter < sizeof(json_decode($rideData->ride_plans, true))) 
+                        <div class="curved-top position-relative display-none padding-none" id="plan-{{ $counter }}">
+                            <div id="map{{ $counter }}" class="map"></div>
+                            <span class="title">Pick-up place</span><br>
+                            <span>{{ $ridePlans["ride_from"] }}</span><br>
+                            <span class="title">Destination</span><br>
+                            <span>{{ $ridePlans["ride_to"] }}</span><br>
+                            <span class="title">Date</span><br>
+                            <span>{{ $ridePlans["ride_date"] }}</span><br>
+                            <span class="title">Time</span><br>
+                            <span>{{ $ridePlans["ride_time"] }}</span>
+                            <span>{{ $ridePlans["ride_meridiem"] }}</span>
+                            <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
+                                <p>
+                                    <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
+                                    <span>Estimated time <strong id="triptime{{ $counter }}"></strong></span><br>
+                                    <span class="title">Charges R<strong class="title" id="tripcharges{{ $counter }}"></strong></span>
+                                </p>
+                            </div>
+                            <p>
+                                <form action="/drive/{{ $rideAuth->id }}/{{ $counter }}/offer" method="POST">
+                                    @csrf
+                                    @method("POST")
+                                    <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
+                                    <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
+                                    <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
+                                    @foreach(json_decode($driveData->ride_offers, true) as $rideofferid)
+                                        @if($rideofferid == $k)
+                                        <input type="hidden" name="action" value="cancel">
+                                            <div class="text-align-center">
+                                                <p>
+                                                    <button>Cancel</button>
+                                                </p>
+                                            </div>
+                                            @break
+                                        @else
+                                            <input type="hidden" name="action" value="offer"> 
+                                            <button>Offer</button>
+                                        @endif
+                                    @endforeach
+                                    @if(sizeof(json_decode($driveData->ride_offers, true)) == 0)
+                                        <input type="hidden" name="action" value="new">    
+                                        <button>Offer</button>
+                                    @endif
+                                </form>
+                            </p>
+                            <div class="display-none">
+                                {{ $originLatNext = $ridePlansData[$counter + 1]["originLat"] }}
+                                {{ $originLngNext = $ridePlansData[$counter + 1]["originLng"] }}
+                                {{ $destLatNext = $ridePlansData[$counter + 1]["destLat"] }}
+                                {{ $destLngNext = $ridePlansData[$counter + 1]["destLng"] }}
+                            </div>
+                            <div class="display-none">
+                                {{ $originLatPrev = $ridePlansData[$counter - 1]["originLat"] }}
+                                {{ $originLngPrev = $ridePlansData[$counter - 1]["originLng"] }}
+                                {{ $destLatPrev = $ridePlansData[$counter - 1]["destLat"] }}
+                                {{ $destLngPrev = $ridePlansData[$counter - 1]["destLng"] }}
+                            </div>
+                            <span class="material-icons-round next-plan-back" onclick="nextPlanEnd('plan-{{ $counter }}', 'plan-{{ $counter - 1 }}', '{{ $originLatPrev }}', '{{ $originLngPrev }}', '{{ $destLatPrev }}', '{{ $destLngPrev }}', 'map{{ $counter - 1 }}')">
+                            arrow_back
+                            </span>
+                            <span class="material-icons-round next-plan" onclick="nextPlan('plan-{{ $counter }}', 'plan-{{ $counter + 1 }}', '{{ $originLatNext }}', '{{ $originLngNext  }}', '{{ $destLatNext }}', '{{ $destLngNext }}', 'map{{ $counter + 1 }}')">
+                            arrow_forward
+                            </span>
+                        </div>
                     @else
-                        @if($counter < sizeof(json_decode($rideData->ride_plans, true))) 
-                            <div class="curved-top position-relative display-none padding-none" id="plan-{{ $counter }}">
-                                <div id="map{{ $counter }}" class="map"></div>
-                                <span class="title">Pick-up place</span><br>
-                                <span>{{ $ridePlans["ride_from"] }}</span><br>
-                                <span class="title">Destination</span><br>
-                                <span>{{ $ridePlans["ride_to"] }}</span><br>
-                                <span class="title">Date</span><br>
-                                <span>{{ $ridePlans["ride_date"] }}</span><br>
-                                <span class="title">Time</span><br>
-                                <span>{{ $ridePlans["ride_time"] }}</span>
-                                <span>{{ $ridePlans["ride_meridiem"] }}</span>
-                                <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
-                                    <p>
-                                        <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
-                                        <span>Estimated time <strong id="triptime{{ $counter }}"></strong></span><br>
-                                        <span class="title">Charges R<strong class="title" id="tripcharges{{ $counter }}"></strong></span>
-                                    </p>
-                                </div>
+                        <div class="curved-top position-relative display-none padding-none" id="plan-{{ $counter }}">
+                            <div id="map{{ $counter }}" class="map"></div>
+                            <span class="title">Pick-up place</span><br>
+                            <span>{{ $ridePlans["ride_from"] }}</span><br>
+                            <span class="title">Destination</span><br>
+                            <span>{{ $ridePlans["ride_to"] }}</span><br>
+                            <span class="title">Date</span><br>
+                            <span>{{ $ridePlans["ride_date"] }}</span><br>
+                            <span class="title">Time</span><br>
+                            <span>{{ $ridePlans["ride_time"] }}</span>
+                            <span>{{ $ridePlans["ride_meridiem"] }}</span>
+                            <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
                                 <p>
-                                    <form action="/drive/{{ $rideAuth->id }}/{{ $counter }}/offer" method="POST">
-                                        @csrf
-                                        @method("POST")
-                                        <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
-                                        <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
-                                        <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
-                                        @foreach(json_decode($driveData->ride_offers, true) as $rideofferid)
-                                            @if($rideofferid == $k)
-                                            <input type="hidden" name="action" value="cancel">
-                                                <div class="text-align-center">
-                                                    <p>
-                                                        <button>Cancel</button>
-                                                    </p>
-                                                </div>
-                                                @break
-                                            @else
-                                                <input type="hidden" name="action" value="offer"> 
-                                                <button>Offer</button>
-                                            @endif
-                                        @endforeach
-                                        @if(sizeof(json_decode($driveData->ride_offers, true)) == 0)
-                                            <input type="hidden" name="action" value="new">    
+                                    <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
+                                    <span>Estimated time <strong id="triptime{{ $counter }}"></strong></span><br>
+                                    <span class="title">Charges R<strong class="title" id="tripcharges{{ $counter }}"></strong></span>
+                                </p>
+                            </div>
+                            <p>
+                                <form action="/drive/{{ $rideAuth->id }}/{{ $counter }}/offer" method="POST">
+                                    @csrf
+                                    @method("POST")
+                                    <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
+                                    <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
+                                    <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
+                                    @foreach(json_decode($driveData->ride_offers, true) as $rideofferid)
+                                        @if($rideofferid == $k)
+                                        <input type="hidden" name="action" value="cancel">
+                                            <div class="text-align-center">
+                                                <p>
+                                                    <button>Cancel</button>
+                                                </p>
+                                            </div>
+                                            @break
+                                        @else
+                                            <input type="hidden" name="action" value="offer"> 
                                             <button>Offer</button>
                                         @endif
-                                    </form>
-                                </p>
-                                <div class="display-none">
-                                    {{ $originLatNext = $ridePlansData[$counter + 1]["originLat"] }}
-                                    {{ $originLngNext = $ridePlansData[$counter + 1]["originLng"] }}
-                                    {{ $destLatNext = $ridePlansData[$counter + 1]["destLat"] }}
-                                    {{ $destLngNext = $ridePlansData[$counter + 1]["destLng"] }}
-                                </div>
-                                <div class="display-none">
-                                    {{ $originLatPrev = $ridePlansData[$counter - 1]["originLat"] }}
-                                    {{ $originLngPrev = $ridePlansData[$counter - 1]["originLng"] }}
-                                    {{ $destLatPrev = $ridePlansData[$counter - 1]["destLat"] }}
-                                    {{ $destLngPrev = $ridePlansData[$counter - 1]["destLng"] }}
-                                </div>
-                                <span class="material-icons-round next-plan-back" onclick="nextPlanEnd('plan-{{ $counter }}', 'plan-{{ $counter - 1 }}', '{{ $originLatPrev }}', '{{ $originLngPrev }}', '{{ $destLatPrev }}', '{{ $destLngPrev }}', 'map{{ $counter - 1 }}')">
-                                arrow_back
-                                </span>
-                                <span class="material-icons-round next-plan" onclick="nextPlan('plan-{{ $counter }}', 'plan-{{ $counter + 1 }}', '{{ $originLatNext }}', '{{ $originLngNext  }}', '{{ $destLatNext }}', '{{ $destLngNext }}', 'map{{ $counter + 1 }}')">
-                                arrow_forward
-                                </span>
+                                    @endforeach
+                                    @if(sizeof(json_decode($driveData->ride_offers, true)) == 0)
+                                        <input type="hidden" name="action" value="new">    
+                                        <button>Offer</button>
+                                    @endif
+                                </form>
+                            </p>
+                            <div class="display-none">
+                                {{ $originLatPrev = $ridePlansData[$counter - 1]["originLat"] }}
+                                {{ $originLngPrev = $ridePlansData[$counter - 1]["originLng"] }}
+                                {{ $destLatPrev = $ridePlansData[$counter - 1]["destLat"] }}
+                                {{ $destLngPrev = $ridePlansData[$counter - 1]["destLng"] }}
                             </div>
-                        @else
-                            <div class="curved-top position-relative display-none padding-none" id="plan-{{ $counter }}">
-                                <div id="map{{ $counter }}" class="map"></div>
-                                <span class="title">Pick-up place</span><br>
-                                <span>{{ $ridePlans["ride_from"] }}</span><br>
-                                <span class="title">Destination</span><br>
-                                <span>{{ $ridePlans["ride_to"] }}</span><br>
-                                <span class="title">Date</span><br>
-                                <span>{{ $ridePlans["ride_date"] }}</span><br>
-                                <span class="title">Time</span><br>
-                                <span>{{ $ridePlans["ride_time"] }}</span>
-                                <span>{{ $ridePlans["ride_meridiem"] }}</span>
-                                <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
-                                    <p>
-                                        <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
-                                        <span>Estimated time <strong id="triptime{{ $counter }}"></strong></span><br>
-                                        <span class="title">Charges R<strong class="title" id="tripcharges{{ $counter }}"></strong></span>
-                                    </p>
-                                </div>
-                                <p>
-                                    <form action="/drive/{{ $rideAuth->id }}/{{ $counter }}/offer" method="POST">
-                                        @csrf
-                                        @method("POST")
-                                        <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
-                                        <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
-                                        <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
-                                        @foreach(json_decode($driveData->ride_offers, true) as $rideofferid)
-                                            @if($rideofferid == $k)
-                                            <input type="hidden" name="action" value="cancel">
-                                                <div class="text-align-center">
-                                                    <p>
-                                                        <button>Cancel</button>
-                                                    </p>
-                                                </div>
-                                                @break
-                                            @else
-                                                <input type="hidden" name="action" value="offer"> 
-                                                <button>Offer</button>
-                                            @endif
-                                        @endforeach
-                                        @if(sizeof(json_decode($driveData->ride_offers, true)) == 0)
-                                            <input type="hidden" name="action" value="new">    
-                                            <button>Offer</button>
-                                        @endif
-                                    </form>
-                                </p>
-                                <div class="display-none">
-                                    {{ $originLatPrev = $ridePlansData[$counter - 1]["originLat"] }}
-                                    {{ $originLngPrev = $ridePlansData[$counter - 1]["originLng"] }}
-                                    {{ $destLatPrev = $ridePlansData[$counter - 1]["destLat"] }}
-                                    {{ $destLngPrev = $ridePlansData[$counter - 1]["destLng"] }}
-                                </div>
-                                <span class="material-icons-round next-plan-back" onclick="nextPlanEnd('plan-{{ $counter }}', 'plan-{{ $counter - 1 }}', '{{ $originLatPrev }}', '{{ $originLngPrev }}', '{{ $destLatPrev }}', '{{ $destLngPrev }}', 'map{{ $counter - 1 }}')">
-                                arrow_back
-                                </span>
-                            </div>
-                        @endif
+                            <span class="material-icons-round next-plan-back" onclick="nextPlanEnd('plan-{{ $counter }}', 'plan-{{ $counter - 1 }}', '{{ $originLatPrev }}', '{{ $originLngPrev }}', '{{ $destLatPrev }}', '{{ $destLngPrev }}', 'map{{ $counter - 1 }}')">
+                            arrow_back
+                            </span>
+                        </div>
                     @endif
-                @endforeach
-            </div>
-        </p>
+                @endif
+            @endforeach
+        </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
     <script>

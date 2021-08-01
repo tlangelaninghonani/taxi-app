@@ -28,9 +28,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -51,11 +48,15 @@
             <span class="title">Offers from drivers for your plans</span>
         </p>
         <div class="offers">
+            <div class="display-none">
+                {{ $plansAccepted = 0 }}
+            </div>
             @foreach(json_decode($rideData->ride_plans, true) as $ridePlans)
                 @if($ridePlans["ride_accepted"] == true)
                     <div class="display-none">
                         {{ $driveA = $driveAuth::find($ridePlans["driver_id"]) }}
                         {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
+                        {{ $plansAccepted++ }}
                     </div>
                     <p>
                         <div class="display-flex">
@@ -77,8 +78,15 @@
                     </p>
                 @endif
             @endforeach
+            @if($plansAccepted == 0)
+                <div class="text-align-center">
+                    <span class="material-icons-round icon-large">
+                    local_offer
+                    </span><br>
+                    <span>No offers</span>
+                </div>
+            @endif
         </div>
-        
     </div>
     <div class="bottom-controls">
         <div class="bottom-controls-item">

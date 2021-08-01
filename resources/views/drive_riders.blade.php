@@ -36,9 +36,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -49,20 +46,20 @@
             <span class="title">See rider's plans</span>
         </p>
         <p>
-            <input type="text" placeholder="Search riders">
+            <input type="text" onkeydown="search('riderscontainer', 'riders', this.value)" placeholder="Search riders">
         </p>
         <p>
-            <div>
+            <div id="riderscontainer">
                 @foreach($rideAuths as $rideAuth)
-                    <div style="display: none">
-                        {{ $rideData = $rideData::find($rideAuth->id) }}
-                    </div>
-                    @if(sizeof(json_decode($rideData->ride_plans, true)) > 0)
-                        @if(sizeof(json_decode($rideData->ride_plans, true)) == 1)
-                            @foreach(json_decode($rideData->ride_plans, true) as $ridePlan)
-                                <p>
-                                    <a class="display-flex" href="/drive/riders/{{ $rideAuth->id }}/plans">
-                                        <div>
+                    <div id="{{ $rideAuth->ride_first_name.$rideAuth->ride_last_name.$rideAuth->id }}" class="riders">
+                        <div style="display: none">
+                            {{ $rideData = $rideData::find($rideAuth->id) }}
+                        </div>
+                        @if(sizeof(json_decode($rideData->ride_plans, true)) > 0)
+                            @if(sizeof(json_decode($rideData->ride_plans, true)) == 1)
+                                @foreach(json_decode($rideData->ride_plans, true) as $ridePlan)
+                                    <p>
+                                        <div class="display-flex" onclick="redirectTo('/drive/riders/{{ $rideAuth->id }}/plans')">
                                             <div>
                                                 <img class="profile-image" src="{{ $rideData->ride_profile_image }}" alt="">
                                             </div>
@@ -71,15 +68,13 @@
                                                 <span>From <strong>{{ $ridePlan["ride_from"] }}</strong></span><br>
                                                 <span>To <strong>{{ $ridePlan["ride_to"] }}</strong></span><br>
                                                 <span>Charges <strong>R{{ $ridePlan["ride_charges"] }}</strong></span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </p>
-                            @endforeach
-                        @else
-                            <p>
-                                <a class="display-flex" href="/drive/riders/{{ $rideAuth->id }}/plans">
-                                    <div>
+                                            </div> 
+                                        </div>  
+                                    </p>
+                                @endforeach
+                            @else
+                                <p>
+                                    <div class="display-flex" onclick="redirectTo('/drive/riders/{{ $rideAuth->id }}/plans')">
                                         <div>
                                             <img class="profile-image" src="{{ $rideData->ride_profile_image }}" alt="">
                                         </div>
@@ -89,10 +84,10 @@
                                             <span>{{ sizeof(json_decode($rideData->ride_plans, true)) }} trips planned</span>
                                         </div>
                                     </div>
-                                </a>
-                            </p>
+                                </p>
+                            @endif
                         @endif
-                    @endif
+                    </div>
                 @endforeach
             </div>
         </p>

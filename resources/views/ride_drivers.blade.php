@@ -23,9 +23,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -46,12 +43,12 @@
             <span class="title">Drivers near you</span>
         </p>
         <p>
-            <input type="text" placeholder="Search driver">
+            <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
         </p>
         <p>
-            <div class="padding-bottom-layout">
+            <div id="driverscontainer" class="padding-bottom-layout">
                 @foreach($driveAuths as $driveAuth)
-                    <div>
+                    <div id="{{ $driveAuth->drive_first_name.$driveAuth->drive_last_name.$driveAuth->id }}" class="drivers">
                         <div style="display: none">
                             {{ $driveAuth->drive_first_name = ucwords($driveAuth->drive_first_name) }}
                             {{ $driveAuth->drive_last_name = ucwords($driveAuth->drive_last_name) }}
@@ -60,7 +57,6 @@
                             {{ $driveData->drive_vehicle = ucwords($driveData->drive_vehicle) }}
                         </div>
                         <p>
-                           
                             <div class="display-flex">
                                 <div>
                                     <img class="profile-image" src="{{ $driveData->drive_profile_image }}" alt="">

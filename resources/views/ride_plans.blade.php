@@ -23,9 +23,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -63,7 +60,7 @@
                             </span>
                         </div>
                         <div>
-                            <span class="title">{{ $ridePlans["ride_date"] }} {{ $ridePlans["ride_time"] }} {{ $ridePlans["ride_duration"] }}</span><br>
+                            <span class="title">{{ $ridePlans["ride_date"] }} {{ $ridePlans["ride_time"] }} {{ $ridePlans["ride_meridiem"] }}</span><br>
                             <span>From <strong>{{ $ridePlans["ride_from"] }}</strong></span><br>
                             <span>To <strong>{{ $ridePlans["ride_to"] }}</strong></span>
                         </div>
@@ -72,6 +69,9 @@
             @endforeach
             @if(sizeof(json_decode($rideData->ride_plans, true)) == 0)
                 <div class="text-align-center">
+                    <span class="material-icons-round icon-large">
+                    travel_explore
+                    </span><br>
                     <span>No plans</span>
                 </div>
             @endif

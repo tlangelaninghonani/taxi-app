@@ -57,6 +57,8 @@ Route::get("/ride/history", [App\Http\Controllers\DataController::class, "rideHi
 Route::get("/ride/{id}/request/accepted", [App\Http\Controllers\DataController::class, "rideRequestAcceptedIndex"]);
 Route::post("/ride/{id}/request/pickup", [App\Http\Controllers\DataController::class, "rideRequestPickup"]);
 Route::get("/ride/offers", [App\Http\Controllers\DataController::class, "rideOffersIndex"]);
+Route::get("/ride/profile", [App\Http\Controllers\DataController::class, "rideProfileIndex"]);
+Route::post("/ride/profile/update", [App\Http\Controllers\DataController::class, "rideProfileUpdate"]);
 
 
 

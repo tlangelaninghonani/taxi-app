@@ -37,9 +37,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -51,8 +48,8 @@
                 <div class="text-align-center">
                     <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                     <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
-                    <span>{{ $driveData->drive_vehicle }}</span><br>
-                    <span>Rated {{ $driveData->drive_ratings }}</span>
+                    <span>Drives <strong>{{ $driveData->drive_vehicle }}</strong></span><br>
+                    <span>Rated <strong>{{ $driveData->drive_ratings }}</strong></span>
                 </div>
             </div>
         </p>

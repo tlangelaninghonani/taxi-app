@@ -17,9 +17,6 @@
                 </span>
             </div>
             <p>
-                <span>Profile</span>
-            </p>
-            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -36,6 +33,9 @@
             more_vert
             </span>
         </div>
+        <p>
+            <span class="title">Profile</span>
+        </p>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
