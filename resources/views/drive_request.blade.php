@@ -49,7 +49,7 @@
             <input type="hidden" id="ridefrom" value="{{ $rideData->ride_from }}">
             <input type="hidden" id="rideto" value="{{ $rideData->ride_to }}">
 
-            <form action="/drive/{{ $rideAuth->id }}/request/accept" method="POST">
+            <form class="app-padding" action="/drive/{{ $rideAuth->id }}/request/accept" method="POST">
                 @csrf
                 @method("POST")
                 <p>

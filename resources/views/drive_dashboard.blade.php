@@ -65,7 +65,7 @@
                 </p>
                 <div class="curved-top padding-none">
                     <div id="map"></div>
-                    <div id="requests">
+                    <div id="requests" class="app-padding">
                         <div class="display-none">
                         {{ $requests_count = 0 }}
                         </div>
@@ -116,7 +116,7 @@
                             @endif
                         </p>
                     </div>
-                    <div id="requestsaccepted" class="display-none">
+                    <div id="requestsaccepted" class="display-none app-padding">
                         <div class="display-none">
                         {{ $accepted_requests_count = 0 }}
                         </div>
@@ -262,7 +262,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-                <span class="title-small">Home</span>
+     
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -270,7 +270,7 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                <span class="title-small">History</span>
+                
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -278,7 +278,7 @@
                 <span class="material-icons-round">
                 travel_explore
                 </span><br>
-                <span class="title-small">Plans</span>
+     
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -286,7 +286,7 @@
                 <span class="material-icons-round">
                 hail
                 </span><br>
-                <span class="title-small">Riders</span>
+         
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -294,7 +294,7 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                <span class="title-small">Offers</span>
+                
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -302,7 +302,7 @@
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-                <span class="title-small">Profile</span>
+     
             </a>
         </div>
     </div>

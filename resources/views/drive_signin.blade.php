@@ -21,9 +21,9 @@
         <p>
             <img class="welcome-page-banner-1" src="https://image.freepik.com/free-vector/man-searching-car-rent_74855-7610.jpg" alt="">
         </p>
-        <div class="curved-top">
+        <div class="curved-top app-padding">
             <p>
-                <div class="text-align-center">
+                <div class="">
                     <span class="title-large">Signing to drive</span>
                 </div>
             </p>

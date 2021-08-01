@@ -516,7 +516,7 @@ class DataController extends Controller
         ]);;
     }
 
-    public function driveProfile(){
+    public function driveProfileIndex(Request $req){
         $drive_id =  intval(Session::get("drive_id"));
 
         $driveAuth = DriveAuth::findorfail($drive_id);
@@ -524,8 +524,26 @@ class DataController extends Controller
 
         return view("drive_profile", [
             "driveAuth" => $driveAuth,
-            "driveData" => $driveData
-        ]);
+            "driveData" => $driveData,
+        ]);;
+    }
+
+    public function driveProfileUpdate(Request $req){
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
+
+        $driveAuth->drive_first_name = $req->firstname;
+        $driveAuth->drive_last_name = $req->lastname;
+
+        $driveData->drive_vehicle = $req->vehiclename;
+        $driveData->drive_vehicle_type = $req->vehicletype;
+        
+        $driveAuth->save();
+        $driveData->save();
+
+        return back();
     }
 
     public function rideRequestIndex($id){

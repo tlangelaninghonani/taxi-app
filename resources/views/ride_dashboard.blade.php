@@ -66,7 +66,7 @@
                 </p>
                 <div class="curved-top padding-none">
                     <div id="map"></div>
-                    <div id="requests">
+                    <div id="requests" class="app-padding">
                         <div class="display-none">
                         {{ $requests_count = 0 }}
                         </div>
@@ -117,7 +117,7 @@
                             @endif
                         </p>
                     </div>
-                    <div id="requestsaccepted" class="display-none">
+                    <div id="requestsaccepted" class="display-none app-padding">
                         <div class="display-none">
                         {{ $accepted_requests_count = 0 }}
                         </div>
@@ -177,16 +177,18 @@
             @if($totalRequestsFromRiders == 0)
                 <div class="curved-top padding-none">
                     <div id="map"></div>
-                    <p>
-                        <div class="text-align-center">
-                            <span class="">Hello {{ $rideAuth->ride_first_name }}, your balance looks good, where are you going today?</span>
-                        </div>
-                    </p>
-                    <p>
-                        <a href="/ride/drivers">
-                            <button>See drivers</button>
-                        </a>
-                    </p>
+                    <div class="app-padding">
+                        <p>
+                            <div class="text-align-center">
+                                <span class="">Hello {{ $rideAuth->ride_first_name }}, your balance looks good, where are you going today?</span>
+                            </div>
+                        </p>
+                        <p>
+                            <a href="/ride/drivers">
+                                <button>See drivers</button>
+                            </a>
+                        </p>
+                    </div>
                     <script
                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initMapCurrentLoc&libraries=&v=weekly"
                     async
@@ -276,7 +278,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-                <span class="title-small">Home</span>
+             
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -284,7 +286,7 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                <span class="title-small">History</span>
+              
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -292,7 +294,7 @@
                 <span class="material-icons-round">
                 travel_explore
                 </span><br>
-                <span class="title-small">Plans</span>
+               
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -300,7 +302,7 @@
                 <span class="material-icons-round">
                 local_taxi
                 </span><br>
-                <span class="title-small">Drivers</span>
+        
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -308,7 +310,7 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                <span class="title-small">Offers</span>
+          
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -316,7 +318,7 @@
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-                <span class="title-small">Profile</span>
+       
             </a>
         </div>
     </div>

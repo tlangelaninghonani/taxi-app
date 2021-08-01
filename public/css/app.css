@@ -8,7 +8,10 @@
 body{
     margin: 0;
 }
-
+:root{
+    --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    --padding: 2%;
+}
 .container{
    display: none !important;
 }
@@ -26,7 +29,7 @@ body{
         box-sizing: border-box;
         display: block !important;
         width: 100%;
-        
+        padding: var(--padding);
     }
 
     .width-100{
@@ -188,19 +191,23 @@ body{
 
 
     .curved-top{
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        /*box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
         border-top-right-radius: 50px;
-        border-top-left-radius: 50px;
+        border-top-left-radius: 50px;*/
         padding-bottom: 15%;
         position: absolute;
         left: 0;
         right: 0;
+     
     }
 
     .curved-top-padding{
         padding: 2%;
     }
 
+    .app-padding{
+        padding: var(--padding);
+    }
     
     input, select, textarea{
         box-sizing: border-box;
@@ -208,7 +215,8 @@ body{
         padding: 18px;
         border: none;
         border-radius: 30px;
-        background-color: rgb(228, 228, 228);
+        background-color: white;
+        box-shadow: var(--shadow);
         
     }
     
@@ -437,8 +445,8 @@ body{
         background-color: white;
         display: flex !important;
         justify-content: space-between;
-        padding: 1%;
-        border-top: 1px solid rgb(245, 245, 245);
+        padding: 5%;
+
     }
     .bottom-controls-item{
         text-align: center;

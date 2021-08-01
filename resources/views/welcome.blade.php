@@ -33,7 +33,7 @@
             </div>
         </p>
         <p>
-            <div class="curved-top">
+            <div class="curved-top app-padding">
                  <p>
                     <div class="text-align-center">
                         <span class="title-large">Get where you like at your own pace</span>

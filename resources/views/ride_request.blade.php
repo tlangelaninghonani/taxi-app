@@ -38,7 +38,7 @@
         </p>
         <div class="curved-top">
             <div id="map"></div>
-            <form action="/ride/{{ $driveAuth->id }}/request" method="POST">
+            <form class="app-padding" action="/ride/{{ $driveAuth->id }}/request" method="POST">
                 @csrf
                 @method("POST")
                 <input type="hidden" value="{{  $driveAuth->id }}" name="rideid" id="rideid">

@@ -77,5 +77,20 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_vehicle_type = ucwords("electric hatchback");
         $driveData->drive_ratings = 4.9;
         $driveData->save();
+
+
+        $driveAuth = new DriveAuth();
+        $driveAuth->drive_first_name = ucwords("isabelle");
+        $driveAuth->drive_last_name = ucwords("gordons");
+        $driveAuth->drive_password = Hash::make("0826203223");
+        $driveAuth->save();
+
+        $driveData = new DriveData();
+        $driveData->drive_id = $driveAuth->id;
+        $driveData->drive_vehicle = ucwords("polo vivo");
+        $driveData->drive_profile_image = "https://i.pinimg.com/originals/8b/56/b7/8b56b72767b137213fbb7965dbebd2c3.jpg";
+        $driveData->drive_vehicle_type = ucwords("electric hatchback");
+        $driveData->drive_ratings = 4.9;
+        $driveData->save();
     }
 }

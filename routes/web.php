@@ -38,7 +38,9 @@ Route::post("/drive/{id}/request/trip/start", [App\Http\Controllers\DataControll
 Route::get("/drive/riders/{id}/plans", [App\Http\Controllers\DataController::class, "driveRidersPlansIndex"]);
 Route::post("/drive/{id}/{planCounter}/offer", [App\Http\Controllers\DataController::class, "driveOffer"]);
 //Route::post("/drive/{id}/offer/accept", [App\Http\Controllers\DataController::class, "driveOfferAccept"]);
-Route::get("/drive/profile", [App\Http\Controllers\DataController::class, "driveProfile"]);
+Route::get("/drive/profile", [App\Http\Controllers\DataController::class, "driveProfileIndex"]);
+Route::post("/drive/profile/update", [App\Http\Controllers\DataController::class, "driveProfileUpdate"]);
+
 
 Route::get("/ride/dashboard", [App\Http\Controllers\RideDashboardController::class, "index"]);
 Route::get("/ride/signin", [App\Http\Controllers\SigninController::class, "rideSigninIndex"]);

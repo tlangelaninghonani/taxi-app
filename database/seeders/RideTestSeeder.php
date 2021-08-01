@@ -45,5 +45,21 @@ class RideTestSeeder extends Seeder
         $rideData->ride_balance = 500.00;
 
         $rideData->save();
+
+
+
+        $rideAuth = new RideAuth();
+        $rideAuth->ride_first_name = ucwords("alan");
+        $rideAuth->ride_last_name = ucwords("mathew");
+        $rideAuth->ride_password = Hash::make("0783938959");
+
+        $rideAuth->save();
+
+        $rideData = new RideData();
+        $rideData->ride_id = $rideAuth->id;
+        $rideData->ride_profile_image = "https://blogs-images.forbes.com/danschawbel/files/2017/12/Dan-Schawbel_avatar_1512422077-400x400.jpg";
+        $rideData->ride_balance = 350.00;
+
+        $rideData->save();
     }
 }

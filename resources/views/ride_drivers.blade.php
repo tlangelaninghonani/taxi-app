@@ -96,7 +96,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-                <span class="title-small">Home</span>
+
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -104,7 +104,7 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                <span class="title-small">History</span>
+               
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -112,7 +112,7 @@
                 <span class="material-icons-round">
                 travel_explore
                 </span><br>
-                <span class="title-small">Plans</span>
+               
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -120,7 +120,7 @@
                 <span class="material-icons-round">
                 local_taxi
                 </span><br>
-                <span class="title-small">Drivers</span>
+        
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -128,7 +128,7 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                <span class="title-small">Offers</span>
+             
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -136,7 +136,7 @@
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-                <span class="title-small">Profile</span>
+
             </a>
         </div>
     </div>
