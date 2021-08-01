@@ -19,14 +19,13 @@
            </div>
         </div>
         <p>
-            <img class="welcome-page-banner-1" src="https://image.freepik.com/free-vector/man-searching-car-rent_74855-7610.jpg" alt="">
+           <div class="text-align-center">
+                <span class="material-icons-round shadow-round choose-ride-drive">
+                local_taxi
+                </span>
+           </div>
         </p>
         <div class="curved-top app-padding">
-            <p>
-                <div class="">
-                    <span class="title-large">Signing to drive</span>
-                </div>
-            </p>
             <p>
                 <form action="/drive/signin" method="POST">
                     @csrf

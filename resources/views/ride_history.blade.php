@@ -60,8 +60,8 @@
                                 </div>
                                 <div class="trunc-text">
                                     <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
-                                    <span>{{ $driveD->drive_vehicle }}</span><br>
-                                    <span>Rated {{ $driveD->drive_ratings }}</span>
+                                    <span>Drives <strong>{{ $driveD->drive_vehicle }}</strong></span><br>
+                                    <span>Rated <strong>{{ $driveD->drive_ratings }}</strong></span>
                                 </div>
                             </div>
                         </a>

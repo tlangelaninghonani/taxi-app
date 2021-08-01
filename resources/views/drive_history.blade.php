@@ -16,14 +16,6 @@
 </style>
 <body>
     <div class="container">
-        <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
-                </span>
-                <span class="app-name">InterCityRides</span>
-           </div>
-        </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
                 <span class="material-icons-round" onclick="closePopup('menu')">
@@ -39,34 +31,42 @@
                 </a>
             </p>
         </div>
-        <span class="material-icons-round " onclick="closePopup('menu')">
-        more_vert
-        </span>
-    </div>
-    <p>
-        <span class="title">History</span>
-    </p>
-    <div class="padding-bottom-layout">
-        @if(sizeof(json_decode($driveData->drive_history_ride_id, true)) > 0)
-            @foreach(json_decode($driveData->drive_history_ride_id, true) as $k => $v)
-                <div style="display: none">
-                    {{ $rideAuth = $rideAuth::find($k) }}
-                    {{ $rideData = $rideData::where("ride_id", $k)->first() }}
-                </div>
-                <p>
-                    <div class="display-flex">
-                        <div>
-                            <img class="profile-image" src="{{ $rideData->ride_profile_image }}" alt="">
-                        </div>
-                        <div class="trunc-text">
-                            <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
-                            <span>From {{ $v["ride_from"] }}</span><br>
-                            <span>To {{ $v["ride_to"] }}</span>
-                        </div>
+        <div class="nav">
+            <div class="display-flex">
+                <span class="material-icons-round">
+                apartment
+                </span>
+                <span class="app-name">InterCityRides</span>
+            </div>
+            <span class="material-icons-round " onclick="closePopup('menu')">
+            more_vert
+            </span>
+        </div>
+        <p>
+            <span class="title">History</span>
+        </p>
+        <div class="padding-bottom-layout">
+            @if(sizeof(json_decode($driveData->drive_history, true)) > 0)
+                @foreach(json_decode($driveData->drive_history, true) as $rideId => $driveHistory)
+                    <div style="display: none">
+                        {{ $rideA = $rideAuth::find($rideId) }}
+                        {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                     </div>
-                </p>
-            @endforeach
-        @endif
+                    <p>
+                        <div class="display-flex">
+                            <div>
+                                <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                            </div>
+                            <div class="trunc-text">
+                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
+                                <span>From <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
+                                <span>To <strong>{{ $driveHistory["drive_to"] }}</strong></span>
+                            </div>
+                        </div>
+                    </p>
+                @endforeach
+            @endif
+        </div>
     </div>
     <div class="bottom-controls">
         <div class="bottom-controls-item">
@@ -86,7 +86,7 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="">
+            <a href="/drive/plans">
                 <span class="material-icons-round">
                 travel_explore
                 </span><br>
@@ -102,7 +102,7 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="">
+            <a href="/drive/offer">
                 <span class="material-icons-round">
                 local_offer
                 </span><br>

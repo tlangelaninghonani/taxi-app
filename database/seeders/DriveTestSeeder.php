@@ -67,7 +67,7 @@ class DriveTestSeeder extends Seeder
         $driveAuth = new DriveAuth();
         $driveAuth->drive_first_name = ucwords("patrick");
         $driveAuth->drive_last_name = ucwords("jablonsky");
-        $driveAuth->drive_password = Hash::make("0826203223");
+        $driveAuth->drive_password = Hash::make("0783938959");
         $driveAuth->save();
 
         $driveData = new DriveData();
@@ -82,7 +82,7 @@ class DriveTestSeeder extends Seeder
         $driveAuth = new DriveAuth();
         $driveAuth->drive_first_name = ucwords("isabelle");
         $driveAuth->drive_last_name = ucwords("gordons");
-        $driveAuth->drive_password = Hash::make("0826203223");
+        $driveAuth->drive_password = Hash::make("0783938959");
         $driveAuth->save();
 
         $driveData = new DriveData();

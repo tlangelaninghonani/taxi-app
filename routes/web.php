@@ -47,7 +47,7 @@ Route::get("/ride/signin", [App\Http\Controllers\SigninController::class, "rideS
 Route::post("/ride/signin", [App\Http\Controllers\SigninController::class, "rideSignin"]);
 Route::get("/ride/{id}/request", [App\Http\Controllers\DataController::class, "rideRequestIndex"]);
 Route::post("/ride/{id}/request", [App\Http\Controllers\DataController::class, "rideRequest"]);
-Route::post("/ride/{id}/request/trip/end", [App\Http\Controllers\DataController::class, "rideRequestTripEnd"]);
+Route::match(array("POST", "GET"), "/ride/{id}/request/trip/end", [App\Http\Controllers\DataController::class, "rideRequestTripEnd"]);
 Route::get("/ride/{id}/rate", [App\Http\Controllers\DataController::class, "rateIndex"]);
 Route::post("/ride/{id}/rate", [App\Http\Controllers\DataController::class, "rate"]);
 Route::get("/ride/drivers", [App\Http\Controllers\DataController::class, "driversIndex"]);

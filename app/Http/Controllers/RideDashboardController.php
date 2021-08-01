@@ -32,11 +32,10 @@ class RideDashboardController extends Controller
             $driveAuth = DriveAuth::find($rideTrip["drive_id"]);
             $driveData = DriveData::where("drive_id", $driveAuth->id)->first();
 
+            $drive_id = $driveAuth->id;
+
             if($driveData->drive_on_trip == false){
-                return view("ride_ratings", [
-                    "driveAuth" => $driveAuth,
-                    "driveData" => $driveData,
-                ]);
+                return redirect("/ride/$drive_id/request/trip/end");
             }
         }
 

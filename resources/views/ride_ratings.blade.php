@@ -33,7 +33,7 @@
         </p>
         <p>
             <div class="curved-top">
-                <form action="/ride/{{ $driveData->id }}/rate" method="POST">
+                <form class="app-padding" action="/ride/{{ $driveData->id }}/rate" method="POST">
                     @csrf
                     @method("POST")
                     <p>

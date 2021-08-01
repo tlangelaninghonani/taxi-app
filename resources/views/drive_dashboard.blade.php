@@ -258,7 +258,7 @@
     </div>
     <div class="bottom-controls">
         <div class="bottom-controls-item">
-            <a href="">
+            <a href="/drive/dashboard">
                 <span class="material-icons-round">
                 home
                 </span><br>
@@ -274,7 +274,7 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="">
+            <a href="/drive/plans">
                 <span class="material-icons-round">
                 travel_explore
                 </span><br>
@@ -290,7 +290,7 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="">
+            <a href="/drive/offer">
                 <span class="material-icons-round">
                 local_offer
                 </span><br>

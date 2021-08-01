@@ -152,9 +152,8 @@ body{
   
     }
     :-webkit-autofill::first-line {
-        font-size: 16px;
         font-family: "Montserrat", sans-serif;
-        background-color: rgb(228, 228, 228);
+        background-color: inherit !important;
       }
 
     .new-plan{
@@ -217,6 +216,12 @@ body{
         background-color: rgb(245, 245, 245);
         
     }
+
+    .shadow-round{
+        box-shadow: var(--shadow);
+        border-radius: 50%;
+        padding: 10px;
+    }
     
     .display-center{
         display: flex;
@@ -250,7 +255,7 @@ body{
     }
 
     .choose-ride-drive-item{
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        box-shadow: var(--shadow);
         width: 120px;
         height: 120px;
         border-radius: 50%;
@@ -272,9 +277,6 @@ body{
         border: 2px solid gray;
     }
 
-    .padding-bottom-layout{
-        padding-bottom: 15%;
-    }
 
 
     ::-webkit-scrollbar {
@@ -419,6 +421,7 @@ body{
         border-radius: 50%;
     }
     .menu{
+        box-sizing: border-box;
         position: fixed;
         right: 0;
         bottom: 0;
@@ -426,7 +429,7 @@ body{
         width: 200px;
         z-index: 10;
         background-color: white;
-        padding: 3%;
+        padding: var(--padding) var(--padding) var(--padding) 25px;
         box-shadow: 0px 0px 5px 0px gray;
         z-index: 50;
     }

@@ -19,14 +19,13 @@
            </div>
         </div>
         <p>
-            <img class="welcome-page-banner-1" src="https://image.freepik.com/free-vector/online-ordering-taxi-car-rent-sharing-using-service-mobile-application_333239-96.jpg" alt="">
+           <div class="text-align-center">
+                <span class="material-icons-round shadow-round choose-ride-drive">
+                hail
+                </span>
+           </div>
         </p>
         <div class="curved-top app-padding">
-            <p>
-                <div class="">
-                    <span class="title-large">Signing to ride</span>
-                </div>
-            </p>
             <p>
                 <form action="/ride/signin" method="POST">
                     @csrf
