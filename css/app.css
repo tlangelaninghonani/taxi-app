@@ -214,8 +214,7 @@ body{
         padding: 18px;
         border: none;
         border-radius: 30px;
-        background-color: white;
-        box-shadow: var(--shadow);
+        background-color: rgb(245, 245, 245);
         
     }
     
