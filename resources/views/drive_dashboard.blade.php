@@ -190,7 +190,7 @@
             <div class="curved-top padding-none">
                 <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116716.15173817966!2d29.381065563392927!3d-23.91160360229813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ec6d8401183307b%3A0xa720ddd4b18e4df7!2sPolokwane!5e0!3m2!1sen!2sza!4v1626522553343!5m2!1sen!2sza" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
                 <div id="map"></div>
-                <div>
+                <div class="app-padding">
                     <div class="text-align-center">
                         <span class="title">On trip with {{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
                     </div>

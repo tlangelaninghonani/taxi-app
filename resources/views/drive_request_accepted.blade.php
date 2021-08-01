@@ -53,7 +53,7 @@
                 <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideRequest["ride_charges"] }}</strong></span>
             </p>
         </div>
-        <div class="curved-top">
+        <div class="curved-top app-padding">
             
             @if($rideData->pick_up_requested == true)
                 @if($driveData->confirm_pickup == true)
