@@ -17,7 +17,7 @@ class SigninController extends Controller
     }
 
     public function driveSigninIndex(){
-        if(Session::has("hasLogged")){
+        if(Session::has("drive_id")){
             return redirect("/drive/dashboard");
         }
         return view("drive_signin");
@@ -43,7 +43,7 @@ class SigninController extends Controller
     }
 
     public function rideSigninIndex(){
-        if(Session::has("hasLogged")){
+        if(Session::has("ride_id")){
             return redirect("/ride/dashboard");
         }
         return view("ride_signin");
