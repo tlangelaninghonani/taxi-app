@@ -44,7 +44,7 @@
         </p>
         <p>
             <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
-            <div class="display-flex-normal gap-small">
+            <div class="display-flex-center-align gap-small">
                 <span class="material-icons-round">
                 tune
                 </span>
