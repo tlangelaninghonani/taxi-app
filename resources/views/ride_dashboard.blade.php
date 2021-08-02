@@ -106,8 +106,23 @@
                                                         </div>
                                                         <div class="trunc-text">
                                                             <span class="title">{{ $drive_first_name." ".$drive_last_name }}</span><br>
-                                                            <span>Drives <strong>{{ $drive->drive_vehicle }}</strong></span><br>
-                                                            <span>Rated <strong>{{ $drive->drive_ratings }}</strong></span>
+                                                            <div class="trunc-text">
+                                                                <span>Drives <strong>{{ $drive->drive_vehicle }} - </strong></span>
+                                                                <strong>{{ $drive->drive_vehicle_type }}</strong>
+                                                            </div>
+                                                            <div class="rating-stars-small">
+                                                                @for($i = 1; $i <= 5; $i++)
+                                                                    @if($i <= floor($drive->drive_ratings))
+                                                                        <span id="star1" class="material-icons-round" style="color: orange" onclick="colorStar(this, 1)">
+                                                                        star
+                                                                        </span>
+                                                                    @else
+                                                                        <span id="star1" class="material-icons-round" onclick="colorStar(this, 1)">
+                                                                        star
+                                                                        </span>
+                                                                    @endif
+                                                                @endfor
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </p>
@@ -152,13 +167,26 @@
                                                 <p>
                                                     <div class="display-flex" onclick="redirectTo('/ride/{{ $drive->drive_id }}/request/accepted')">
                                                         <div>
-                                                            <div>
-                                                                <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
-                                                            </div>
+                                                            <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
+                                                        </div>
+                                                        <div class="trunc-text">
+                                                            <span class="title">{{ $drive_first_name." ".$drive_last_name }}</span><br>
                                                             <div class="trunc-text">
-                                                                <span class="title">{{ $drive_first_name." ".$drive_last_name }}</span><br>
-                                                                <span>Drives <strong>{{ $drive->drive_vehicle }}</strong></span><br>
-                                                                <span>Rated <strong>{{ $drive->drive_ratings }}</strong></span>
+                                                                <span>Drives <strong>{{ $drive->drive_vehicle }} - </strong></span>
+                                                                <strong>{{ $drive->drive_vehicle_type }}</strong>
+                                                            </div>
+                                                            <div class="rating-stars-small">
+                                                                @for($i = 1; $i <= 5; $i++)
+                                                                    @if($i <= floor($drive->drive_ratings))
+                                                                        <span id="star1" class="material-icons-round" style="color: orange" onclick="colorStar(this, 1)">
+                                                                        star
+                                                                        </span>
+                                                                    @else
+                                                                        <span id="star1" class="material-icons-round" onclick="colorStar(this, 1)">
+                                                                        star
+                                                                        </span>
+                                                                    @endif
+                                                                @endfor
                                                             </div>
                                                         </div>
                                                     </div>

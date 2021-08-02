@@ -2,7 +2,7 @@
 
 *{
     font-family: "Montserrat", sans-serif;
-    color: rgb(49, 49, 49);
+    color: rgb(58, 58, 58);
 }
 
 body{
@@ -240,7 +240,7 @@ body{
         padding: 18px !important;
         border-radius: 30px;
         border: none;
-        background-color: black;
+        background-color: rgb(36, 36, 36);
         color: white;
     }
 
@@ -365,6 +365,27 @@ body{
     .rating-stars span{
         font-size: 35px;
     }
+
+    .rating-stars-small{
+        display: flex;
+        align-items: center;
+    }
+
+    .rating-stars-small span{
+        font-size: 20px;
+    }
+
+    .rating-stars-small-center{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .rating-stars-small-center span{
+        font-size: 20px;
+    }
+       
+
 
     .choose-ride-drive-a{
         text-decoration: none;

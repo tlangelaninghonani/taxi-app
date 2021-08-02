@@ -57,7 +57,19 @@
                             <div class="trunc-text">
                                 <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
                                 <span>Drives <strong>{{ $driveD->drive_vehicle }}</strong></span><br>
-                                <span>Rated <strong>{{ $driveD->drive_ratings }}</strong></span>
+                                <div class="rating-stars-small">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= floor($driveD->drive_ratings))
+                                            <span id="star1" class="material-icons-round" style="color: orange" onclick="colorStar(this, 1)">
+                                            star
+                                            </span>
+                                        @else
+                                            <span id="star1" class="material-icons-round" onclick="colorStar(this, 1)">
+                                            star
+                                            </span>
+                                        @endif
+                                    @endfor
+                                </div>
                             </div>
                         </div>
                     </p>

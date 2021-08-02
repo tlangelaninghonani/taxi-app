@@ -67,8 +67,23 @@
                                 <a href="/ride/{{ $driveA->id }}/request/accepted">
                                     <div>
                                         <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br> 
-                                        <span>Drives <strong>{{ $driveD->drive_vehicle }}</strong></span><br>
-                                        <span>Rated <strong>{{ $driveD->drive_ratings }}</strong></span><br>
+                                        <div class="trunc-text">
+                                            <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
+                                            <strong>{{ $driveD->drive_vehicle_type }}</strong>
+                                        </div>
+                                        <div class="rating-stars-small">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                @if($i <= floor($driveD->drive_ratings))
+                                                    <span id="star1" class="material-icons-round" style="color: orange" onclick="colorStar(this, 1)">
+                                                    star
+                                                    </span>
+                                                @else
+                                                    <span id="star1" class="material-icons-round" onclick="colorStar(this, 1)">
+                                                    star
+                                                    </span>
+                                                @endif
+                                            @endfor
+                                        </div>
                                         <span>From <strong>{{ $ridePlans["ride_from"] }}</strong></span><br>
                                         <span>To <strong>{{ $ridePlans["ride_to"] }}</strong></span><br>
                                     </div>

@@ -464,6 +464,32 @@ class DataController extends Controller
         $rideData->pick_up_requested = false;
 
         $rideData->save();
+        
+
+        $allHistory = json_decode($driveData->drive_history, true);
+
+        $driveTrip = json_decode($driveData->drive_trip, true);
+
+        $allHistory[$rideAuth->id] = array(
+            "drive_from" => $driveTrip["drive_from"],
+            "drive_to" => $driveTrip["drive_to"],
+            "drive_from_lat" => $driveTrip["drive_from_lat"],
+            "drive_from_lng" => $driveTrip["drive_from_lng"],
+            "drive_to_lat" => $driveTrip["drive_to_lat"],
+            "drive_to_lng" => $driveTrip["drive_to_lng"],
+            "drive_distance" => $driveTrip["drive_distance"],
+            "drive_duration" => $driveTrip["drive_duration"],
+            "drive_charges" => $driveTrip["drive_charges"]
+        );
+
+        $driveData->drive_history = json_encode($allHistory);
+
+        $driveData->drive_trip = "";
+        $driveData->drive_on_trip = false;
+        $driveData->confirm_pickup = false;
+
+
+        $driveData->save();
 
         return view("ride_ratings", [
             "driveAuth" => $driveAuth,
