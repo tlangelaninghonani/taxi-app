@@ -10,7 +10,7 @@ body{
 }
 :root{
     --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-    --padding: 8px;
+    --padding: 5%;
 }
 
 .container{
@@ -92,14 +92,7 @@ body{
 
     }
     
-    button{
-        width: 100%;
-        padding: 18px !important;
-        border-radius: 30px;
-        border: none;
-        background-color: black;
-        color: white;
-    }
+    
 
     .items-menu-icon{
         position: absolute;
@@ -232,13 +225,25 @@ body{
     }
     
     input, select, textarea{
-        box-sizing: border-box;
         width: 100%;
         padding: 18px;
         border: none;
         border-radius: 30px;
         background-color: rgb(245, 245, 245);
-        
+        margin: 0 -5%;
+    }
+
+    button{
+        box-sizing: border-box;
+        width: 100%;
+        padding: 18px !important;
+        border-radius: 30px;
+        border: none;
+        background-color: black;
+        color: white;
+        position: absolute;
+        left: 0;
+        right: 0;
     }
 
     .shadow-round{
