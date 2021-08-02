@@ -20,6 +20,7 @@ class RideTestSeeder extends Seeder
         $rideAuth->ride_first_name = ucwords("tlangelani");
         $rideAuth->ride_last_name = ucwords("nghonani");
         $rideAuth->ride_password = Hash::make("0783938959");
+        $rideAuth->ride_gender = ucwords("male");
 
         $rideAuth->save();
 
@@ -36,6 +37,7 @@ class RideTestSeeder extends Seeder
         $rideAuth->ride_first_name = ucwords("john");
         $rideAuth->ride_last_name = ucwords("doe");
         $rideAuth->ride_password = Hash::make("0783938959");
+        $rideAuth->ride_gender = ucwords("male");
 
         $rideAuth->save();
 
@@ -52,6 +54,7 @@ class RideTestSeeder extends Seeder
         $rideAuth->ride_first_name = ucwords("alan");
         $rideAuth->ride_last_name = ucwords("mathew");
         $rideAuth->ride_password = Hash::make("0783938959");
+        $rideAuth->ride_gender = ucwords("male");
 
         $rideAuth->save();
 

@@ -40,15 +40,21 @@
             </span>
         </div>
         <p>
-            <span class="title">Drivers near you</span>
+            <span class="title">Drivers</span>
         </p>
         <p>
             <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
+            <div class="display-flex-normal gap-small">
+                <span class="material-icons-round">
+                tune
+                </span>
+                <span class="title-small">Type Male/Female/Other to filter by gender</span>
+            </div>
         </p>
         <p>
             <div id="driverscontainer" class="padding-bottom-layout">
                 @foreach($driveAuths as $driveAuth)
-                    <div id="{{ $driveAuth->drive_first_name.$driveAuth->drive_last_name.$driveAuth->id }}" class="drivers">
+                    <div id="{{ $driveAuth->drive_first_name.$driveAuth->drive_last_name.$driveAuth->id.$driveAuth->drive_gender }}" class="drivers">
                         <div style="display: none">
                             {{ $driveAuth->drive_first_name = ucwords($driveAuth->drive_first_name) }}
                             {{ $driveAuth->drive_last_name = ucwords($driveAuth->drive_last_name) }}
@@ -66,7 +72,19 @@
                                         <div class="status-driving">
                                             <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br> 
                                             <span>Drives <strong>{{ $driveData->drive_vehicle }}</strong></span><br>
-                                            <span>Rated <strong>{{ $driveData->drive_ratings }}</strong></span><br>
+                                            <div class="rating-stars-small">
+                                                @for($i = 1; $i <= 5; $i++)
+                                                    @if($i <= floor($driveData->drive_ratings))
+                                                        <span class="material-icons-round" style="color: orange" >
+                                                        star
+                                                        </span>
+                                                    @else
+                                                        <span class="material-icons-round" >
+                                                        star
+                                                        </span>
+                                                    @endif
+                                                @endfor
+                                            </div>
                                             <span>Completing a trip</span>
                                         </div>
                                     @else
@@ -76,6 +94,15 @@
                                                 <div class="trunc-text">
                                                 <span>Drives <strong>{{ $driveData->drive_vehicle }} - </strong></span>
                                                 <strong>{{ $driveData->drive_vehicle_type }}</strong>
+                                                </div>
+                                                <div id="{{ $driveAuth->drive_gender.$driveAuth->id }}" class="display-flex-normal gender">
+                                                    @if($driveAuth->drive_gender == "Male")
+                                                        <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                    @elseif($driveAuth->drive_gender == "Female")
+                                                        <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                    @else
+                                                        <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                    @endif
                                                 </div>
                                                 <div class="rating-stars-small">
                                                     @for($i = 1; $i <= 5; $i++)

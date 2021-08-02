@@ -14,6 +14,17 @@ function closePopup(id){
     }
 }
 
+function displayFilter(self, id){
+    let toClosePopup = document.querySelector("#"+id);
+    if(toClosePopup.style.display == "" || toClosePopup.style.display == "none"){
+        toClosePopup.style.display = "block";
+        self.innerHTML = "close";
+    }else{
+        toClosePopup.style.display = "none";
+        self.innerHTML = "tune";
+    }
+}
+
 function openClosePlan(id){
     let toClosePopup = document.querySelector("#"+id);
     if(toClosePopup.style.display == "" || toClosePopup.style.display == "none"){

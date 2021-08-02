@@ -26,6 +26,15 @@
                 <div class="text-align-center">
                     <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                     <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
+                    <div class="display-flex-center-align">
+                        @if($driveAuth->drive_gender == "Male")
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                        @elseif($driveAuth->drive_gender == "Female")
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                        @else
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                        @endif
+                    </div>
                     <span>Drives <strong>{{ $driveData->drive_vehicle }} - </strong></span>
                     <strong>{{ $driveData->drive_vehicle_type }}</strong>
                     <div class="rating-stars-small-center">
