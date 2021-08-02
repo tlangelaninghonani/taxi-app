@@ -37,6 +37,10 @@ body{
         padding: 15px;
         background-color: rgb(235, 235, 235);
         border-radius: 50%;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        margin: 19% var(--padding);
     }
 
     .width-100{
@@ -90,6 +94,7 @@ body{
         margin-bottom: 5%;
         display: flex;
         justify-content: space-between;
+
     }
 
     .f-right{
@@ -512,7 +517,7 @@ body{
         justify-content: space-between;
         align-items: center;
         padding: 5%;
-
+        border-top: 1px solid rgb(244, 244, 244);
     }
     .bottom-controls-item{
         text-align: center;
