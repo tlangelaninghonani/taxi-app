@@ -25,14 +25,16 @@ function displayFilter(self, id){
     }
 }
 
-function openClosePlan(id){
+function openClosePlan(self, id){
     let toClosePopup = document.querySelector("#"+id);
     if(toClosePopup.style.display == "" || toClosePopup.style.display == "none"){
         document.querySelector("#plans").style.display = "none";
         toClosePopup.style.display = "block";
+        self.innerHTML = "cancel";
     }else{
         toClosePopup.style.display = "none";
         document.querySelector("#plans").style.display = "block";
+        self.innerHTML = "add_circle";
     }
 }
 function redirectTo(path){
