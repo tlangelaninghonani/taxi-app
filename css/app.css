@@ -2,6 +2,7 @@
 
 *{
     font-family: "Montserrat", sans-serif;
+    color: rgb(49, 49, 49);
 }
 
 body{
@@ -11,6 +12,7 @@ body{
     --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
     --padding: 2px;
 }
+
 .container{
    display: none !important;
 }
@@ -31,6 +33,9 @@ body{
         padding: var(--padding);
         padding-bottom: 15%;
     }
+    .new-plan-icon{
+       
+    }
 
     .width-100{
         width: 100%;
@@ -38,7 +43,20 @@ body{
 
     .display-flex{
         display: flex;
-        grid-column-gap: 2%;
+        gap: 10px;
+    }
+
+    .display-flex-center{
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .display-flex-center-align{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
     }
 
     .display-flex-normal{
@@ -184,6 +202,10 @@ body{
        justify-content: center;
        align-items: center;
        grid-column-gap: 5px;
+    }
+
+    .gap{
+        gap: 30px
     }
 
     .app-icon{

@@ -42,12 +42,9 @@
         <p>
             <div class="display-flex-space-between">
                 <span class="title">Plans</span>
-                <div class="display-flex-normal">
-                    <span class="material-icons-round title">
-                    add
-                    </span>
-                    <span class="title" onclick="openClosePlan('newplan')">New plan</span>
-                </div>
+                <span  onclick="openClosePlan('newplan')" class="material-icons-round new-plan-icon">
+                add
+                </span>
             </div>
         </p>
         <div id="plans">

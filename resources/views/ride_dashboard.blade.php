@@ -58,8 +58,20 @@
             <span class="display-none">{{ $totalRequestsFromRiders = 0 }}</span>
             @if(sizeof(json_decode($rideData->ride_requests, true)) > 0)
                 <p>
-                    <span class="title border-bottom" onclick="displayComp(this, 'requests')">Requests</span>
-                    <span class="title f-right" onclick="displayComp(this, 'requestsaccepted')">Accepted</span>
+                    <div class="display-flex-center gap">
+                        <div onclick="displayComp(this, 'requests')" class="display-flex-center-align">
+                            <span class="material-icons-round">
+                            local_taxi
+                            </span>
+                            <span>Requests</span>
+                        </div>
+                        <div onclick="displayComp(this, 'requestsaccepted')" class="display-flex-center-align">
+                            <span class="material-icons-round">
+                            check_circle
+                            </span>
+                            <span>Accepted</span>
+                        </div>
+                    </div>
                 </p>
                 <div class="curved-top padding-none">
                     <div id="map"></div>
@@ -68,10 +80,11 @@
                         {{ $requests_count = 0 }}
                         </div>
                         <p>
-                            <div class="display-flex-justify-center">
-                                <div>
-                                    <span class="title">Requests to drivers</span>
-                                </div>
+                            <div class="display-flex-center-align">
+                                <span class="material-icons-round">
+                                local_taxi
+                                </span>
+                                <span>Requests to drivers</span>
                             </div>
                         </p>
                         <p>
@@ -87,18 +100,16 @@
                                                     {{ $drive_last_name = $driveAuth->find($drive->drive_id)->drive_last_name }}
                                                 </div>
                                                 <p>
-                                                    <a class="display-flex" href="">
+                                                    <div class="display-flex">
                                                         <div>
-                                                            <div>
-                                                                <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
-                                                            </div>
-                                                            <div class="trunc-text">
-                                                                <span class="title">{{ $drive_first_name." ".$drive_last_name }}</span><br>
-                                                                <span>Drives <strong>{{ $drive->drive_vehicle }}</strong></span><br>
-                                                                <span>Rated <strong>{{ $drive->drive_ratings }}</strong></span>
-                                                            </div>
+                                                            <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
                                                         </div>
-                                                    </a>
+                                                        <div class="trunc-text">
+                                                            <span class="title">{{ $drive_first_name." ".$drive_last_name }}</span><br>
+                                                            <span>Drives <strong>{{ $drive->drive_vehicle }}</strong></span><br>
+                                                            <span>Rated <strong>{{ $drive->drive_ratings }}</strong></span>
+                                                        </div>
+                                                    </div>
                                                 </p>
                                             @endif
                                         @endif
@@ -119,10 +130,11 @@
                         {{ $accepted_requests_count = 0 }}
                         </div>
                         <p>
-                            <div class="display-flex-justify-center">
-                                <div>
-                                    <span class="title">Accepted requests</span>
-                                </div>
+                            <div class="display-flex-center-align">
+                                <span class="material-icons-round">
+                                check_circle
+                                </span>
+                                <span>Accepted requests</span>
                             </div>
                         </p>
                         <p>
@@ -138,7 +150,7 @@
                                                     {{ $drive_last_name = $driveAuth->find($drive->drive_id)->drive_last_name }}
                                                 </div>
                                                 <p>
-                                                    <a class="display-flex" href="/ride/{{ $drive->drive_id }}/request/accepted">
+                                                    <div class="display-flex" onclick="redirectTo('/ride/{{ $drive->drive_id }}/request/accepted')">
                                                         <div>
                                                             <div>
                                                                 <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
@@ -149,7 +161,7 @@
                                                                 <span>Rated <strong>{{ $drive->drive_ratings }}</strong></span>
                                                             </div>
                                                         </div>
-                                                    </a>
+                                                    </div>
                                                 </p>
                                             @endif
                                         @endif

@@ -42,6 +42,8 @@ function displayComp(self, id){
     let comp = document.querySelector("#"+id);
     comp.style.display = "block";
 
+    comp.scrollIntoView();
+
     self.classList.add("border-bottom");
 
     elementPrev["tracked"] = self;

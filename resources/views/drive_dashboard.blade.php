@@ -57,8 +57,20 @@
             <span class="display-none">{{ $totalRequestsFromRiders = 0 }}</span>
             @if($rideRequest)
                 <p>
-                    <span class="title border-bottom" onclick="displayComp(this, 'requests')">Requests</span>
-                    <span class="title f-right" onclick="displayComp(this, 'requestsaccepted')">Accepted</span>
+                    <div class="display-flex-center gap">
+                        <div onclick="displayComp(this, 'requests')" class="display-flex-center-align">
+                            <span class="material-icons-round">
+                            local_taxi
+                            </span>
+                            <span>Requests</span>
+                        </div>
+                        <div onclick="displayComp(this, 'requestsaccepted')" class="display-flex-center-align">
+                            <span class="material-icons-round">
+                            check_circle
+                            </span>
+                            <span>Accepted</span>
+                        </div>
+                    </div>
                 </p>
                 <div class="curved-top padding-none">
                     <div id="map"></div>
@@ -67,10 +79,11 @@
                         {{ $requests_count = 0 }}
                         </div>
                         <p>
-                            <div class="display-flex-justify-center">
-                                <div>
-                                    <span class="title">Requests from riders</span>
-                                </div>
+                            <div class="display-flex-center-align">
+                                <span class="material-icons-round">
+                                local_taxi
+                                </span>
+                                <span>Requests from riders</span>
                             </div>
                         </p>
                         <p>
@@ -86,18 +99,16 @@
                                                     {{ $ride_last_name = $rideAuth->find($ride->ride_id)->ride_last_name }}
                                                 </div>
                                                 <p>
-                                                    <a class="display-flex" href="/drive/{{ $ride->ride_id }}/request">
+                                                    <div class="display-flex" onclick="redirectTo('/drive/{{ $ride->ride_id }}/request')">
                                                         <div>
-                                                            <div>
-                                                                <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
-                                                            </div>
-                                                            <div class="trunc-text">
-                                                                <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
-                                                                <span>From <strong>{{ $requestData["ride_from"] }}</strong></span><br>
-                                                                <span>To <strong>{{ $requestData["ride_to"] }}</strong></span>
-                                                            </div>
+                                                            <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
                                                         </div>
-                                                    </a>
+                                                        <div class="trunc-text">
+                                                            <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
+                                                            <span>From <strong>{{ $requestData["ride_from"] }}</strong></span><br>
+                                                            <span>To <strong>{{ $requestData["ride_to"] }}</strong></span>
+                                                        </div>
+                                                    </div>
                                                 </p>
                                             @endif
                                         @endif
@@ -118,10 +129,11 @@
                         {{ $accepted_requests_count = 0 }}
                         </div>
                         <p>
-                            <div class="display-flex-justify-center">
-                                <div>
-                                    <span class="title">Accepted requests</span>
-                                </div>
+                            <div class="display-flex-center-align">
+                                <span class="material-icons-round">
+                                check_circle
+                                </span>
+                                <span>Accepted requests</span>
                             </div>
                         </p>
                         <p>
@@ -137,18 +149,16 @@
                                                 {{ $ride_last_name = $rideAuth->find($ride->ride_id)->ride_last_name }}
                                             </div>
                                             <p>
-                                                <a class="display-flex" href="/drive/{{ $ride->ride_id }}/request/accepted">
+                                                <div class="display-flex" onclick="redirectTo('/drive/{{ $ride->ride_id }}/request/accepted')">
                                                     <div>
-                                                        <div>
-                                                            <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
-                                                        </div>
-                                                        <div class="trunc-text">
-                                                            <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
-                                                            <span>From <strong>{{ $requestData["ride_from"] }}</strong></span><br>
-                                                            <span>To <strong>{{ $requestData["ride_to"] }}</strong></span>
-                                                        </div>
+                                                        <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
                                                     </div>
-                                                </a>
+                                                    <div class="trunc-text">
+                                                        <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
+                                                        <span>From <strong>{{ $requestData["ride_from"] }}</strong></span><br>
+                                                        <span>To <strong>{{ $requestData["ride_to"] }}</strong></span>
+                                                    </div>
+                                                </div>
                                             </p>
                                         @endif
                                     @endif
