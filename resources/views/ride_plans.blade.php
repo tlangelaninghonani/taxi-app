@@ -59,7 +59,8 @@
                         <div>
                             <span class="title">{{ $ridePlans["ride_date"] }} {{ $ridePlans["ride_time"] }} {{ $ridePlans["ride_meridiem"] }}</span><br>
                             <span>From <strong>{{ $ridePlans["ride_from"] }}</strong></span><br>
-                            <span>To <strong>{{ $ridePlans["ride_to"] }}</strong></span>
+                            <span>To <strong>{{ $ridePlans["ride_to"] }}</strong></span><br>
+                            <span>Charges <strong>R{{ $ridePlans["ride_charges"] }}</strong></span>
                         </div>
                     </div>
                 </p>

@@ -25,7 +25,15 @@
                 </span>
            </div>
         </p>
+        <p>
+            <div class="text-align-center">
+                <span class="title">You could plan a ride for later and get offers from drivers</span>
+            </div>
+        </p>
         <div class="curved-top app-padding">
+            <p>
+                <span class="title title-margin-left">Enter your details</span>
+            </p>
             <p>
                 <form action="/ride/signin" method="POST">
                     @csrf

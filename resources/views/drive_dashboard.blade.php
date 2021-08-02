@@ -52,6 +52,15 @@
                         <span>Drives <strong>{{ $driveData->drive_vehicle }} - </strong></span>
                         <strong>{{ $driveData->drive_vehicle_type }}</strong>
                     </div>
+                    <div class="display-flex-center">
+                        @if($driveAuth->drive_gender == "Male")
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                        @elseif($driveAuth->drive_gender == "Female")
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                        @else
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                        @endif
+                    </div>
                     <div class="rating-stars-small-center">
                         @for($i = 1; $i <= 5; $i++)
                             @if($i <= floor($driveData->drive_ratings))

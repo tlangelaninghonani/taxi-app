@@ -34,7 +34,9 @@ body{
         padding-bottom: 15%;
     }
     .new-plan-icon{
-       
+        padding: 15px;
+        background-color: rgb(235, 235, 235);
+        border-radius: 50%;
     }
 
     .width-100{
@@ -69,6 +71,7 @@ body{
         display: flex;
         align-items: center;
     }
+
 
     .display-flex-space-between{
         display: flex;
@@ -117,15 +120,15 @@ body{
     #map{
         width: 100%;
         height: 250px;
-        border-top-right-radius: 50px;
-        border-top-left-radius: 50px;
+        border-top-right-radius: 40px;
+        border-top-left-radius: 40px;
     }
 
     .map{
         width: 100%;
         height: 250px;
-        border-top-right-radius: 50px;
-        border-top-left-radius: 50px;
+        border-top-right-radius: 40px;
+        border-top-left-radius: 40px;
     }
 
     #map button{
@@ -215,11 +218,14 @@ body{
         font-size: 60px !important;
     }
 
+    .title-margin-left{
+        margin-left: 10px;
+    }
 
     .curved-top{
-        /*box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-        border-top-right-radius: 50px;
-        border-top-left-radius: 50px;*/
+        box-shadow: var(--shadow);
+        border-top-right-radius: 40px;
+        border-top-left-radius: 40px;
         position: absolute;
         left: 0;
         right: 0;

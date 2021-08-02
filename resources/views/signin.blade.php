@@ -18,9 +18,6 @@
                 <span class="app-name">InterCityRides</span>
            </div>
         </div>
-        <p>
-            <span class="title">Sign in to</span>
-        </p>
         <div class="choose-ride-drive-container">
             <div>
                 <p>

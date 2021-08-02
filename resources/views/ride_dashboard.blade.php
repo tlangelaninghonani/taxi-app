@@ -96,8 +96,7 @@
                                                 <span class="display-none">{{ $totalRequestsFromRiders++ }}</span>    
                                                 <div class="display-none">
                                                     {{ $requests_count++ }}
-                                                    {{ $drive_first_name = $driveAuth->find($drive->drive_id)->drive_first_name }}
-                                                    {{ $drive_last_name = $driveAuth->find($drive->drive_id)->drive_last_name }}
+                                                    {{ $driveA = $driveAuth::find($drive->drive_id) }}
                                                 </div>
                                                 <p>
                                                     <div class="display-flex">
@@ -105,10 +104,19 @@
                                                             <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
                                                         </div>
                                                         <div class="trunc-text">
-                                                            <span class="title">{{ $drive_first_name." ".$drive_last_name }}</span><br>
+                                                            <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
                                                             <div class="trunc-text">
                                                                 <span>Drives <strong>{{ $drive->drive_vehicle }} - </strong></span>
                                                                 <strong>{{ $drive->drive_vehicle_type }}</strong>
+                                                            </div>
+                                                            <div class="display-flex-normal gender">
+                                                                @if($driveA->drive_gender == "Male")
+                                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                                @elseif($driveA->drive_gender == "Female")
+                                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                                @else
+                                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                                @endif
                                                             </div>
                                                             <div class="rating-stars-small">
                                                                 @for($i = 1; $i <= 5; $i++)
@@ -161,8 +169,7 @@
                                                 <span class="display-none">{{ $totalRequestsFromRiders++ }}</span>    
                                                 <div class="display-none">
                                                     {{ $accepted_requests_count++ }}
-                                                    {{ $drive_first_name = $driveAuth->find($drive->drive_id)->drive_first_name }}
-                                                    {{ $drive_last_name = $driveAuth->find($drive->drive_id)->drive_last_name }}
+                                                    {{ $driveA = $driveAuth::find($drive->drive_id) }}
                                                 </div>
                                                 <p>
                                                     <div class="display-flex" onclick="redirectTo('/ride/{{ $drive->drive_id }}/request/accepted')">
@@ -170,10 +177,19 @@
                                                             <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
                                                         </div>
                                                         <div class="trunc-text">
-                                                            <span class="title">{{ $drive_first_name." ".$drive_last_name }}</span><br>
+                                                            <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
                                                             <div class="trunc-text">
                                                                 <span>Drives <strong>{{ $drive->drive_vehicle }} - </strong></span>
                                                                 <strong>{{ $drive->drive_vehicle_type }}</strong>
+                                                            </div>
+                                                            <div class="display-flex-normal gender">
+                                                                @if($driveA->drive_gender == "Male")
+                                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                                @elseif($driveA->drive_gender == "Female")
+                                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                                @else
+                                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                                @endif
                                                             </div>
                                                             <div class="rating-stars-small">
                                                                 @for($i = 1; $i <= 5; $i++)

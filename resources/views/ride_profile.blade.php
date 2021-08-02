@@ -46,13 +46,14 @@
         </p>
         <p>
             <div class="curved-top">
+                <p>
+                    <span class="title title-margin-left">Edit your details</span>
+                </p>
                 <form class="app-padding" action="/ride/profile/update" method="POST">
                     @csrf
                     @method("POST")
-                    <p>
-                        <span>First name</span><br>
-                        <input type="text" name="firstname" value="{{ $rideAuth->ride_first_name }}" placeholder="Enter First name">
-                    </p>
+                    <span>First name</span><br>
+                    <input type="text" name="firstname" value="{{ $rideAuth->ride_first_name }}" placeholder="Enter First name">
                     <p>
                         <span>Last name</span><br>
                         <input type="text" name="lastname" value="{{ $rideAuth->ride_last_name }}" placeholder="Enter Last name">

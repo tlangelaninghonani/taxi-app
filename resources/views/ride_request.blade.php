@@ -17,9 +17,21 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round ">
+           <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
+        </div>
+        <div class="menu display-none" id="menu">
+            <div class="text-align-right">
+                <span class="material-icons-round" onclick="closePopup('menu')">
+                close
+                </span>
+            </div>
+            <p>
+                <a href="/signout">
+                    <span> Sign out</span>
+                </a>
+            </p>
         </div>
         <p>
             <div class="display-center">

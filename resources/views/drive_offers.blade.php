@@ -45,20 +45,22 @@
             </span>
         </div>
         <p>
-            <span class="title">Offers from drivers for your plans</span>
+            <span class="title">Offers</span>
         </p>
         <div class="offers">
             <div class="display-none">
-                {{ $totalOffers = 0 }}
+                {{ $totalOffers = false }}
             </div>
             @foreach($rideAuth::all() as $auth)
                 <div class="display-none">
                     {{ $rideD = $rideData::where("ride_id", $auth->id)->first() }}
-                    {{ $totalOffers++ }}
                 </div>
                 @foreach(json_decode($rideD->ride_offers, true) as $driver_id => $rideOffers)
                     @if($driver_id == $driveAuth->id)
                         @foreach($rideOffers as $offer)
+                            <div class="display-none">
+                                {{ $totalOffers = true }}
+                            </div>
                             <p>
                                 <div onclick="redirectTo('/drive/riders/{{ $auth->id }}/plans')" class="display-flex">
                                     <div>
@@ -75,7 +77,7 @@
                     @endif
                 @endforeach
             @endforeach
-            @if($totalOffers == 0)
+            @if($totalOffers == false)
                 <div class="text-align-center">
                     <span class="material-icons-round icon-large">
                     local_offer

@@ -45,7 +45,7 @@
             </span>
         </div>
         <p>
-            <span class="title">Offers from drivers for your plans</span>
+            <span class="title">Offers for your ride plans</span>
         </p>
         <div class="offers">
             <div class="display-none">
