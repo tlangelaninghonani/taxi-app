@@ -19,6 +19,7 @@ class CreateDriveDataTable extends Migration
             $table->text("drive_profile_image")->nullable();
             $table->text("drive_vehicle");
             $table->text("drive_vehicle_type");
+            $table->text("drive_reviews")->default("[]");
             $table->decimal("drive_ratings", 4, 2)->default(0.0);
             $table->text("ride_offers")->default("[]");
             $table->text("drive_trip")->nullable();

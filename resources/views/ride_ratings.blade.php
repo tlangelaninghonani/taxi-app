@@ -27,7 +27,19 @@
                     <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                     <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
                     <span>{{ $driveData->drive_vehicle }}</span><br>
-                    <span>Rated {{ $driveData->drive_ratings }}</span>
+                    <div class="rating-stars-small-center">
+                        @for($i = 1; $i <= 5; $i++)
+                            @if($i <= floor($driveData->drive_ratings))
+                                <span class="material-icons-round" style="color: orange">
+                                star
+                                </span>
+                            @else
+                                <span class="material-icons-round">
+                                star
+                                </span>
+                            @endif
+                        @endfor
+                    </div>
                 </div>
             </div>
         </p>
@@ -60,10 +72,10 @@
                             </span>
                         </div>
                     </p>
-                        <input id="ratings" type="hidden" step="0.1" name="ratings" value="1">
+                        <input id="ratings" type="hidden" name="ratings" value="1">
                     <p>
                         <span>Comment</span><br>
-                        <input type="text" placeholder="We'd love your feedback">
+                        <input type="text" name="comment" placeholder="We'd love your feedback">
                     </p>
                     <p>
                         <button>Rate</button>

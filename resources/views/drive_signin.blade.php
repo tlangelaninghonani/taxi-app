@@ -43,6 +43,14 @@
                         <input type="password" id="password" name="password" placeholder="Enter password" required>
                     </p>
                     <p>
+                        <div class="text-align-center">
+                            @if(Session::has("error"))
+                                <span>Account does not exists</span>
+                                {{ Session::forget("error") }}
+                            @endif
+                        </div>
+                    </p>
+                    <p>
                         <button>Sign in</button>
                     </p>
                 </form>

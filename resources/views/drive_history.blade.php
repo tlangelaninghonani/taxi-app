@@ -51,12 +51,14 @@
                     </div>
                     <p>
                         <div class="display-flex">
-                            <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
-                        </div>
-                        <div class="trunc-text">
-                            <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
-                            <span>From <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
-                            <span>To <strong>{{ $driveHistory["drive_to"] }}</strong></span>
+                            <div>
+                                <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                            </div>
+                            <div class="trunc-text">
+                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
+                                <span>From <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
+                                <span>To <strong>{{ $driveHistory["drive_to"] }}</strong></span>
+                            </div>
                         </div>
                     </p>
                 @endforeach
@@ -88,9 +90,9 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/plans">
+            <a href="/drive/reviews">
                 <span class="material-icons-round">
-                travel_explore
+                edit
                 </span><br>
   
             </a>
@@ -104,7 +106,7 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/offer">
+            <a href="/drive/offers">
                 <span class="material-icons-round">
                 local_offer
                 </span><br>

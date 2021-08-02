@@ -46,16 +46,27 @@
             <span class="title">See rider's plans</span>
         </p>
         <p>
-            <input type="text" onkeydown="search('riderscontainer', 'riders', this.value)" placeholder="Search riders">
+            <input type="text" id="search" class="display-none" onkeydown="search('riderscontainer', 'riders', this.value)" placeholder="Search riders">
         </p>
         <p>
             <div id="riderscontainer">
+                <div class="display-none">
+                {{ $ridersPlans = 0 }}
+                </div>
                 @foreach($rideAuths as $rideAuth)
                     <div id="{{ $rideAuth->ride_first_name.$rideAuth->ride_last_name.$rideAuth->id }}" class="riders">
                         <div style="display: none">
                             {{ $rideData = $rideData::find($rideAuth->id) }}
                         </div>
                         @if(sizeof(json_decode($rideData->ride_plans, true)) > 0)
+                        <script>
+                            if(document.querySelector("#search").style.display == "" || document.querySelector("#search").style.display == "none"){
+                                document.querySelector("#search").style.display = "block";
+                            }
+                        </script>
+                         <div class="display-none">
+                            {{ $ridersPlans++ }}
+                        </div>
                             @if(sizeof(json_decode($rideData->ride_plans, true)) == 1)
                                 @foreach(json_decode($rideData->ride_plans, true) as $ridePlan)
                                     <p>
@@ -89,6 +100,14 @@
                         @endif
                     </div>
                 @endforeach
+                @if($ridersPlans == 0)
+                    <div class="text-align-center">
+                        <span class="material-icons-round icon-large">
+                        hail
+                        </span><br>
+                        <span>No rider's plans</span>
+                    </div
+                @endif
             </div>
         </p>
     </div>
@@ -110,9 +129,9 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="">
+            <a href="/drive/reviews">
                 <span class="material-icons-round">
-                travel_explore
+                edit
                 </span><br>
                
             </a>
@@ -126,7 +145,7 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="">
+            <a href="/drive/offers">
                 <span class="material-icons-round">
                 local_offer
                 </span><br>

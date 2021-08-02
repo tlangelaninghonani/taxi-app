@@ -55,11 +55,11 @@
                     <div class="rating-stars-small-center">
                         @for($i = 1; $i <= 5; $i++)
                             @if($i <= floor($driveData->drive_ratings))
-                                <span id="star1" class="material-icons-round" style="color: orange" onclick="colorStar(this, 1)">
+                                <span class="material-icons-round" style="color: orange" >
                                 star
                                 </span>
                             @else
-                                <span id="star1" class="material-icons-round" onclick="colorStar(this, 1)">
+                                <span class="material-icons-round" >
                                 star
                                 </span>
                             @endif
@@ -296,9 +296,9 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/plans">
+            <a href="/drive/reviews">
                 <span class="material-icons-round">
-                travel_explore
+                edit
                 </span><br>
      
             </a>
@@ -312,7 +312,7 @@
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/offer">
+            <a href="/drive/offers">
                 <span class="material-icons-round">
                 local_offer
                 </span><br>

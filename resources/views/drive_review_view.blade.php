@@ -6,7 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ $links['css'] }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
+    <title>{{ $rideAuth->ride_first_name }}'s review</title>
 </head>
 <style>
     a{
@@ -40,96 +40,88 @@
             </span>
         </div>
         <p>
-            <span class="title">History</span>
+            <span class="title">{{ $rideAuth->ride_first_name }}'s review</span>
         </p>
-        <div class="padding-bottom-layout">
-            @if(sizeof(json_decode($rideData->ride_history, true)) > 0)
-                @foreach(json_decode($rideData->ride_history, true) as $driveId => $rideHistory)
-                    <div style="display: none">
-                        {{ $driveA = $driveAuth::find($driveId) }}
-                        {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
-                    </div>
-                    <p>
-                        <div class="display-flex" onclick="redirectTo('/ride/{{ $driveA->id }}/request')">
-                            <div>
-                                <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
-                            </div>
-                            <div class="trunc-text">
-                                <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
-                                <span>Drives <strong>{{ $driveD->drive_vehicle }}</strong></span><br>
-                                <div class="rating-stars-small">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($i <= floor($driveD->drive_ratings))
-                                            <span class="material-icons-round" style="color: orange" >
-                                            star
-                                            </span>
-                                        @else
-                                            <span class="material-icons-round" >
-                                            star
-                                            </span>
-                                        @endif
-                                    @endfor
-                                </div>
-                            </div>
-                        </div>
-                    </p>
-                @endforeach
-            @else
+        <p>
+            <div class="display-center">
                 <div class="text-align-center">
-                    <span class="material-icons-round icon-large">
-                    watch_later
-                    </span><br>
-                    <span>No history</span>
+                    <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
                 </div>
-            @endif
-        </div>
+            </div>
+        </p>
+        <p>
+            <div class="display-flex-center">
+                <div>
+                    <span>Rated you</span>   
+                </div>
+                <div class="rating-stars-small">
+                    @for($i = 1; $i <= 5; $i++)
+                        @if($i <= $driveReview["ratings"])
+                            <span class="material-icons-round" style="color: orange" >
+                            star
+                            </span>
+                        @else
+                            <span class="material-icons-round" >
+                            star
+                            </span>
+                        @endif
+                    @endfor
+                </div>
+            </div>
+        </p>
+        <p>
+            <div class="text-align-center">
+                <span>{{ $driveReview["comment"] }}</span>
+            </div>
+        </p>
         <div class="bottom-controls">
             <div class="bottom-controls-item">
-                <a href="/ride/dashboard">
+                <a href="/drive/dashboard">
                     <span class="material-icons-round">
                     home
                     </span><br>
-             
+        
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/ride/history">
+                <a href="/drive/history">
                     <span class="material-icons-round">
                     watch_later
                     </span><br>
-                  
+                    
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/ride/plans">
+                <a href="/drive/reviews">
                     <span class="material-icons-round">
-                    travel_explore
+                    edit
                     </span><br>
-               
+        
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/ride/drivers">
+                <a href="/drive/riders">
                     <span class="material-icons-round">
-                    local_taxi
+                    hail
                     </span><br>
-                  
+            
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/ride/offers">
+                <a href="/drive/offer">
                     <span class="material-icons-round">
                     local_offer
                     </span><br>
-                
+                    
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/ride/profile">
+                <a href="/drive/profile">
                     <span class="material-icons-round">
                     account_circle
                     </span><br>
-
+        
                 </a>
             </div>
         </div>

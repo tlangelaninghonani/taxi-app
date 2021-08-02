@@ -40,7 +40,9 @@ Route::post("/drive/{id}/{planCounter}/offer", [App\Http\Controllers\DataControl
 //Route::post("/drive/{id}/offer/accept", [App\Http\Controllers\DataController::class, "driveOfferAccept"]);
 Route::get("/drive/profile", [App\Http\Controllers\DataController::class, "driveProfileIndex"]);
 Route::post("/drive/profile/update", [App\Http\Controllers\DataController::class, "driveProfileUpdate"]);
-
+Route::get("/drive/reviews", [App\Http\Controllers\DataController::class, "driveReviewsIndex"]);
+Route::get("/drive/review/{id}/view", [App\Http\Controllers\DataController::class, "driveReviewView"]);
+Route::get("/drive/offers", [App\Http\Controllers\DataController::class, "driveOffersIndex"]);
 
 Route::get("/ride/dashboard", [App\Http\Controllers\RideDashboardController::class, "index"]);
 Route::get("/ride/signin", [App\Http\Controllers\SigninController::class, "rideSigninIndex"]);

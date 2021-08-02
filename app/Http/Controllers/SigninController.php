@@ -17,6 +17,9 @@ class SigninController extends Controller
     }
 
     public function driveSigninIndex(){
+        if(Session::has("hasLogged")){
+            return redirect("/drive/dashboard");
+        }
         return view("drive_signin");
     }
 
@@ -35,9 +38,14 @@ class SigninController extends Controller
             }
             
         }
+        Session::put("error", true);
+        return back();
     }
 
     public function rideSigninIndex(){
+        if(Session::has("hasLogged")){
+            return redirect("/ride/dashboard");
+        }
         return view("ride_signin");
     }
 
@@ -56,6 +64,7 @@ class SigninController extends Controller
             }
             
         }
-        
+        Session::put("error", true);
+        return back();
     }
 }

@@ -49,49 +49,33 @@
         </p>
         <div class="offers">
             <div class="display-none">
-                {{ $areOffers = false }}
+                {{ $totalOffers = 0 }}
             </div>
-            @foreach(json_decode($rideData->ride_offers, true) as $driver_id => $rideOffers)
+            @foreach($rideAuth::all() as $auth)
                 <div class="display-none">
-                    {{ $driveA = $driveAuth::find($driver_id) }}
-                    {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
+                    {{ $rideD = $rideData::where("ride_id", $auth->id)->first() }}
+                    {{ $totalOffers++ }}
                 </div>
-                @foreach($rideOffers as $k => $v)
-                    <div class="display-none">
-                        {{ $areOffers = true }}
-                    </div>
-                    <p>
-                        <div onclick="redirectTo('/ride/{{ $driveA->id }}/request')" class="display-flex">
-                            <div>
-                                <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
-                            </div>
-                            <div class="trunc-text">
-                                <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br> 
-                                <div class="trunc-text">
-                                    <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
-                                    <strong>{{ $driveD->drive_vehicle_type }}</strong>
+                @foreach(json_decode($rideD->ride_offers, true) as $driver_id => $rideOffers)
+                    @if($driver_id == $driveAuth->id)
+                        @foreach($rideOffers as $offer)
+                            <p>
+                                <div onclick="redirectTo('/drive/riders/{{ $auth->id }}/plans')" class="display-flex">
+                                    <div>
+                                        <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                                    </div>
+                                    <div class="trunc-text">
+                                        <span class="title">{{ $auth->ride_first_name." ".$auth->ride_last_name }}</span><br> 
+                                        <span>From <strong>{{ json_decode($rideD->ride_plans, true)[$offer["plan"]]["ride_from"] }}</strong></span><br>
+                                        <span>To <strong>{{ json_decode($rideD->ride_plans, true)[$offer["plan"]]["ride_to"] }}</strong></span><br>
+                                    </div>
                                 </div>
-                                <div class="rating-stars-small">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($i <= floor($driveD->drive_ratings))
-                                            <span class="material-icons-round" style="color: orange" >
-                                            star
-                                            </span>
-                                        @else
-                                            <span class="material-icons-round" >
-                                            star
-                                            </span>
-                                        @endif
-                                    @endfor
-                                </div>
-                                <span>From <strong>{{ json_decode($rideData->ride_plans, true)[$k]["ride_from"] }}</strong></span><br>
-                                <span>To <strong>{{ json_decode($rideData->ride_plans, true)[$k]["ride_to"] }}</strong></span><br>
-                            </div>
-                        </div>
-                    </p>
+                            </p>
+                        @endforeach
+                    @endif
                 @endforeach
             @endforeach
-            @if($areOffers == false)
+            @if($totalOffers == 0)
                 <div class="text-align-center">
                     <span class="material-icons-round icon-large">
                     local_offer
@@ -103,51 +87,51 @@
     </div>
     <div class="bottom-controls">
         <div class="bottom-controls-item">
-            <a href="/ride/dashboard">
+            <a href="/drive/dashboard">
                 <span class="material-icons-round">
                 home
                 </span><br>
-           
+     
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/ride/history">
+            <a href="/drive/history">
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-           
+                
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/ride/plans">
+            <a href="/drive/reviews">
                 <span class="material-icons-round">
-                travel_explore
+                edit
                 </span><br>
-       
+     
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/ride/drivers">
+            <a href="/drive/riders">
                 <span class="material-icons-round">
-                local_taxi
+                hail
                 </span><br>
-             
+         
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/ride/offers">
+            <a href="/drive/offers">
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-      
+                
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/ride/profile">
+            <a href="/drive/profile">
                 <span class="material-icons-round">
                 account_circle
                 </span><br>
-             
+     
             </a>
         </div>
     </div>

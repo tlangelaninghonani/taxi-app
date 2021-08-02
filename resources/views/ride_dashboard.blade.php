@@ -113,11 +113,11 @@
                                                             <div class="rating-stars-small">
                                                                 @for($i = 1; $i <= 5; $i++)
                                                                     @if($i <= floor($drive->drive_ratings))
-                                                                        <span id="star1" class="material-icons-round" style="color: orange" onclick="colorStar(this, 1)">
+                                                                        <span class="material-icons-round" style="color: orange" >
                                                                         star
                                                                         </span>
                                                                     @else
-                                                                        <span id="star1" class="material-icons-round" onclick="colorStar(this, 1)">
+                                                                        <span class="material-icons-round" >
                                                                         star
                                                                         </span>
                                                                     @endif
@@ -178,11 +178,11 @@
                                                             <div class="rating-stars-small">
                                                                 @for($i = 1; $i <= 5; $i++)
                                                                     @if($i <= floor($drive->drive_ratings))
-                                                                        <span id="star1" class="material-icons-round" style="color: orange" onclick="colorStar(this, 1)">
+                                                                        <span class="material-icons-round" style="color: orange" >
                                                                         star
                                                                         </span>
                                                                     @else
-                                                                        <span id="star1" class="material-icons-round" onclick="colorStar(this, 1)">
+                                                                        <span class="material-icons-round" >
                                                                         star
                                                                         </span>
                                                                     @endif
