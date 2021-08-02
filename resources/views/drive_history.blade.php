@@ -51,14 +51,12 @@
                     </div>
                     <p>
                         <div class="display-flex">
-                            <div>
-                                <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
-                            </div>
-                            <div class="trunc-text">
-                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
-                                <span>From <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
-                                <span>To <strong>{{ $driveHistory["drive_to"] }}</strong></span>
-                            </div>
+                            <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                        </div>
+                        <div class="trunc-text">
+                            <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
+                            <span>From <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
+                            <span>To <strong>{{ $driveHistory["drive_to"] }}</strong></span>
                         </div>
                     </p>
                 @endforeach

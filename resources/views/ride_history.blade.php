@@ -50,18 +50,16 @@
                         {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
                     </div>
                     <p>
-                        <a class="display-flex" href="/ride/{{ $driveA->id }}/request">
+                        <div class="display-flex" onclick="redirectTo('/ride/{{ $driveA->id }}/request')">
                             <div>
-                                <div>
-                                    <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
-                                </div>
-                                <div class="trunc-text">
-                                    <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
-                                    <span>Drives <strong>{{ $driveD->drive_vehicle }}</strong></span><br>
-                                    <span>Rated <strong>{{ $driveD->drive_ratings }}</strong></span>
-                                </div>
+                                <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
                             </div>
-                        </a>
+                            <div class="trunc-text">
+                                <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
+                                <span>Drives <strong>{{ $driveD->drive_vehicle }}</strong></span><br>
+                                <span>Rated <strong>{{ $driveD->drive_ratings }}</strong></span>
+                            </div>
+                        </div>
                     </p>
                 @endforeach
             @else
