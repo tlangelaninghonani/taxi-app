@@ -61,8 +61,11 @@ Route::post("/ride/{id}/request/pickup", [App\Http\Controllers\DataController::c
 Route::get("/ride/offers", [App\Http\Controllers\DataController::class, "rideOffersIndex"]);
 Route::get("/ride/profile", [App\Http\Controllers\DataController::class, "rideProfileIndex"]);
 Route::post("/ride/profile/update", [App\Http\Controllers\DataController::class, "rideProfileUpdate"]);
-
-
+Route::get("/ride/signup/personal", [App\Http\Controllers\SignupController::class, "ridePersonalIndex"]);
+Route::post("/ride/signup/personal", [App\Http\Controllers\SignupController::class, "ridePersonal"]);
+Route::get("/ride/signup/vehicle", [App\Http\Controllers\SignupController::class, "rideVehicleIndex"]);
+Route::post("/ride/signup/vehicle", [App\Http\Controllers\SignupController::class, "rideVehicle"]);
+Route::post("/ride/signup", [App\Http\Controllers\SignupController::class, "rideSignup"]);
 
 
 

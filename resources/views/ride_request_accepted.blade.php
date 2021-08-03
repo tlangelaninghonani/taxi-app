@@ -56,6 +56,12 @@
                 </div>
             </div>
         </p>
+        <p>
+            <div class="text-align-center">
+                <span>Pick-up <strong>{{ $rideRequest["ride_from"] }}</strong></span><br>
+                <span>Drop <strong>{{ $rideRequest["ride_to"] }}</strong></span>
+            </div>
+        </p>
         <div id="tripinfo" class="text-align-center ">
             <p>
                 <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>
@@ -74,13 +80,13 @@
                         @endif
                         <p>
                             <div class="text-align-center">
-                                <span class="title">{{ $driveAuth->drive_first_name }} is on the way to pick you up</span>
+                                <span class="title">{{ $driveAuth->drive_first_name }} is on the way to pick you up...</span>
                             </div>
                         </p> 
                     @else
                     <p>
                         <div class="text-align-center">
-                            <span class="title">Waiting for {{ $driveAuth->drive_first_name }} to confirm pick-up</span>
+                            <span class="title">Waiting for {{ $driveAuth->drive_first_name }} to confirm pick-up...</span>
                         </div>
                     </p>
                     @endif
@@ -88,7 +94,7 @@
                 @else
                 <p>
                     <div class="text-align-center">
-                        <span class="title">{{ $driveAuth->drive_first_name }} is waiting for your pick-up request</span>
+                        <span class="title">{{ $driveAuth->drive_first_name }} is waiting for your pick-up request...</span>
                     </div>
                 </p>
                 <p>

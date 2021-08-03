@@ -26,10 +26,7 @@ class SigninController extends Controller
     public function driveSignin(Request $req){
         Session::flush();
 
-        $firstName = ucwords($req->firstname);
-        $lastName = ucwords($req->lastname);
-
-        $drive = driveAuth::where("drive_first_name", $firstName)->where("drive_last_name", $lastName)->first();
+        $drive = driveAuth::where("drive_phone", $req->phone)->first();
         if($drive){
             if(Hash::check($req->password, $drive->drive_password)){
                 Session::put("drive_id", $drive->id);
@@ -52,10 +49,7 @@ class SigninController extends Controller
     public function rideSignin(Request $req){
         Session::flush();
 
-        $firstName = ucwords($req->firstname);
-        $lastName = ucwords($req->lastname);
-
-        $ride = RideAuth::where("ride_first_name", $firstName)->where("ride_last_name", $lastName)->first();
+        $ride = RideAuth::where("ride_phone", $req->phone)->first();
         if($ride){
             if(Hash::check($req->password, $ride->ride_password)){
                 Session::put("ride_id", $ride->id);

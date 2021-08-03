@@ -19,6 +19,7 @@ class CreateRideAuthsTable extends Migration
             $table->text("ride_last_name");
             $table->text("ride_password");
             $table->text("ride_gender");
+            $table->text("ride_phone");
             $table->timestamps();
         });
     }

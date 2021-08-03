@@ -36,8 +36,23 @@
         <p>
             <div class="display-center">
                 <div class="text-align-center">
-                    <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @if($rideData->ride_profile_image == "")
+                        <span class="material-icons-round empty-profile-large">
+                        account_circle
+                        </span><br>
+                    @else
+                        <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
+                    <div class="display-flex-center gender">
+                        @if($rideAuth->ride_gender == "Male")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @elseif($rideAuth->ride_gender == "Female")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @else
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </p>
@@ -54,15 +69,16 @@
                     <div class="curved-top" id="plan-{{ $counter }}">
                         <div id="map{{ $counter }}" class="map"></div>
                         <div class="app-padding">
-                            <span class="title">Pick-up place</span><br>
-                            <span>{{ $ridePlans["ride_from"] }}</span><br>
-                            <span class="title">Destination</span><br>
-                            <span>{{ $ridePlans["ride_to"] }}</span><br>
-                            <span class="title">Date</span><br>
-                            <span>{{ $ridePlans["ride_date"] }}</span><br>
-                            <span class="title">Time</span><br>
-                            <span>{{ $ridePlans["ride_time"] }}</span>
-                            <span>{{ $ridePlans["ride_meridiem"] }}</span>
+                            <p>
+                                <div class="text-align-center">
+                                    <span class="title">Pick-up</span><br>
+                                    <span>{{ $ridePlans["ride_from"] }}</span><br>
+                                    <span class="title">Drop</span><br>
+                                    <span>{{ $ridePlans["ride_to"] }}</span><br>
+                                    <span class="title">Date & Time</span><br>
+                                    <span>{{ $ridePlans["ride_date"] }} {{ $ridePlans["ride_time"] }} {{ $ridePlans["ride_meridiem"] }}</span><br>
+                                </div>
+                            </p>
                             <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
                                 <p>
                                     <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
@@ -75,8 +91,13 @@
                                     @csrf
                                     @method("POST")
                                     <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
-                                    <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
-                                    <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
+                                        <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
+                                        <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
+                                        <input type="hidden" name="ridefromcoords" value="{{ $ridePlans['ride_from_coords'] }}">
+                                        <input type="hidden" name="ridetocoords" value="{{ $ridePlans['ride_to_coords'] }}">
+                                        <input type="hidden" name="ridedistance" value="{{ $ridePlans['ride_distance'] }}">
+                                        <input type="hidden" name="rideduration" value="{{ $ridePlans['ride_duration'] }}">
+                                        <input type="hidden" name="ridecharges" value="{{ $ridePlans['ride_charges'] }}">
                                     <div class="display-none">
                                         {{ $isOffered = false }}
                                     </div>
@@ -123,15 +144,16 @@
                         <div class="curved-top display-none" id="plan-{{ $counter }}">
                             <div id="map{{ $counter }}" class="map"></div>
                             <div class="app-padding">
-                                <span class="title">Pick-up place</span><br>
-                                <span>{{ $ridePlans["ride_from"] }}</span><br>
-                                <span class="title">Destination</span><br>
-                                <span>{{ $ridePlans["ride_to"] }}</span><br>
-                                <span class="title">Date</span><br>
-                                <span>{{ $ridePlans["ride_date"] }}</span><br>
-                                <span class="title">Time</span><br>
-                                <span>{{ $ridePlans["ride_time"] }}</span>
-                                <span>{{ $ridePlans["ride_meridiem"] }}</span>
+                                <p>
+                                    <div class="text-align-center">
+                                        <span class="title">Pick-up</span><br>
+                                        <span>{{ $ridePlans["ride_from"] }}</span><br>
+                                        <span class="title">Drop</span><br>
+                                        <span>{{ $ridePlans["ride_to"] }}</span><br>
+                                        <span class="title">Date & Time</span><br>
+                                        <span>{{ $ridePlans["ride_date"] }} {{ $ridePlans["ride_time"] }} {{ $ridePlans["ride_meridiem"] }}</span><br>
+                                    </div>
+                                </p>
                                 <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
                                     <p>
                                         <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
@@ -146,6 +168,11 @@
                                         <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
                                         <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
                                         <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
+                                        <input type="hidden" name="ridefromcoords" value="{{ $ridePlans['ride_from_coords'] }}">
+                                        <input type="hidden" name="ridetocoords" value="{{ $ridePlans['ride_to_coords'] }}">
+                                        <input type="hidden" name="ridedistance" value="{{ $ridePlans['ride_distance'] }}">
+                                        <input type="hidden" name="rideduration" value="{{ $ridePlans['ride_duration'] }}">
+                                        <input type="hidden" name="ridecharges" value="{{ $ridePlans['ride_charges'] }}">
                                         <div class="display-none">
                                             {{ $isOffered = false }}
                                         </div>
@@ -198,15 +225,16 @@
                         <div class="curved-top display-none" id="plan-{{ $counter }}">
                             <div id="map{{ $counter }}" class="map"></div>
                             <div class="app-padding">
-                                <span class="title">Pick-up place</span><br>
-                                <span>{{ $ridePlans["ride_from"] }}</span><br>
-                                <span class="title">Destination</span><br>
-                                <span>{{ $ridePlans["ride_to"] }}</span><br>
-                                <span class="title">Date</span><br>
-                                <span>{{ $ridePlans["ride_date"] }}</span><br>
-                                <span class="title">Time</span><br>
-                                <span>{{ $ridePlans["ride_time"] }}</span>
-                                <span>{{ $ridePlans["ride_meridiem"] }}</span>
+                                <p>
+                                    <div class="text-align-center">
+                                        <span class="title">Pick-up</span><br>
+                                        <span>{{ $ridePlans["ride_from"] }}</span><br>
+                                        <span class="title">Drop</span><br>
+                                        <span>{{ $ridePlans["ride_to"] }}</span><br>
+                                        <span class="title">Date & Time</span><br>
+                                        <span>{{ $ridePlans["ride_date"] }} {{ $ridePlans["ride_time"] }} {{ $ridePlans["ride_meridiem"] }}</span><br>
+                                    </div>
+                                </p>
                                 <div id="tripinfo{{ $counter }}" class="text-align-center display-none">
                                     <p>
                                         <span>Distance <strong id="tripdistance{{ $counter }}"></strong></span><br>
@@ -218,9 +246,13 @@
                                     <form action="/drive/{{ $rideAuth->id }}/{{ $counter }}/offer" method="POST">
                                         @csrf
                                         @method("POST")
-                                        <input type="hidden" name="ridefrom" value="{{ $ridePlans['ride_from'] }}">
                                         <input type="hidden" name="rideto" value="{{ $ridePlans['ride_to'] }}">
                                         <input type="hidden" name="ridedatetime" value="{{ $ridePlans['ride_date'] }} {{ $ridePlans['ride_time'] }} {{ $ridePlans['ride_meridiem'] }}">
+                                        <input type="hidden" name="ridefromcoords" value="{{ $ridePlans['ride_from_coords'] }}">
+                                        <input type="hidden" name="ridetocoords" value="{{ $ridePlans['ride_to_coords'] }}">
+                                        <input type="hidden" name="ridedistance" value="{{ $ridePlans['ride_distance'] }}">
+                                        <input type="hidden" name="rideduration" value="{{ $ridePlans['ride_duration'] }}">
+                                        <input type="hidden" name="ridecharges" value="{{ $ridePlans['ride_charges'] }}">
                                         <div class="display-none">
                                             {{ $isOffered = false }}
                                         </div>

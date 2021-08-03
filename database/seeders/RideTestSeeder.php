@@ -21,6 +21,7 @@ class RideTestSeeder extends Seeder
         $rideAuth->ride_last_name = ucwords("nghonani");
         $rideAuth->ride_password = Hash::make("0783938959");
         $rideAuth->ride_gender = ucwords("male");
+        $rideAuth->ride_phone = "0677228944";
 
         $rideAuth->save();
 
@@ -38,6 +39,7 @@ class RideTestSeeder extends Seeder
         $rideAuth->ride_last_name = ucwords("doe");
         $rideAuth->ride_password = Hash::make("0783938959");
         $rideAuth->ride_gender = ucwords("male");
+        $rideAuth->ride_phone = "0829086204";
 
         $rideAuth->save();
 
@@ -55,6 +57,7 @@ class RideTestSeeder extends Seeder
         $rideAuth->ride_last_name = ucwords("mathew");
         $rideAuth->ride_password = Hash::make("0783938959");
         $rideAuth->ride_gender = ucwords("male");
+        $rideAuth->ride_phone = "0783938959";
 
         $rideAuth->save();
 
@@ -62,6 +65,23 @@ class RideTestSeeder extends Seeder
         $rideData->ride_id = $rideAuth->id;
         $rideData->ride_profile_image = "https://blogs-images.forbes.com/danschawbel/files/2017/12/Dan-Schawbel_avatar_1512422077-400x400.jpg";
         $rideData->ride_balance = 350.00;
+
+        $rideData->save();
+
+
+        $rideAuth = new RideAuth();
+        $rideAuth->ride_first_name = ucwords("melissa");
+        $rideAuth->ride_last_name = ucwords("johnson");
+        $rideAuth->ride_password = Hash::make("0783938959");
+        $rideAuth->ride_gender = ucwords("female");
+        $rideAuth->ride_phone = "0829084585";
+
+        $rideAuth->save();
+
+        $rideData = new RideData();
+        $rideData->ride_id = $rideAuth->id;
+        $rideData->ride_profile_image = "https://www.psypost.org/wp-content/uploads/2018/10/young-attractive-woman.jpg";
+        $rideData->ride_balance = 210.00;
 
         $rideData->save();
     }

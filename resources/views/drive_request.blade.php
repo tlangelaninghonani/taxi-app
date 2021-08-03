@@ -36,8 +36,23 @@
         <p>
             <div class="display-center">
                 <div class="text-align-center">
-                    <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @if($rideData->ride_profile_image == "")
+                        <span class="material-icons-round empty-profile-large">
+                        account_circle
+                        </span><br>
+                    @else
+                        <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
+                    <div class="display-flex-center gender">
+                        @if($rideAuth->ride_gender == "Male")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @elseif($rideAuth->ride_gender == "Female")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @else
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </p>
@@ -49,14 +64,14 @@
             <form class="app-padding" action="/drive/{{ $rideAuth->id }}/request/accept" method="POST">
                 @csrf
                 @method("POST")
+                <div class="text-align-center">
                 <p>
-                    <span class="title">Pick-up place</span><br>
-                    <span>{{ $rideRequest["ride_from"] }}</span>
-                </p>
-                <p>
-                    <span class="title">Destination</span><br>
+                    <span class="title">Pick-up</span><br>
+                    <span>{{ $rideRequest["ride_from"] }}</span><br>
+                    <span class="title">Drop</span><br>
                     <span>{{ $rideRequest["ride_to"] }}</span>
                 </p>
+                </div>
                 <div id="tripinfo" class="text-align-center ">
                     <p>
                         <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>

@@ -48,9 +48,23 @@
         <p>
             <div class="display-center border-bottom-curved">
                 <div class="text-align-center">
-                    <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @if($rideData->ride_profile_image == "")
+                        <span class="material-icons-round empty-profile-large">
+                        account_circle
+                        </span><br>
+                    @else
+                        <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
-                    <span>Balance R{{ $rideData->ride_balance }}</span>
+                    <div class="display-flex-center gender">
+                        @if($rideAuth->ride_gender == "Male")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @elseif($rideAuth->ride_gender == "Female")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @else
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </p>
@@ -69,7 +83,7 @@
                             <span class="material-icons-round">
                             check_circle
                             </span>
-                            <span>Accepted</span>
+                            <span>Accepted requests</span>
                         </div>
                     </div>
                 </p>
@@ -99,7 +113,7 @@
                                                     {{ $driveA = $driveAuth::find($drive->drive_id) }}
                                                 </div>
                                                 <p>
-                                                    <div class="display-flex">
+                                                    <div class="display-flex-normal gap-10">
                                                         <div>
                                                             <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
                                                         </div>
@@ -172,7 +186,7 @@
                                                     {{ $driveA = $driveAuth::find($drive->drive_id) }}
                                                 </div>
                                                 <p>
-                                                    <div class="display-flex" onclick="redirectTo('/ride/{{ $drive->drive_id }}/request/accepted')">
+                                                    <div class="display-flex-normal gap-10" onclick="redirectTo('/ride/{{ $drive->drive_id }}/request/accepted')">
                                                         <div>
                                                             <img class="profile-image" src="{{ $drive->drive_profile_image }}" alt="">
                                                         </div>
@@ -259,7 +273,7 @@
                 <div class="curved-top-padding">
                     <p>
                         <div class="text-align-center">
-                            <span class="title">On trip wth {{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
+                            <span class="title">On trip wth {{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}...</span><br>
                         </div>
                         <div id="tripinfo" class="text-align-center ">
                             <p>

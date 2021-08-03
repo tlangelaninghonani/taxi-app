@@ -39,8 +39,15 @@
         <p>
             <div class="display-center">
                 <div class="text-align-center">
-                    <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @if($rideData->ride_profile_image == "")
+                        <span class="material-icons-round empty-profile-large">
+                        account_circle
+                        </span><br>
+                    @else
+                        <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
+                    <span>Phone <strong>{{ $rideAuth->ride_phone }}</strong></span>
                 </div>
             </div>
         </p>
@@ -57,6 +64,10 @@
                     <p>
                         <span>Last name</span><br>
                         <input type="text" name="lastname" value="{{ $rideAuth->ride_last_name }}" placeholder="Enter Last name">
+                    </p>
+                    <p>
+                        <span>Phone</span><br>
+                        <input type="text" name="phone" value="{{ $rideAuth->ride_phone }}" placeholder="Enter Phone">
                     </p>
                     <p>
                         <button>Save</button>

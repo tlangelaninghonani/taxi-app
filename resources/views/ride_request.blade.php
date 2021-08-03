@@ -77,11 +77,11 @@
                 @method("POST")
                 <input type="hidden" value="{{  $driveAuth->id }}" name="rideid" id="rideid">
                 <p>
-                    <span class="title">Pick-up place</span><br>
+                    <span class="title">Pick-up</span><br>
                     <input type="text" name="ridefrom" id="ridefrom" placeholder="Pick-up place" required>
                 </p>
                 <p>
-                    <span class="title">Destination</span><br>
+                    <span class="title">Drop</span><br>
                     <input type="text" name="rideto" id="rideto" placeholder="Your destination"  required>
                 </p>
                 <div id="tripinfo" class="text-align-center display-none">

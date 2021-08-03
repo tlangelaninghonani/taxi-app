@@ -19,6 +19,7 @@ class CreateDriveAuthsTable extends Migration
             $table->text("drive_last_name");
             $table->text("drive_password");
             $table->text("drive_gender");
+            $table->text("drive_phone");
             $table->timestamps();
         });
     }

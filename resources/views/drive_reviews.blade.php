@@ -50,9 +50,15 @@
                         {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                     </div>
                     <p>
-                        <div class="display-flex" onclick="redirectTo('/drive/review/{{ $rideId }}/view')">
+                        <div class="display-flex-normal gap-10" onclick="redirectTo('/drive/review/{{ $rideId }}/view')">
                             <div>
+                                @if($rideD->ride_profile_image == "")
+                                <span class="material-icons-round empty-profile-medium">
+                                account_circle
+                                </span><br>
+                                @else
                                 <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                                @endif
                             </div>
                             <div class="trunc-text">
                                 <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>

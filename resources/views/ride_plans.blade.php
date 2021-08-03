@@ -43,7 +43,7 @@
             <div class="display-flex-space-between">
                 <span class="title">Plans</span>
                 <span  onclick="openClosePlan(this, 'newplan')" class="material-icons-round new-plan-icon">
-                add_circle
+                add
                 </span>
             </div>
         </p>

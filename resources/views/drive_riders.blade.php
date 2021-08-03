@@ -54,7 +54,7 @@
                 {{ $ridersPlans = 0 }}
                 </div>
                 @foreach($rideAuths as $rideAuth)
-                    <div id="{{ $rideAuth->ride_first_name.$rideAuth->ride_last_name.$rideAuth->id }}" class="riders">
+                    <div id="{{ $rideAuth->ride_first_name.$rideAuth->ride_last_name.$rideAuth->id.$rideAuth->ride_gender }}" class="riders">
                         <div style="display: none">
                             {{ $rideData = $rideData::find($rideAuth->id) }}
                         </div>
@@ -70,15 +70,29 @@
                             @if(sizeof(json_decode($rideData->ride_plans, true)) == 1)
                                 @foreach(json_decode($rideData->ride_plans, true) as $ridePlan)
                                     <p>
-                                        <div class="display-flex" onclick="redirectTo('/drive/riders/{{ $rideAuth->id }}/plans')">
+                                        <div class="display-flex-normal gap-10" onclick="redirectTo('/drive/riders/{{ $rideAuth->id }}/plans')">
                                             <div>
+                                                @if($rideData->ride_profile_image == "")
+                                                <span class="material-icons-round empty-profile-medium">
+                                                account_circle
+                                                </span><br>
+                                                @else
                                                 <img class="profile-image" src="{{ $rideData->ride_profile_image }}" alt="">
+                                                @endif
                                             </div>
                                             <div class="trunc-text">
                                                 <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br> 
-                                                <span>From <strong>{{ $ridePlan["ride_from"] }}</strong></span><br>
-                                                <span>To <strong>{{ $ridePlan["ride_to"] }}</strong></span><br>
-                                                <span>Charges <strong>R{{ $ridePlan["ride_charges"] }}</strong></span>
+                                                <div class="display-flex-normal gender">
+                                                    @if($rideAuth->ride_gender == "Male")
+                                                        <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                                                    @elseif($rideAuth->ride_gender == "Female")
+                                                        <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                                                    @else
+                                                        <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                                                    @endif
+                                                </div>
+                                                <span>Pick-up <strong>{{ $ridePlan["ride_from"] }}</strong></span><br>
+                                                <span>Drop <strong>{{ $ridePlan["ride_to"] }}</strong></span><br>
                                             </div> 
                                         </div>  
                                     </p>

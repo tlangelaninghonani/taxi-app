@@ -50,7 +50,7 @@
                         {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
                     </div>
                     <p>
-                        <div class="display-flex" onclick="redirectTo('/ride/{{ $driveA->id }}/request')">
+                        <div class="display-flex-normal gap-10" onclick="redirectTo('/ride/{{ $driveA->id }}/request')">
                             <div>
                                 <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
                             </div>

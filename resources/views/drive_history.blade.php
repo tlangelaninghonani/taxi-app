@@ -52,12 +52,27 @@
                     <p>
                         <div class="display-flex">
                             <div>
+                                @if($rideD->ride_profile_image == "")
+                                <span class="material-icons-round empty-profile-medium">
+                                account_circle
+                                </span><br>
+                                @else
                                 <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                                @endif 
                             </div>
                             <div class="trunc-text">
                                 <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
-                                <span>From <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
-                                <span>To <strong>{{ $driveHistory["drive_to"] }}</strong></span>
+                                <div class="display-flex-normal gender">
+                                    @if($rideA->ride_gender == "Male")
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @elseif($rideA->ride_gender == "Female")
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @else
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @endif
+                                </div>
+                                <span>Picked from <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
+                                <span>Dropped at <strong>{{ $driveHistory["drive_to"] }}</strong></span>
                             </div>
                         </div>
                     </p>

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ $links['css'] }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ride sign in</title>
+    <title>Ride sign up</title>
 </head>
 <body>
     <div class="container">
@@ -19,7 +19,7 @@
            </div>
         </div>
         <p>
-            <span>Signing in to ride</span>
+            <span>Signing up for new ride account</span>
         </p>
         <p>
            <div class="text-align-center">
@@ -28,44 +28,46 @@
                 </span>
            </div>
         </p>
-        <p>
-            <div class="text-align-center">
-                <span class="title">You could plan a ride for later and get offers from drivers</span>
-            </div>
-        </p>
         <div class="curved-top app-padding">
             <p>
-                <span class="title title-margin-left">Enter your details</span>
+                <span class="title title-margin-left">Personal details</span>
             </p>
             <p>
-                <form action="/ride/signin" method="POST">
+                <form action="/ride/signup/personal" method="POST">
                     @csrf
                     @method("POST")
                     <p>
-                        <span>Phone</span><br>
-                        <input type="tel" id="phone" name="phone" placeholder="Enter Phone" required>
+                        <span>First name</span><br>
+                        <input type="text" id="firstname" name="firstname" placeholder="Enter First name" required>
                     </p>
                     <p>
-                        <span>Password</span><br>
-                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+                        <span>Last name</span><br>
+                        <input type="text" id="lastname" name="lastname" placeholder="Enter Last name" required>
+                    </p>
+                    <p>
+                        <span>Gender</span><br>
+                        <select name="gender" id="gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </p>
+                    <p>
+                        <span>Phone</span><br>
+                        <input type="text" id="phone" name="phone" placeholder="Enter Phone" required>
                     </p>
                     <p>
                         <div class="text-align-center">
                             @if(Session::has("error"))
-                                <span>Account does not exists</span>
+                                <span>Account already exists</span>
                                 {{ Session::forget("error") }}
                             @endif
                         </div>
                     </p>
                     <p>
-                        <button>Sign in</button>
+                        <button>Next</button>
                     </p>
                 </form>
-            </p>
-            <p>
-                <div class="text-align-center">
-                    <span>Don't have an account yet? <strong onclick="redirectTo('/ride/signup/personal')">Sign up</strong></span>
-                </div>
             </p>
         </div>
     </div>

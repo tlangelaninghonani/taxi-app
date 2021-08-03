@@ -36,11 +36,30 @@
         <p>
             <div class="display-center">
                 <div class="text-align-center">
-                    <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @if($rideData->ride_profile_image == "")
+                        <span class="material-icons-round empty-profile-large">
+                        account_circle
+                        </span><br>
+                    @else
+                        <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
-                    <span>From <strong>{{ $rideRequest["ride_from"] }}</strong></span><br>
-                    <span>To <strong>{{ $rideRequest["ride_to"] }}</strong></span>
+                    <div class="display-flex-center gender">
+                        @if($rideAuth->ride_gender == "Male")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @elseif($rideAuth->ride_gender == "Female")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @else
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @endif
+                    </div>
                 </div>
+            </div>
+        </p>
+        <p>
+            <div class="text-align-center">
+                <span>Pick-up <strong>{{ $rideRequest["ride_from"] }}</strong></span><br>
+                <span>Drop <strong>{{ $rideRequest["ride_to"] }}</strong></span>
             </div>
         </p>
         <div id="tripinfo" class="text-align-center ">

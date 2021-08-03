@@ -5,6 +5,11 @@ googleIcons.href = "https://fonts.googleapis.com/icon?family=Material+Icons+Roun
 document.getElementsByTagName("head")[0].appendChild(googleIcons);
 var elementPrev = {};
 
+/*var materialClass = document.querySelectorAll(".material-icons-round");
+for (let i = 0; i < materialClass.length; i++) {
+    materialClass[i].classList.add("material-icons-font");
+}*/
+
 function closePopup(id){
     let toClosePopup = document.querySelector("#"+id);
     if(toClosePopup.style.display == "" || toClosePopup.style.display == "none"){
@@ -30,11 +35,11 @@ function openClosePlan(self, id){
     if(toClosePopup.style.display == "" || toClosePopup.style.display == "none"){
         document.querySelector("#plans").style.display = "none";
         toClosePopup.style.display = "block";
-        self.innerHTML = "cancel";
+        self.innerHTML = "close";
     }else{
         toClosePopup.style.display = "none";
         document.querySelector("#plans").style.display = "block";
-        self.innerHTML = "add_circle";
+        self.innerHTML = "add";
     }
 }
 function redirectTo(path){
@@ -61,6 +66,25 @@ function displayComp(self, id){
 
     elementPrev["tracked"] = self;
 
+}
+
+function verifyPasswords(buttonId){
+    let button = document.querySelector("#"+buttonId);
+    let password = document.querySelector("#password");
+    let confirmPassword = document.querySelector("#confirm");
+    if(password.value.length < 8){
+        button.disabled = true;
+        document.querySelector("#passwordmatcherr").style.display = "none";
+        document.querySelector("#passwordlengtherr").style.display = "block";
+    }else if(password.value !== confirmPassword.value){
+        button.disabled = true;
+        document.querySelector("#passwordlengtherr").style.display = "none";
+        document.querySelector("#passwordmatcherr").style.display = "block";
+    }else{
+        document.querySelector("#passwordlengtherr").style.display = "none";
+        document.querySelector("#passwordmatcherr").style.display = "none";
+        button.disabled = false;
+    }
 }
 
 function nextPlan(hide, show, originLat, originLng, destLat, destLng, mapId){

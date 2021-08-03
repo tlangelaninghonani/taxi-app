@@ -63,7 +63,7 @@
                             {{ $driveData->drive_vehicle = ucwords($driveData->drive_vehicle) }}
                         </div>
                         <p>
-                            <div class="display-flex">
+                            <div class="display-flex-normal gap-10">
                                 <div>
                                     <img class="profile-image" src="{{ $driveData->drive_profile_image }}" alt="">
                                 </div>
@@ -71,6 +71,15 @@
                                     @if($driveData->on_trip == true)
                                         <div class="status-driving">
                                             <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br> 
+                                            <div id="{{ $driveAuth->drive_gender.$driveAuth->id }}" class="display-flex-normal gender">
+                                                @if($driveAuth->drive_gender == "Male")
+                                                    <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                @elseif($driveAuth->drive_gender == "Female")
+                                                    <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                @else
+                                                    <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                @endif
+                                            </div>
                                             <span>Drives <strong>{{ $driveData->drive_vehicle }}</strong></span><br>
                                             <div class="rating-stars-small">
                                                 @for($i = 1; $i <= 5; $i++)
@@ -116,7 +125,7 @@
                                                             </span>
                                                         @endif
                                                     @endfor
-                                                </div>     
+                                                </div>    
                                             </div>
                                         </a>
                                     @endif

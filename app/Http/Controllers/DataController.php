@@ -216,6 +216,15 @@ class DataController extends Controller
         $driveAuth = DriveAuth::findorfail($drive_id);
         $driveData = DriveData::where("drive_id", $drive_id)->first();
 
+        $updatedOffers = array();
+        foreach(json_decode($rideData->ride_offers, true) as $k => $v){
+            if(! $driveAuth->id == $k){
+                $updatedOffers[$k] = $v;
+            }
+        }
+
+        $rideData->ride_offers = json_encode($updatedOffers);
+
         $allHistory = json_decode($driveData->drive_history, true);
 
         $driveTrip = json_decode($driveData->drive_trip, true);
@@ -399,6 +408,23 @@ class DataController extends Controller
             $allOffers[$driveAuth->id][$planCounter] = array(
                 "offered" => true,
             );
+
+            $rideData->ride_offers = json_encode($allOffers);
+
+            $rideRequests = json_decode($rideData->ride_requests, true);
+            $rideRequests[$driveAuth->id] = array(
+                "ride_id" => $rideAuth->id,
+                "ride_from" => ucwords($req->ridefrom),
+                "ride_to" => ucwords($req->rideto),
+                "ride_from_coords" => $req->ridefromcoords,
+                "ride_to_coords" => $req->ridetocoords,
+                "ride_distance" => $req->ridedistance,
+                "ride_time" => $req->rideduration,
+                "ride_charges" => $req->ridecharges,
+                "ride_accepted" => true
+            );
+
+            $rideData->ride_requests = json_encode($rideRequests);
         }else{
             $allOffers = json_decode($rideData->ride_offers, true);
           
@@ -413,9 +439,11 @@ class DataController extends Controller
                 }
             }
             $allOffers[$driveAuth->id] = $updatedOffers;
+
+            $rideData->ride_offers = json_encode($allOffers);
+
         }
         
-        $rideData->ride_offers = json_encode($allOffers);
 
         $rideData->save();
 
@@ -513,6 +541,15 @@ class DataController extends Controller
         if($req->method() == "GET" && $rideData->ride_on_trip == false){
             return abort(404);
         }
+
+        $updatedOffers = array();
+        foreach(json_decode($rideData->ride_offers, true) as $k => $v){
+            if(! $driveAuth->id == $k){
+                $updatedOffers[$k] = $v;
+            }
+        }
+
+        $rideData->ride_offers = json_encode($updatedOffers);
         
         $rideRequests = json_decode($rideData->ride_requests, true);
 
@@ -602,6 +639,7 @@ class DataController extends Controller
 
         $rideAuth->ride_first_name = $req->firstname;
         $rideAuth->ride_last_name = $req->lastname;
+        $rideAuth->ride_phone = $req->phone;
         
         $rideAuth->save();
 
@@ -764,6 +802,15 @@ class DataController extends Controller
             "ride_charges" => $req->ridecharges,
             "ride_accepted" => false
         );
+
+        $updatedOffers = array();
+        foreach(json_decode($rideData->ride_offers, true) as $k => $v){
+            if(! $driveAuth->id == $k){
+                $updatedOffers[$k] = $v;
+            }
+        }
+
+        $rideData->ride_offers = json_encode($updatedOffers);
 
         $rideData->ride_requests = json_encode($rideRequests);
         $rideData->save();

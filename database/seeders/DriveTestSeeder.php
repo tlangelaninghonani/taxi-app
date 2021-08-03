@@ -19,8 +19,9 @@ class DriveTestSeeder extends Seeder
         $driveAuth = new DriveAuth();
         $driveAuth->drive_first_name = ucwords("james");
         $driveAuth->drive_last_name = ucwords("atikinson");
-        $driveAuth->drive_password = Hash::make("0783938959");
+        $driveAuth->drive_password = Hash::make("jamesatikinson@393");
         $driveAuth->drive_gender = ucwords("male");
+        $driveAuth->drive_phone = "0677228944";
         $driveAuth->save();
 
         $driveData = new DriveData();
@@ -36,8 +37,9 @@ class DriveTestSeeder extends Seeder
         $driveAuth = new DriveAuth();
         $driveAuth->drive_first_name = ucwords("rowan");
         $driveAuth->drive_last_name = ucwords("bond");
-        $driveAuth->drive_password = Hash::make("0783938959");
+        $driveAuth->drive_password = Hash::make("rowanbond@393");
         $driveAuth->drive_gender = ucwords("male");
+        $driveAuth->drive_phone = "0826524562";
         $driveAuth->save();
 
         $driveData = new DriveData();
@@ -53,8 +55,9 @@ class DriveTestSeeder extends Seeder
         $driveAuth = new DriveAuth();
         $driveAuth->drive_first_name = ucwords("marry");
         $driveAuth->drive_last_name = ucwords("smith");
-        $driveAuth->drive_password = Hash::make("0783938959");
+        $driveAuth->drive_password = Hash::make("marrysmith@393");
         $driveAuth->drive_gender = ucwords("female");
+        $driveAuth->drive_phone = "0769851235";
         $driveAuth->save();
 
         $driveData = new DriveData();
@@ -70,8 +73,9 @@ class DriveTestSeeder extends Seeder
         $driveAuth = new DriveAuth();
         $driveAuth->drive_first_name = ucwords("patrick");
         $driveAuth->drive_last_name = ucwords("jablonsky");
-        $driveAuth->drive_password = Hash::make("0783938959");
+        $driveAuth->drive_password = Hash::make("patrickjablonsky@393");
         $driveAuth->drive_gender = ucwords("other");
+        $driveAuth->drive_phone = "0729856523";
         $driveAuth->save();
 
         $driveData = new DriveData();
@@ -86,8 +90,9 @@ class DriveTestSeeder extends Seeder
         $driveAuth = new DriveAuth();
         $driveAuth->drive_first_name = ucwords("isabelle");
         $driveAuth->drive_last_name = ucwords("gordons");
-        $driveAuth->drive_password = Hash::make("0783938959");
+        $driveAuth->drive_password = Hash::make("isabellegordons@393");
         $driveAuth->drive_gender = ucwords("female");
+        $driveAuth->drive_phone = "0695625623";
         $driveAuth->save();
 
         $driveData = new DriveData();

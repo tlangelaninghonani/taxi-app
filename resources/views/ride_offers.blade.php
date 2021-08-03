@@ -61,7 +61,7 @@
                         {{ $areOffers = true }}
                     </div>
                     <p>
-                        <div onclick="redirectTo('/ride/{{ $driveA->id }}/request')" class="display-flex">
+                        <div onclick="redirectTo('/ride/{{ $driveA->id }}/request/accepted')" class="display-flex-normal gap-10">
                             <div>
                                 <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
                             </div>
@@ -70,6 +70,15 @@
                                 <div class="trunc-text">
                                     <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
                                     <strong>{{ $driveD->drive_vehicle_type }}</strong>
+                                </div>
+                                <div id="{{ $driveAuth->drive_gender.$driveAuth->id }}" class="display-flex-normal gender">
+                                    @if($driveA->drive_gender == "Male")
+                                        <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                    @elseif($driveA->drive_gender == "Female")
+                                        <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                    @else
+                                        <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                    @endif
                                 </div>
                                 <div class="rating-stars-small">
                                     @for($i = 1; $i <= 5; $i++)
@@ -84,8 +93,8 @@
                                         @endif
                                     @endfor
                                 </div>
-                                <span>From <strong>{{ json_decode($rideData->ride_plans, true)[$k]["ride_from"] }}</strong></span><br>
-                                <span>To <strong>{{ json_decode($rideData->ride_plans, true)[$k]["ride_to"] }}</strong></span><br>
+                                <!--<span>From <strong>{{ json_decode($rideData->ride_plans, true)[$k]["ride_from"] }}</strong></span><br>
+                                <span>To <strong>{{ json_decode($rideData->ride_plans, true)[$k]["ride_to"] }}</strong></span><br>-->
                             </div>
                         </div>
                     </p>

@@ -92,7 +92,7 @@
                             <span class="material-icons-round">
                             check_circle
                             </span>
-                            <span>Accepted</span>
+                            <span>Accepted & offered</span>
                         </div>
                     </div>
                 </p>
@@ -119,18 +119,32 @@
                                                 <span class="display-none">{{ $totalRequestsFromRiders++ }}</span>    
                                                 <div class="display-none">
                                                     {{ $requests_count++ }}
-                                                    {{ $ride_first_name = $rideAuth->find($ride->ride_id)->ride_first_name }}
-                                                    {{ $ride_last_name = $rideAuth->find($ride->ride_id)->ride_last_name }}
+                                                    {{ $rideA = $rideAuth::find($ride->ride_id) }}
                                                 </div>
                                                 <p>
-                                                    <div class="display-flex" onclick="redirectTo('/drive/{{ $ride->ride_id }}/request')">
+                                                    <div class="display-flex-normal gap-10" onclick="redirectTo('/drive/{{ $ride->ride_id }}/request')">
                                                         <div>
+                                                            @if($ride->ride_profile_image == "")
+                                                            <span class="material-icons-round empty-profile-medium">
+                                                            account_circle
+                                                            </span><br>
+                                                            @else
                                                             <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
+                                                            @endif  
                                                         </div>
                                                         <div class="trunc-text">
-                                                            <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
-                                                            <span>From <strong>{{ $requestData["ride_from"] }}</strong></span><br>
-                                                            <span>To <strong>{{ $requestData["ride_to"] }}</strong></span>
+                                                            <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
+                                                            <div class="display-flex-normal gender">
+                                                                @if($rideA->ride_gender == "Male")
+                                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                                @elseif($rideA->ride_gender == "Female")
+                                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                                @else
+                                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                                @endif
+                                                            </div>
+                                                            <span>Pick-up <strong>{{ $requestData["ride_from"] }}</strong></span><br>
+                                                            <span>Drop <strong>{{ $requestData["ride_to"] }}</strong></span>
                                                         </div>
                                                     </div>
                                                 </p>
@@ -157,7 +171,7 @@
                                 <span class="material-icons-round">
                                 check_circle
                                 </span>
-                                <span>Accepted requests</span>
+                                <span>Accepted & offered</span>
                             </div>
                         </p>
                         <p>
@@ -169,18 +183,32 @@
                                             <span class="display-none">{{ $totalRequestsFromRiders++ }}</span> 
                                             <div class="display-none">
                                                 {{ $accepted_requests_count++ }}
-                                                {{ $ride_first_name = $rideAuth->find($ride->ride_id)->ride_first_name }}
-                                                {{ $ride_last_name = $rideAuth->find($ride->ride_id)->ride_last_name }}
+                                                {{ $rideA = $rideAuth::find($ride->ride_id) }}
                                             </div>
                                             <p>
-                                                <div class="display-flex" onclick="redirectTo('/drive/{{ $ride->ride_id }}/request/accepted')">
+                                                <div class="display-flex-normal gap-10" onclick="redirectTo('/drive/{{ $ride->ride_id }}/request/accepted')">
                                                     <div>
+                                                        @if($ride->ride_profile_image == "")
+                                                        <span class="material-icons-round empty-profile-medium">
+                                                        account_circle
+                                                        </span><br>
+                                                        @else
                                                         <img class="profile-image" src="{{ $ride->ride_profile_image }}" alt="">
+                                                        @endif  
                                                     </div>
                                                     <div class="trunc-text">
-                                                        <span class="title">{{ $ride_first_name." ".$ride_last_name }}</span><br>
-                                                        <span>From <strong>{{ $requestData["ride_from"] }}</strong></span><br>
-                                                        <span>To <strong>{{ $requestData["ride_to"] }}</strong></span>
+                                                        <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
+                                                        <div class="display-flex-normal gender">
+                                                            @if($rideA->ride_gender == "Male")
+                                                                <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                            @elseif($rideA->ride_gender == "Female")
+                                                                <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                            @else
+                                                                <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                            @endif
+                                                        </div>
+                                                        <span>Pick-up <strong>{{ $requestData["ride_from"] }}</strong></span><br>
+                                                        <span>Drop <strong>{{ $requestData["ride_to"] }}</strong></span>
                                                     </div>
                                                 </div>
                                             </p>
@@ -193,7 +221,7 @@
                         <p>
                             @if($accepted_requests_count == 0)
                                 <div class="text-align-center">
-                                    <span>No accepted requests</span>
+                                    <span>No accepted requests or offers</span>
                                 </div>
                             @endif
                         </p>
@@ -222,9 +250,11 @@
                 <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116716.15173817966!2d29.381065563392927!3d-23.91160360229813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ec6d8401183307b%3A0xa720ddd4b18e4df7!2sPolokwane!5e0!3m2!1sen!2sza!4v1626522553343!5m2!1sen!2sza" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
                 <div id="map"></div>
                 <div class="app-padding">
-                    <div class="text-align-center">
-                        <span class="title">On trip with {{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
-                    </div>
+                    <p>
+                        <div class="text-align-center">
+                            <span class="title">On trip with {{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}...</span><br>
+                        </div>
+                    </p>
                     <div id="tripinfo" class="text-align-center ">
                         <p>
                             <span>From <strong>{{ $driveTrip["drive_from"] }}</strong></span><br>
