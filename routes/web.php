@@ -48,6 +48,7 @@ Route::post("/drive/signup/personal", [App\Http\Controllers\SignupController::cl
 Route::get("/drive/signup/vehicle", [App\Http\Controllers\SignupController::class, "driveVehicleIndex"]);
 Route::post("/drive/signup/vehicle", [App\Http\Controllers\SignupController::class, "driveVehicle"]);
 Route::post("/drive/signup", [App\Http\Controllers\SignupController::class, "driveSignup"]);
+Route::post("/drive/profile/upload/image", [App\Http\Controllers\DataController::class, "driveProfilePictureEdit"]);
 
 
 Route::get("/ride/dashboard", [App\Http\Controllers\RideDashboardController::class, "index"]);
@@ -70,8 +71,7 @@ Route::post("/ride/profile/update", [App\Http\Controllers\DataController::class,
 Route::get("/ride/signup/personal", [App\Http\Controllers\SignupController::class, "ridePersonalIndex"]);
 Route::post("/ride/signup/personal", [App\Http\Controllers\SignupController::class, "ridePersonal"]);
 Route::post("/ride/signup", [App\Http\Controllers\SignupController::class, "rideSignup"]);
-
-
+Route::post("/ride/profile/upload/image", [App\Http\Controllers\DataController::class, "rideProfilePictureEdit"]);
 
 
 

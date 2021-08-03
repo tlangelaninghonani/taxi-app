@@ -40,17 +40,69 @@
             <div class="display-center">
                 <div class="text-align-center">
                     @if($rideData->ride_profile_image == "")
-                        <span class="material-icons-round empty-profile-large">
-                        account_circle
-                        </span><br>
+                        <div class="position-relative">
+                            <span class="material-icons-round empty-profile-large">
+                            account_circle
+                            </span><br>
+                            <span onclick="closePopup('profileedit')" class="material-icons-round change-profile-image">
+                            edit
+                            </span>
+                        </div>
                     @else
-                        <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                        <div class="position-relative">
+                            <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                            <span onclick="closePopup('profileedit')" class="material-icons-round change-profile-image">
+                            edit
+                            </span>
+                        </div>
                     @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
                     <span>Phone <strong>{{ $rideAuth->ride_phone }}</strong></span>
                 </div>
             </div>
         </p>
+        <form class="display-none" id="uploadform" action="/ride/profile/upload/image" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method("POST")
+            <input type="file" name="image" id="image" accept="image/png, image/jpg, image/jpeg, image/gif">
+        </form>
+        <div id="profileedit" class="profile-edit display-none">
+            <div>
+                <div class="text-align-right">
+                    <span class="material-icons-round" onclick="closePopup('profileedit')">
+                    close
+                    </span>
+                </div>
+                <p>
+                    <div class="text-align-center">
+                        @if($rideData->ride_profile_image == "")
+                            <span class="material-icons-round empty-profile-large">
+                            account_circle
+                            </span><br>
+                        @else
+                            <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                        @endif
+
+                    </div>
+                </p>
+                <div class="display-flex-center gap">
+                    <div class="display-flex-normal" onclick="uploadSubmit('image', 'uploadform')">
+                        <span class="material-icons-round">
+                        image
+                        </span>
+                        <span>Upload</span>
+                    </div>
+                    @if($rideData->ride_profile_image != "")
+                        <div class="display-flex-normal" onclick="submitForm('uploadform')">
+                            <span class="material-icons-round">
+                            delete
+                            </span>
+                            <span>Remove</span>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
         <p>
             <div class="curved-top">
                 <p>

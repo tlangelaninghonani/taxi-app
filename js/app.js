@@ -108,6 +108,20 @@ function search(containerId, itemsClass, keyword){
     }
 }
 
+function uploadSubmit(fileId, formId){
+    let file = document.querySelector("#"+fileId);
+    let form = document.querySelector("#"+formId);
+    file.click();
+    file.onchange = function(){
+        form.submit();
+    }
+}
+
+function submitForm(formId){
+    let form = document.querySelector("#"+formId);
+    form.submit();
+}
+
 function nextPlanEnd(hide, show){
     document.querySelector("#"+hide).style.display = "none";
     document.querySelector("#"+show).style.display = "block";

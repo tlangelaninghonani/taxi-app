@@ -631,6 +631,46 @@ class DataController extends Controller
         ]);
     }
 
+    public function rideProfilePictureEdit(Request $req){
+        $ride_id =  intval(Session::get("ride_id"));
+
+        $rideAuth = RideAuth::findorfail($ride_id);
+        $rideData = RideData::where("ride_id", $ride_id)->first();
+
+        if($req->file("image")){
+            $file = $req->file("image");
+            $uniqueFileName = uniqid().$file->getClientOriginalName();
+            $file->move("storage/ride/profile", $uniqueFileName);
+            $rideData->ride_profile_image = "/storage/ride/profile/$uniqueFileName";
+        }else{
+            $rideData->ride_profile_image = "";  
+        }
+
+        $rideData->save();
+
+        return back();
+    }
+
+    public function driveProfilePictureEdit(Request $req){
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
+
+        if($req->file("image")){
+            $file = $req->file("image");
+            $uniqueFileName = uniqid().$file->getClientOriginalName();
+            $file->move("storage/drive/profile", $uniqueFileName);
+            $driveData->drive_profile_image = "/storage/drive/profile/$uniqueFileName";
+        }else{
+            $driveData->drive_profile_image = "";  
+        }
+
+        $driveData->save();
+
+        return back();
+    }
+
     public function rideProfileUpdate(Request $req){
         $ride_id =  intval(Session::get("ride_id"));
 

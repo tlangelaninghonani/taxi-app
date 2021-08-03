@@ -65,6 +65,32 @@ body{
         gap: 5px;
     }
 
+    .gray-padding{
+        padding: 10px !important;
+        background-color: rgb(238, 238, 238);
+        border-radius: 50%;
+    }
+
+    .profile-edit{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        z-index: 999999;
+        padding: var(--padding);
+    }
+
+    .change-profile-image{
+        position: absolute;
+        bottom: 0;
+        background-color: white;
+        padding: 4px;
+        border-radius: 50%;
+        margin-left: 20px;
+    }
+
     .display-flex-normal{
         display: flex;
         align-items: center;
@@ -176,6 +202,9 @@ body{
 
         outline: none;
   
+    }
+    input[type=file]{
+        display: none;
     }
     :-webkit-autofill::first-line {
         font-family: "Montserrat", sans-serif;
