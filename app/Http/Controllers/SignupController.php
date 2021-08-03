@@ -5,11 +5,79 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RideAuth;
 use App\Models\RideData;
+use App\Models\DriveAuth;
+use App\Models\DriveData;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class SignupController extends Controller
 {
+    public function drivePersonalIndex(){
+        return view("drive_signup_personal");
+    }
+
+    public function drivePersonal(Request $req){
+        Session::put("firstname", ucwords($req->firstname));
+        Session::put("lastname", ucwords($req->lastname));
+        Session::put("phone", $req->phone);
+        Session::put("gender", ucwords($req->gender));
+        if(DriveAuth::where("drive_first_name", Session::get("firstname"))
+        ->where("drive_last_name", Session::get("lastname"))
+        ->where("drive_phone", $req->phone)->exists()){
+            Session::put("error", true);
+            return back();
+        }
+        if(driveAuth::where("drive_phone", $req->phone)->exists()){
+            Session::put("error", true);
+            return back();
+        }
+        Session::put("drivedetails", true);
+        return redirect("/drive/signup/vehicle");
+    }
+
+    public function driveVehicle(Request $req){
+        Session::put("vehiclename", ucwords($req->vehiclename));
+        Session::put("vehicletype", ucwords($req->vehicletype));
+        Session::put("vehicleplate", $req->vehicleplate);
+        Session::put("vehiclecolor", ucwords($req->vehiclecolor));
+
+        return view("drive_signup_password");
+    }
+
+    public function driveVehicleIndex(){
+        if(Session::has("drivedetails")){
+            return view("drive_signup_vehicle");
+        }else{
+            return redirect("/drive/signup/personal");
+        }
+    }
+
+
+    public function driveSignup(Request $req){
+        $drive = new DriveAuth();
+        $drive->drive_first_name = Session::get("firstname");
+        $drive->drive_last_name = Session::get("lastname");
+        $drive->drive_phone = Session::get("phone");
+        $drive->drive_gender = Session::get("gender");
+        $drive->drive_password = Hash::make($req->password);
+
+        $drive->save();
+
+        $driveData = new DriveData();
+        $driveData->drive_id = $drive->id;
+        $driveData->drive_profile_image = "";
+        $driveData->drive_vehicle = Session::get("vehiclename");
+        $driveData->drive_vehicle_type = Session::get("vehicletype");
+        $driveData->drive_vehicle_plate = Session::get("vehicleplate");
+        $driveData->drive_vehicle_color = Session::get("vehiclecolor");
+
+        $driveData->save();
+
+        Session::put("drive_id", $drive->id);
+        Session::put("hasLogged", true);
+        return redirect("/drive/dashboard");
+    }
+
     public function ridePersonalIndex(){
         return view("ride_signup_personal");
     }

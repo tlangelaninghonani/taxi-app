@@ -46,7 +46,13 @@
         <p>
             <div class="display-center">
                 <div class="text-align-center">
-                    <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                    @if($driveData->drive_profile_image == "")
+                        <span class="material-icons-round empty-profile-large">
+                        account_circle
+                        </span><br>
+                    @else
+                        <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                    @endif
                     <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
                     <div class="trunc-text">
                         <span>Drives <strong>{{ $driveData->drive_vehicle }} - </strong></span>

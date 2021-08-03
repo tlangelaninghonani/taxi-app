@@ -65,7 +65,13 @@
                         <p>
                             <div class="display-flex-normal gap-10">
                                 <div>
+                                    @if($driveData->drive_profile_image == "")
+                                    <span class="material-icons-round empty-profile-medium">
+                                    account_circle
+                                    </span><br>
+                                    @else
                                     <img class="profile-image" src="{{ $driveData->drive_profile_image }}" alt="">
+                                    @endif
                                 </div>
                                 <div class="trunc-text">
                                     @if($driveData->on_trip == true)

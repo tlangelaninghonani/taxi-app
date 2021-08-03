@@ -43,6 +43,12 @@ Route::post("/drive/profile/update", [App\Http\Controllers\DataController::class
 Route::get("/drive/reviews", [App\Http\Controllers\DataController::class, "driveReviewsIndex"]);
 Route::get("/drive/review/{id}/view", [App\Http\Controllers\DataController::class, "driveReviewView"]);
 Route::get("/drive/offers", [App\Http\Controllers\DataController::class, "driveOffersIndex"]);
+Route::get("/drive/signup/personal", [App\Http\Controllers\SignupController::class, "drivePersonalIndex"]);
+Route::post("/drive/signup/personal", [App\Http\Controllers\SignupController::class, "drivePersonal"]);
+Route::get("/drive/signup/vehicle", [App\Http\Controllers\SignupController::class, "driveVehicleIndex"]);
+Route::post("/drive/signup/vehicle", [App\Http\Controllers\SignupController::class, "driveVehicle"]);
+Route::post("/drive/signup", [App\Http\Controllers\SignupController::class, "driveSignup"]);
+
 
 Route::get("/ride/dashboard", [App\Http\Controllers\RideDashboardController::class, "index"]);
 Route::get("/ride/signin", [App\Http\Controllers\SigninController::class, "rideSigninIndex"]);
@@ -63,8 +69,6 @@ Route::get("/ride/profile", [App\Http\Controllers\DataController::class, "ridePr
 Route::post("/ride/profile/update", [App\Http\Controllers\DataController::class, "rideProfileUpdate"]);
 Route::get("/ride/signup/personal", [App\Http\Controllers\SignupController::class, "ridePersonalIndex"]);
 Route::post("/ride/signup/personal", [App\Http\Controllers\SignupController::class, "ridePersonal"]);
-Route::get("/ride/signup/vehicle", [App\Http\Controllers\SignupController::class, "rideVehicleIndex"]);
-Route::post("/ride/signup/vehicle", [App\Http\Controllers\SignupController::class, "rideVehicle"]);
 Route::post("/ride/signup", [App\Http\Controllers\SignupController::class, "rideSignup"]);
 
 

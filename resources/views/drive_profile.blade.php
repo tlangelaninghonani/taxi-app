@@ -39,7 +39,13 @@
         <p>
             <div class="display-center">
                 <div class="text-align-center">
-                    <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                    @if($driveData->drive_profile_image == "")
+                        <span class="material-icons-round empty-profile-large">
+                        account_circle
+                        </span><br>
+                    @else
+                        <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                    @endif
                     <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
                     <span>Drives <strong>{{ $driveData->drive_vehicle }}</strong></span><br>
                     <strong>{{ $driveData->drive_vehicle_type }}</strong>
@@ -61,13 +67,14 @@
         </p>
         <p>
             <div class="curved-top">
+                <p>
+                    <span class="title title-margin-left">Edit your details</span>
+                </p>
                 <form class="app-padding" action="/drive/profile/update" method="POST">
                     @csrf
                     @method("POST")
-                    <p>
-                        <span>First name</span><br>
-                        <input type="text" name="firstname" value="{{ $driveAuth->drive_first_name }}" placeholder="Enter First name">
-                    </p>
+                    <span>First name</span><br>
+                    <input type="text" name="firstname" value="{{ $driveAuth->drive_first_name }}" placeholder="Enter First name">
                     <p>
                         <span>Last name</span><br>
                         <input type="text" name="lastname" value="{{ $driveAuth->drive_last_name }}" placeholder="Enter Last name">

@@ -62,6 +62,11 @@
                     </p>
                 </form>
             </p>
+            <p>
+                <div class="text-align-center">
+                    <span>Don't have an account yet? <strong onclick="redirectTo('/drive/signup/personal')">Sign up</strong></span>
+                </div>
+            </p>
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>

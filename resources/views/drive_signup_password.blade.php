@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ $links['css'] }}">
-    <title>Ride sign up</title>
+    <title>Drive sign up</title>
 </head>
 <body>
     <div class="container">
@@ -30,36 +30,30 @@
         </p>
         <div class="curved-top app-padding">
             <p>
-                <span class="title title-margin-left">Vehicle details</span>
+                <span class="title title-margin-left">Enter your password</span>
             </p>
             <p>
-                <form action="/drive/signup/vehicle" method="POST">
+                <form action="/drive/signup" method="POST">
                     @csrf
                     @method("POST")
                     <p>
-                        <span>Vehicle name</span><br>
-                        <input type="text" id="vehiclename" name="vehiclename" placeholder="Enter Vehicle name" required>
+                        <span>Password</span><br>
+                        <input type="password" id="password" onkeyup="verifyPasswords('signupubutton')" name="password" placeholder="Enter Password" required>
                     </p>
                     <p>
-                        <span>Vehicle type</span><br>
-                        <select name="vehicletype" id="vehicletype">
-                            <option value="hatchback">Hatchback</option>
-                            <option value="sedan">Sedan</option>
-                            <option value="executive">Executive</option>
-                            <option value="pickup">Pick-up</option>
-                            <option value="bus">Bus</option>
-                        </select>
+                        <span>Confirm password</span><br>
+                        <input type="password" id="confirm" onkeyup="verifyPasswords('signupubutton')" placeholder="Confirm password" required>
                     </p>
                     <p>
-                        <span>Vehicle plate</span><br>
-                        <input type="text" id="vehicleplate" name="vehicleplate" placeholder="Enter Vehicle plate" required>
+                        <div id="passwordlengtherr" class="text-align-center display-none">
+                            <span>Password should be more than 8 characters</span>
+                        </div>
+                        <div id="passwordmatcherr" class="text-align-center display-none">
+                            <span>Passwords does not match</span>
+                        </div>
                     </p>
                     <p>
-                        <span>Vehicle color</span><br>
-                        <input type="text" id="vehiclecolor" name="vehiclecolor" placeholder="Enter Vehicle color" required>
-                    </p>
-                    <p>
-                        <button>Next</button>
+                        <button id="signupubutton">Sign up</button>
                     </p>
                 </form>
             </p>
