@@ -750,7 +750,7 @@ class DataController extends Controller
         $chat = new Chat();
         $chat->drive_id = $driveAuth->id;
         $chat->ride_id = $rideAuth->id;
-        $chat->from = $rideAuth->id;
+        $chat->from = "ride";
         $chat->chat = $req->chat;
         $chat->save();
     }
@@ -767,7 +767,7 @@ class DataController extends Controller
         $chat = new Chat();
         $chat->drive_id = $driveAuth->id;
         $chat->ride_id = $rideAuth->id;
-        $chat->from = $driveAuth->id;
+        $chat->from = "drive";
         $chat->chat = $req->chat;
         $chat->save();
     }

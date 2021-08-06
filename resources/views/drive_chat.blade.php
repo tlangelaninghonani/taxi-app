@@ -28,6 +28,11 @@
                 </span>
             </div>
             <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>

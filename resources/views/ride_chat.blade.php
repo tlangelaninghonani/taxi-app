@@ -28,6 +28,11 @@
                 </span>
             </div>
             <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -86,40 +91,41 @@
             <div id="chats">
                 @if($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->count() > 0)
                     @foreach($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->get() as $chat)   
-                        @if($chat->from == $driveAuth->id)
-                        <div class="display-flex chat-padding-drive">
-                            <div>
-                                @if($driveData->drive_profile_image == "")
-                                <span class="material-icons-round empty-profile-small">
-                                account_circle
-                                </span><br>
-                                @else
-                                <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt="">
-                                @endif
+                        @if($chat->from == "drive")
+                            <div class="display-flex chat-padding-drive">
+                                <div>
+                                    @if($driveData->drive_profile_image == "")
+                                    <span class="material-icons-round empty-profile-small">
+                                    account_circle
+                                    </span><br>
+                                    @else
+                                    <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt="">
+                                    @endif
+                                </div>
+                                <div class="drive-chat">
+                                    <span>
+                                    {{ $chat->chat }}
+                                    </span>
+                                </div>
                             </div>
-                            <div class="drive-chat">
-                                <span>
-                                {{ $chat->chat }}
-                                </span>
-                            </div>
-                        </div>
                         @else
-                        <div class="display-flex-end chat-padding">
-                            <div class="ride-chat">
-                                <span>
-                                {{ $chat->chat }}
-                                </span>
+                        
+                            <div class="display-flex-end chat-padding">
+                                <div class="ride-chat">
+                                    <span>
+                                    {{ $chat->chat }}
+                                    </span>
+                                </div>
+                                <div class="ride-profile-image">
+                                    @if($rideAuth->ride_profile_image == "")
+                                    <span class="material-icons-round empty-profile-small">
+                                    account_circle
+                                    </span><br>
+                                    @else
+                                    <img class="profile-image" src="{{ $rideAuth->ride_profile_image }}" alt="">
+                                    @endif
+                                </div>
                             </div>
-                            <div class="ride-profile-image">
-                                @if($rideAuth->ride_profile_image == "")
-                                <span class="material-icons-round empty-profile-small">
-                                account_circle
-                                </span><br>
-                                @else
-                                <img class="profile-image" src="{{ $rideAuth->ride_profile_image }}" alt="">
-                                @endif
-                            </div>
-                        </div>
                         @endif
                     @endforeach
                 @else
