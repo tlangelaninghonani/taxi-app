@@ -302,7 +302,7 @@ body{
         border-bottom-left-radius: 30px;
         background-color: rgb(243, 243, 243);
         padding: 18px;
-        width: 80%;
+        max-width: 65%;
     }
 
     .chat-padding{

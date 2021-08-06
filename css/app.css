@@ -301,8 +301,8 @@ body{
         border-bottom-right-radius: 30px;
         border-bottom-left-radius: 30px;
         background-color: rgb(243, 243, 243);
-        width: 80%;
         padding: 18px;
+        max-width: 65%;
     }
 
     .chat-padding{
