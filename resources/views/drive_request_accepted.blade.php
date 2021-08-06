@@ -89,7 +89,7 @@
                             <span class="material-icons-round">
                             question_answer
                             </span>
-                            <span>Chat with {{ $rideAuth->drive_first_name }}</span>
+                            <span>Chat with {{ $rideAuth->ride_first_name }}</span>
                         </div>
                     </div>
                 </p>
@@ -107,16 +107,16 @@
                                 </form>
                             </p>
                         @else
+                            <div class="text-align-center">
+                                <span class="title">{{ $rideAuth->ride_first_name }} requested a pick-up</span>
+                            </div>
                             <p>
-                                <div class="text-align-center">
-                                    <span class="title">{{ $rideAuth->ride_first_name }} requested a pick-up</span>
-                                </div>
+                                <form action="/drive/{{ $request->id }}/request/pickup/confirm" method="POST">
+                                    @csrf
+                                    @method("POST")
+                                    <button>Confirm pick-up</button>
+                                </form>
                             </p>
-                            <form action="/drive/{{ $request->id }}/request/pickup/confirm" method="POST">
-                                @csrf
-                                @method("POST")
-                                <button>Confirm pick-up</button>
-                            </form>
                         @endif
                         
                     @else
