@@ -320,6 +320,7 @@ body{
         border-bottom-right-radius: 30px;
         background-color: rgb(243, 243, 243);
         padding: 18px;
+        width: 80%;
     }
     .ride-chat *{
         color: black;
