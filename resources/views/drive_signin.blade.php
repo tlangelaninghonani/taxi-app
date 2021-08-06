@@ -40,7 +40,7 @@
                     @method("POST")
                     <p>
                         <span>Phone</span><br>
-                        <input type="text" id="phone" placeholder="Enter Phone" name="phone" required>
+                        <input type="tel" id="phone" placeholder="Enter Phone" name="phone" required>
                     </p>
                     <p>
                         <span>Password</span><br>
