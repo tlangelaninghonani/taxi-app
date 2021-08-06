@@ -18,7 +18,7 @@ class CreateChatsTable extends Migration
             $table->text("drive_id");
             $table->text("ride_id");
             $table->text("chat");
-            $table->integer("from");
+            $table->text("from");
             $table->timestamps();
         });
     }
