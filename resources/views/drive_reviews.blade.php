@@ -48,7 +48,7 @@
             @if($reviews::where("drive_id", $driveAuth->id)->count() > 0)
                 @foreach($reviews::where("drive_id", $driveAuth->id)->get() as $review)
                     <div style="display: none">
-                        {{ $rideA = $rideAuth::find($review->drive_id) }}
+                        {{ $rideA = $rideAuth::find($review->ride_id) }}
                         {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                     </div>
                     <p>
