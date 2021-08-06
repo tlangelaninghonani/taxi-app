@@ -17,11 +17,27 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round ">
+           <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
-
+        <div class="menu display-none" id="menu">
+            <div class="text-align-right">
+                <span class="material-icons-round" onclick="closePopup('menu')">
+                close
+                </span>
+            </div>
+            <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
+                <a href="/signout">
+                    <span> Sign out</span>
+                </a>
+            </p>
+        </div>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -62,58 +78,121 @@
                 </div>
             </div>
         </p>
-        <p>
-            <div class="text-align-center">
-                <span>Pick-up <strong>{{ $rideRequest["ride_from"] }}</strong></span><br>
-                <span>Drop <strong>{{ $rideRequest["ride_to"] }}</strong></span>
-            </div>
-        </p>
-        <div id="tripinfo" class="text-align-center ">
-            <p>
-                <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>
-                <span>Estimated time <strong id="triptime">{{ $rideRequest["ride_time"] }}</strong></span><br>
-                <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideRequest["ride_charges"] }}</strong></span>
-            </p>
-        </div>
-        <div class="curved-top app-padding">
-            <div>
-                @if($rideData->pick_up_requested == true)
-                    @if($driveData->confirm_pickup == true)
-                        @if($driveData->on_trip == true)
-                            <script>
-                                window.location.href = "/ride/dashboard";
-                            </script>
-                        @endif
-                        <p>
+        <div class="curved-top">
+            <div id="map"></div>
+            <div class="app-padding">
+                <p>
+                    <div class="text-align-center">
+                        <span class="title">Pick-up</span><br>
+                        <span>{{ $request->ride_from }}</span><br>
+                        <span class="title">Drop</span><br>
+                        <span>{{ $request->ride_to }}</span>
+                    </div>
+                </p>
+                <div id="tripinfo" class="text-align-center ">
+                    <p>
+                        <span>Distance <strong id="tripdistance">{{ $request->ride_distance }}</strong></span><br>
+                        <span>Estimated time <strong id="triptime">{{ $request->ride_duration }}</strong></span><br>
+                        <span class="title">Charges R<strong class="title" id="tripcharges">{{ $request->ride_charges }}</strong></span>
+                    </p>
+                </div>
+                <form id="drivertochat" action="/ride/{{ $driveAuth->id }}/chat" method="POST">
+                    @csrf
+                    @method("POST")
+                </form>
+                <p>
+                    <div class="display-flex-center">
+                        <div class="display-flex-normal" onclick="submitForm('drivertochat')">
+                            <span class="material-icons-round">
+                            question_answer
+                            </span>
+                            <span>Chat with {{ $driveAuth->drive_first_name }}</span>
+                        </div>
+                    </div>
+                </p>
+                <div class="app-padding">
+                    @if($request->pick_up_requested )
+                        @if($request->pick_up_confirmed)
+                            @if($rideData->ride_on_trip)
+                                <script>
+                                    window.location.href = "/ride/dashboard";
+                                </script>
+                            @endif
                             <div class="text-align-center">
                                 <span class="title">{{ $driveAuth->drive_first_name }} is on the way to pick you up...</span>
                             </div>
-                        </p> 
+                        @else
+                            <div class="text-align-center">
+                                <span class="title">Waiting for {{ $driveAuth->drive_first_name }} to confirm pick-up...</span>
+                            </div>
+                        @endif
                     @else
-                    <p>
-                        <div class="text-align-center">
-                            <span class="title">Waiting for {{ $driveAuth->drive_first_name }} to confirm pick-up...</span>
-                        </div>
-                    </p>
-                    @endif
-                    
-                @else
-                <p>
                     <div class="text-align-center">
                         <span class="title">{{ $driveAuth->drive_first_name }} is waiting for your pick-up request...</span>
                     </div>
-                </p>
-                <p>
-                    <form action="/ride/{{ $driveAuth->id }}/request/pickup" method="POST">
-                    @csrf
-                    @method("POST")
-                        <button>Request pick-up</button>
-                    </form>
-                </p>
-                @endif
+                    <p>
+                        <form action="/ride/{{ $request->id }}/request/pickup" method="POST">
+                        @csrf
+                        @method("POST")
+                            <button>Request pick-up</button>
+                        </form>
+                    </p>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+    function drawLine(){
+        const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -33.8688, lng: 151.2195 },
+        zoom: 12,
+        mapId: "4cce301a9d6797df",
+        disableDefaultUI: true,
+        });
+
+        let directionsService = new google.maps.DirectionsService();
+        var directionsOptions = {
+            polylineOptions: {
+                strokeColor: 'red',
+                strokeWeight: 2,
+            }
+        }
+        let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
+        directionsRenderer.setMap(map); // Existing map object displays directions
+        // Create route from existing points used for markers
+        const route = {
+            origin: {lat: parseFloat("{{ $request->ride_from_lat }}"), lng: parseFloat("{{ $request->ride_from_lng }}")},
+            destination: {lat: parseFloat("{{ $request->ride_to_lat }}"), lng: parseFloat("{{ $request->ride_to_lng }}")},
+            travelMode: 'DRIVING'
+        }
+
+        directionsService.route(route,
+            function(response, status) { // anonymous function to capture directions
+            if (status !== 'OK') {
+                window.alert('Directions request failed due to ' + status);
+                return;
+            } else {
+                directionsRenderer.setDirections(response); // Add route to the map
+                var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                if (!directionsData) {
+                window.alert('Directions request failed');
+                return;
+                }
+                else {
+                    document.querySelector("#tripinfo").style.display = "block";
+                    document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
+                    document.querySelector("#triptime").innerHTML = directionsData.duration.text;
+                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
+                }
+            }
+        });
+    }
+    </script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=drawLine&libraries=places&v=weekly"
+    async
+    ></script>
 </body>
 </html>

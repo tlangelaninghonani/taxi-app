@@ -17,6 +17,11 @@
                 </span>
             </div>
             <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -33,9 +38,6 @@
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">Profile</span>
-        </p>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -127,56 +129,6 @@
                 </form>
             </div>
         </p>
-    </div>
-    <div class="bottom-controls">
-        <div class="bottom-controls-item">
-            <a href="/ride/dashboard">
-                <span class="material-icons-round">
-                home
-                </span><br>
-                
-            </a>
-        </div>
-        <div class="bottom-controls-item">
-            <a href="/ride/history">
-                <span class="material-icons-round">
-                watch_later
-                </span><br>
-                
-            </a>
-        </div>
-        <div class="bottom-controls-item">
-            <a href="/ride/plans">
-                <span class="material-icons-round">
-                travel_explore
-                </span><br>
-        
-            </a>
-        </div>
-        <div class="bottom-controls-item">
-            <a href="/ride/drivers">
-                <span class="material-icons-round">
-                local_taxi
-                </span><br>
-            
-            </a>
-        </div>
-        <div class="bottom-controls-item">
-            <a href="/ride/offers">
-                <span class="material-icons-round">
-                local_offer
-                </span><br>
-            
-            </a>
-        </div>
-        <div class="bottom-controls-item">
-            <a href="/ride/profile">
-                <span class="material-icons-round">
-                account_circle
-                </span><br>
-                
-            </a>
-        </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
 </body>

@@ -28,6 +28,11 @@
                 </span>
             </div>
             <p>
+                <a href="/drive/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -44,55 +49,42 @@
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">Offers you sent to riders plans</span>
-        </p>
         <div class="offers">
-            <div class="display-none">
-                {{ $totalOffers = false }}
-            </div>
-            @foreach($rideAuth::all() as $auth)
-                <div class="display-none">
-                    {{ $rideD = $rideData::where("ride_id", $auth->id)->first() }}
-                </div>
-                @foreach(json_decode($rideD->ride_offers, true) as $driver_id => $rideOffers)
-                    @if($driver_id == $driveAuth->id)
-                        @foreach($rideOffers as $k => $v)
-                            <div class="display-none">
-                                {{ $totalOffers = true }}
+            @if($offers::where("drive_id", $driveAuth->id)->count() > 0)
+                @foreach($offers::where("drive_id", $driveAuth->id)->get() as $offer)
+                    <div class="display-none">
+                        {{ $rideA = $rideAuth::find($offer->ride_id) }}
+                        {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
+                    </div>
+                    <p>
+                        <div onclick="redirectTo('/drive/{{ $offer->id }}/riders/plans')" class="display-flex">
+                            <div>
+                                @if($rideD->ride_profile_image == "")
+                                <span class="material-icons-round empty-profile-medium">
+                                account_circle
+                                </span><br>
+                                @else
+                                <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                                @endif 
                             </div>
-                            <p>
-                                <div onclick="redirectTo('/drive/riders/{{ $auth->id }}/plans')" class="display-flex">
-                                    <div>
-                                        @if($rideD->ride_profile_image == "")
-                                        <span class="material-icons-round empty-profile-medium">
-                                        account_circle
-                                        </span><br>
-                                        @else
-                                        <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
-                                        @endif 
-                                    </div>
-                                    <div class="trunc-text">
-                                        <span class="title">{{ $auth->ride_first_name." ".$auth->ride_last_name }}</span><br> 
-                                        <div class="display-flex-normal gender">
-                                            @if($auth->ride_gender == "Male")
-                                                <span>Gender <strong>{{ $auth->ride_gender }}</strong></span>
-                                            @elseif($auth->ride_gender == "Female")
-                                                <span>Gender <strong>{{ $auth->ride_gender }}</strong></span>
-                                            @else
-                                                <span>Gender <strong>{{ $auth->ride_gender }}</strong></span>
-                                            @endif
-                                        </div>
-                                        <span>Pick-up <strong>{{ json_decode($rideD->ride_plans, true)[$k]["ride_from"] }}</strong></span><br>
-                                        <span>Drop <strong>{{ json_decode($rideD->ride_plans, true)[$k]["ride_to"] }}</strong></span><br>
-                                    </div>
+                            <div class="trunc-text">
+                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br> 
+                                <div class="display-flex-normal gender">
+                                    @if($rideA->ride_gender == "Male")
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @elseif($rideA->ride_gender == "Female")
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @else
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @endif
                                 </div>
-                            </p>
-                        @endforeach
-                    @endif
+                                <span>Pick-up <strong>{{ $offer->ride_from }}</strong></span><br>
+                                <span>Drop <strong>{{ $offer->ride_to }}</strong></span><br>
+                            </div>
+                        </div>
+                    </p>
                 @endforeach
-            @endforeach
-            @if($totalOffers == false)
+            @else
                 <div class="text-align-center">
                     <span class="material-icons-round icon-large">
                     local_offer
@@ -108,7 +100,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-     
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -116,7 +108,7 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-                
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -124,7 +116,7 @@
                 <span class="material-icons-round">
                 edit
                 </span><br>
-     
+                <span class="title-small">Reviews</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -132,7 +124,7 @@
                 <span class="material-icons-round">
                 hail
                 </span><br>
-         
+                <span class="title-small">Riders</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -140,15 +132,15 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-                
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/profile">
+            <a href="/drive/chats">
                 <span class="material-icons-round">
-                account_circle
+                question_answer
                 </span><br>
-     
+                <span class="title-small">Chats</span>
             </a>
         </div>
     </div>

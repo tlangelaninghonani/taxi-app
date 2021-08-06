@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRideDataTable extends Migration
+class CreateChatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateRideDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('ride_data', function (Blueprint $table) {
+        Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->integer("ride_id");
-            $table->text("ride_profile_image")->nullable();
-            $table->boolean("ride_on_trip")->default(false);
+            $table->text("drive_id");
+            $table->text("ride_id");
+            $table->text("chat");
+            $table->integer("from");
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateRideDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ride_data');
+        Schema::dropIfExists('chats');
     }
 }

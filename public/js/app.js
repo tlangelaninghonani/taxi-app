@@ -30,16 +30,17 @@ function displayFilter(self, id){
     }
 }
 
-function openClosePlan(self, id){
+function openClosePlan(iconId, id){
+    let icon = document.querySelector("#"+iconId);
     let toClosePopup = document.querySelector("#"+id);
     if(toClosePopup.style.display == "" || toClosePopup.style.display == "none"){
         document.querySelector("#plans").style.display = "none";
         toClosePopup.style.display = "block";
-        self.innerHTML = "close";
+        icon.innerHTML = "close";
     }else{
         toClosePopup.style.display = "none";
         document.querySelector("#plans").style.display = "block";
-        self.innerHTML = "add";
+        icon.innerHTML = "add";
     }
 }
 function redirectTo(path){
@@ -117,6 +118,86 @@ function uploadSubmit(fileId, formId){
     }
 }
 
+function sendMessageDrive(chatsId, profilePictureId, messageId, driveId){
+    let message = document.querySelector("#"+messageId);
+    let chats = document.querySelector("#"+chatsId);
+    let driveChatContainer = document.createElement("div");
+    let rideChat = document.createElement("div");
+    let profilePicture = document.createElement("div");
+    profilePicture.innerHTML = document.querySelector("#"+profilePictureId).innerHTML;
+
+    if(message.value !== ""){
+        if(document.querySelector("#nocomment")){
+            document.querySelector("#nocomment").style.display = "none";
+        }
+        driveChatContainer.setAttribute("class", "display-flex chat-padding-drive");
+        rideChat.setAttribute("class", "drive-chat");
+        let messageSpan = document.createElement("span");
+        messageSpan.innerHTML = message.value;
+        driveChatContainer.appendChild(profilePicture);
+        rideChat.appendChild(messageSpan);
+        driveChatContainer.appendChild(rideChat);
+        chats.appendChild(driveChatContainer);
+
+        document.querySelector("#chat").value = message.value;
+        formData = new FormData(document.querySelector("#chatform"));
+
+        messageSpan.scrollIntoView();
+
+        $.ajax({
+        url : "/drive/"+driveId+"/chat/message",
+        type : 'POST',
+        cache: false,
+        data : formData,
+        processData: false, 
+        contentType: false,  
+        });
+
+        message.value = "";
+    }
+   
+}
+
+function sendMessage(chatsId, profilePictureId, messageId, driveId){
+    let message = document.querySelector("#"+messageId);
+    let chats = document.querySelector("#"+chatsId);
+    let rideChatContainer = document.createElement("div");
+    let rideChat = document.createElement("div");
+    let profilePicture = document.createElement("div");
+    profilePicture.innerHTML = document.querySelector("#"+profilePictureId).innerHTML;
+
+    if(message.value !== ""){
+        if(document.querySelector("#nocomment")){
+            document.querySelector("#nocomment").style.display = "none";
+        }
+        rideChatContainer.setAttribute("class", "display-flex-end chat-padding");
+        rideChat.setAttribute("class", "ride-chat");
+        let messageSpan = document.createElement("span");
+        messageSpan.innerHTML = message.value;
+        rideChat.appendChild(messageSpan);
+        rideChatContainer.appendChild(rideChat);
+        rideChatContainer.appendChild(profilePicture);
+        chats.appendChild(rideChatContainer);
+
+        document.querySelector("#chat").value = message.value;
+        formData = new FormData(document.querySelector("#chatform"));
+
+        messageSpan.scrollIntoView();
+
+        $.ajax({
+        url : "/ride/"+driveId+"/chat/message",
+        type : 'POST',
+        cache: false,
+        data : formData,
+        processData: false, 
+        contentType: false,  
+        });
+
+        message.value = "";
+    }
+   
+}
+
 function submitForm(formId){
     let form = document.querySelector("#"+formId);
     form.submit();
@@ -159,7 +240,8 @@ let map;
             position: {lat: position.coords.latitude, lng: position.coords.longitude},
             map: map,
             title: "Me",
-            
+            animation: google.maps.Animation.DROP,
+            icon: "https://img.icons8.com/color/48/000000/street-view.png"
         });
         },
       );
@@ -168,6 +250,34 @@ let map;
     }
 }
 
+function initMapCurrentLocDrive() {
+let map;
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -23.30246, lng: 30.71868},
+    zoom: 12,
+    mapId: "4cce301a9d6797df",
+    disableDefaultUI: true,
+  });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          const myLocation = new google.maps.Marker({
+            position: {lat: position.coords.latitude, lng: position.coords.longitude},
+            map: map,
+            title: "Me",
+            animation: google.maps.Animation.DROP,
+            icon: "https://img.icons8.com/color/48/000000/street-view.png"
+        });
+        },
+      );
+    } else {
+        console.log("Browser doesn't support Geolocation");
+    }
+}
 
 
 

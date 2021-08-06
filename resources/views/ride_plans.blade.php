@@ -23,6 +23,11 @@
                 </span>
             </div>
             <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -40,32 +45,36 @@
             </span>
         </div>
         <p>
-            <div class="display-flex-space-between">
-                <span class="title">Plans</span>
-                <span  onclick="openClosePlan(this, 'newplan')" class="material-icons-round new-plan-icon">
-                add
-                </span>
+            <div class="display-flex-end">
+                <div class="display-flex-normal" onclick="openClosePlan('closenewplan', 'newplan')">
+                    <span class="material-icons-round new-plan-icon" id="closenewplan">
+                    add
+                    </span>
+                    <span>New plan</span>
+                </div>
             </div>
         </p>
         <div id="plans">
-            @foreach(json_decode($rideData->ride_plans, true) as $ridePlans)
-                <p>
-                    <div class="display-flex">
-                        <div>
-                            <span class="material-icons-round plan-icon">
-                            schedule
-                            </span>
+            @if($plans::where("ride_id", $rideAuth->id)->count() > 0)
+                @foreach($plans::where("ride_id", $rideAuth->id)->get() as $plan)
+                    <p>
+                        <div class="display-flex" onclick="redirectTo('/ride/{{ $plan->id }}/plans/view')">
+                            <div>
+                                <span class="material-icons-round plan-icon">
+                                schedule
+                                </span>
+                            </div>
+                            <div class="trunc-text">
+                                <span class="title">{{ $plan->ride_date }} {{ $plan->ride_time }} {{ $plan->ride_meridiem }}</span><br> 
+                                <span>Pick-up <strong>{{ $plan->ride_from }}</strong></span><br>
+                                <span>Drop <strong>{{ $plan->ride_to }}</strong></span><br>
+
+                                <span>Charges <strong>R{{ $plan->ride_charges }}</strong></span>
+                            </div>
                         </div>
-                        <div>
-                            <span class="title">{{ $ridePlans["ride_date"] }} {{ $ridePlans["ride_time"] }} {{ $ridePlans["ride_meridiem"] }}</span><br>
-                            <span>From <strong>{{ $ridePlans["ride_from"] }}</strong></span><br>
-                            <span>To <strong>{{ $ridePlans["ride_to"] }}</strong></span><br>
-                            <span>Charges <strong>R{{ $ridePlans["ride_charges"] }}</strong></span>
-                        </div>
-                    </div>
-                </p>
-            @endforeach
-            @if(sizeof(json_decode($rideData->ride_plans, true)) == 0)
+                    </p>
+                @endforeach
+            @else
                 <div class="text-align-center">
                     <span class="material-icons-round icon-large">
                     travel_explore
@@ -133,7 +142,7 @@
                     <span class="material-icons-round">
                     home
                     </span><br>
-                 
+                    <span class="title-small">Home</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -141,7 +150,7 @@
                     <span class="material-icons-round">
                     watch_later
                     </span><br>
-                   
+                    <span class="title-small">History</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -149,7 +158,7 @@
                     <span class="material-icons-round">
                     travel_explore
                     </span><br>
-           
+                    <span class="title-small">Plans</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -157,7 +166,7 @@
                     <span class="material-icons-round">
                     local_taxi
                     </span><br>
-               
+                    <span class="title-small">Drivers</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -165,15 +174,15 @@
                     <span class="material-icons-round">
                     local_offer
                     </span><br>
-              
+                    <span class="title-small">Offers</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/ride/profile">
+                <a href="/ride/chats">
                     <span class="material-icons-round">
-                    account_circle
+                    question_answer
                     </span><br>
-                 
+                    <span class="title-small">Chats</span>
                 </a>
             </div>
         </div>
@@ -183,7 +192,13 @@
         function initAutocomplete() {
             let from, to;
             var points = false;
-            let directionsRenderer = new google.maps.DirectionsRenderer();
+            var directionsOptions = {
+                polylineOptions: {
+                    strokeColor: 'red',
+                    strokeWeight: 2,
+                }
+            }
+            let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
 
             const map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -33.8688, lng: 151.2195 },
@@ -235,6 +250,7 @@
                     map,
                     title: place.name,
                     position: place.geometry.location,
+                    animation: google.maps.Animation.DROP,
                 })
                 );
         
@@ -283,6 +299,7 @@
                     map,
                     title: place.name,
                     position: place.geometry.location,
+                    animation: google.maps.Animation.DROP,
                     })
                 );
             

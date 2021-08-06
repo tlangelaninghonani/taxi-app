@@ -23,6 +23,11 @@
                 </span>
             </div>
             <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -39,14 +44,11 @@
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">History</span>
-        </p>
         <div class="padding-bottom-layout">
-            @if(sizeof(json_decode($rideData->ride_history, true)) > 0)
-                @foreach(json_decode($rideData->ride_history, true) as $driveId => $rideHistory)
+            @if(sizeof($history::where("ride_id", $rideAuth->id)->get()) > 0)
+                @foreach($history::where("ride_id", $rideAuth->id)->get() as $rideHistory)
                     <div style="display: none">
-                        {{ $driveA = $driveAuth::find($driveId) }}
+                        {{ $driveA = $driveAuth::find($rideHistory->drive_id) }}
                         {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
                     </div>
                     <p>
@@ -107,7 +109,7 @@
                     <span class="material-icons-round">
                     home
                     </span><br>
-             
+                    <span class="title-small">Home</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -115,7 +117,7 @@
                     <span class="material-icons-round">
                     watch_later
                     </span><br>
-                  
+                    <span class="title-small">History</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -123,7 +125,7 @@
                     <span class="material-icons-round">
                     travel_explore
                     </span><br>
-               
+                    <span class="title-small">Plans</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -131,7 +133,7 @@
                     <span class="material-icons-round">
                     local_taxi
                     </span><br>
-                  
+                    <span class="title-small">Drivers</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -139,15 +141,15 @@
                     <span class="material-icons-round">
                     local_offer
                     </span><br>
-                
+                    <span class="title-small">Offers</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/ride/profile">
+                <a href="/ride/chats">
                     <span class="material-icons-round">
-                    account_circle
+                    question_answer
                     </span><br>
-
+                    <span class="title-small">Chats</span>
                 </a>
             </div>
         </div>

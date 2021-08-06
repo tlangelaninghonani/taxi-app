@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Hash;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         $links = array(
             "js" => "$prefix/js/app.js",
             "css" => "$prefix/css/app.css",
+            "hash" => new Hash(),
         );
         View::share("links", $links);
     }

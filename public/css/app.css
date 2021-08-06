@@ -1,24 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+:root{
+    --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    --padding: 1%;
+    --cust-black: black;
+}
 
 *{
     font-family: "Montserrat", sans-serif;
-    color: rgb(58, 58, 58);
+    color: var(--cust-black);
 }
 
 body{
     margin: 0;
 }
-:root{
-    --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-    --padding: 1%;
-}
+
 
 .container{
    display: none !important;
 }
 
 .title-small{
-    font-size: 15px !important;
+    font-size: 13px !important;
 }
 
 .bottom-controls{
@@ -94,6 +96,11 @@ body{
     .display-flex-normal{
         display: flex;
         align-items: center;
+    }
+
+    .display-flex-end{
+        display: flex;
+        justify-content: flex-end;
     }
 
     .gap-10{
@@ -198,6 +205,12 @@ body{
         border-radius: 50%;
     }
 
+    .gray-padding-button{
+        background-color: rgb(243, 243, 243);
+        padding: 2%;
+        border-radius: 30px;
+    }
+
     input:focus, button:focus, a:focus{
 
         outline: none;
@@ -282,13 +295,61 @@ body{
     
     }
 
+    .drive-chat{
+        box-sizing: border-box;
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        background-color: rgb(243, 243, 243);
+        padding: 18px;
+    }
+
+    .chat-padding{
+        padding-left: 20%;
+        margin-top: 2%;
+    }
+
+    .chat-padding-drive{
+        margin-top: 2%;
+    }
+
+    .ride-chat{
+        box-sizing: border-box;
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        background-color: rgb(243, 243, 243);
+        padding: 18px;
+    }
+    .ride-chat *{
+        color: black;
+    }
+    .type-message{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: var(--padding);
+        display: flex;
+        align-items: center;
+        background-color: white;
+    }
+
+    .send-message{
+        padding: 15px;
+    }
+
+    textarea{
+        resize: none;
+    }
+
     button{
         box-sizing: border-box;
         width: 100%;
         padding: 18px !important;
         border-radius: 30px;
         border: none;
-        background-color: rgb(36, 36, 36);
+        background-color: var(--cust-black);
         color: white;
     }
 
@@ -513,12 +574,23 @@ body{
         margin-left: 7px;
     }
 
+    .profile-image-small{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
     .empty-profile-large{
         font-size: 150px !important;
     }
 
     .empty-profile-medium{
         font-size: 93px !important;
+    }
+
+    .empty-profile-small{
+        font-size: 42px !important;
+        margin-left: 3px;
     }
     
     .profile-image-large{
@@ -555,9 +627,9 @@ body{
         right: 0;
         background-color: white;
         display: flex !important;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
-        padding: 5%;
+        padding: 2%;
     }
     .bottom-controls-item{
         text-align: center;

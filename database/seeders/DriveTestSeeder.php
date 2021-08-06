@@ -27,7 +27,7 @@ class DriveTestSeeder extends Seeder
         $driveData = new DriveData();
         $driveData->drive_id = $driveAuth->id;
         $driveData->drive_vehicle = ucwords("chevrolet blazer");
-        $driveData->drive_profile_image = "https://www.avoo.uk/images/home/profile-3.jpg";
+        $driveData->drive_profile_image = "";
         $driveData->drive_vehicle_type = ucwords("sedan");
         $driveData->drive_vehicle_plate = strtoupper("sdf 156 gp");
         $driveData->drive_vehicle_color = ucwords("black");
@@ -87,7 +87,7 @@ class DriveTestSeeder extends Seeder
         $driveData = new DriveData();
         $driveData->drive_id = $driveAuth->id;
         $driveData->drive_vehicle = ucwords("toyota prius");
-        $driveData->drive_profile_image = "https://i2.wp.com/www.thenewsnigeria.com.ng/wp-content/uploads/2020/09/Ray-Brown.jpeg?ssl=1";
+        $driveData->drive_profile_image = "";
         $driveData->drive_vehicle_type = ucwords("electric hatchback");
         $driveData->drive_vehicle_plate = strtoupper("idf 566 l");
         $driveData->drive_vehicle_color = ucwords("gray");

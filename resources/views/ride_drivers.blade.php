@@ -23,6 +23,11 @@
                 </span>
             </div>
             <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -39,9 +44,7 @@
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">Drivers</span>
-        </p>
+        @if(sizeof($driveAuths) > 0)
         <p>
             <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
             <div class="display-flex-center-align gap-small">
@@ -142,6 +145,14 @@
                 @endforeach
             </div>
         </p>
+        @else
+        <div class="text-align-center">
+            <span class="material-icons-round icon-large">
+            hail
+            </span><br>
+            <span>No riders</span>
+        </div>
+        @endif
     </div>
     <div class="bottom-controls">
         <div class="bottom-controls-item">
@@ -149,7 +160,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -157,7 +168,7 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-               
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -165,7 +176,7 @@
                 <span class="material-icons-round">
                 travel_explore
                 </span><br>
-               
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -173,7 +184,7 @@
                 <span class="material-icons-round">
                 local_taxi
                 </span><br>
-        
+                <span class="title-small">Drivers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -181,15 +192,15 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-             
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/ride/profile">
+            <a href="/ride/chats">
                 <span class="material-icons-round">
-                account_circle
+                question_answer
                 </span><br>
-
+                <span class="title-small">Chats</span>
             </a>
         </div>
     </div>

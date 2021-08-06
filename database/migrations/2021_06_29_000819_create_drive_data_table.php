@@ -21,13 +21,8 @@ class CreateDriveDataTable extends Migration
             $table->text("drive_vehicle_type");
             $table->text("drive_vehicle_plate");
             $table->text("drive_vehicle_color");
-            $table->text("drive_reviews")->default("[]");
             $table->decimal("drive_ratings", 4, 2)->default(0.0);
-            $table->text("ride_offers")->default("[]");
-            $table->text("drive_trip")->nullable();
-            $table->boolean("drive_on_trip")->default(false);
-            $table->text("drive_history")->default("[]");
-            $table->boolean("confirm_pickup")->default(false);
+             $table->boolean("drive_on_trip")->default(false);
             $table->timestamps();
         });
     }

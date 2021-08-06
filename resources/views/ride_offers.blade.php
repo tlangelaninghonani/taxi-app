@@ -28,6 +28,11 @@
                 </span>
             </div>
             <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -44,24 +49,18 @@
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">Offers for your ride plans</span>
-        </p>
         <div class="offers">
             <div class="display-none">
                 {{ $areOffers = false }}
             </div>
-            @foreach(json_decode($rideData->ride_offers, true) as $driver_id => $rideOffers)
-                <div class="display-none">
-                    {{ $driveA = $driveAuth::find($driver_id) }}
-                    {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
-                </div>
-                @foreach($rideOffers as $k => $v)
+            @if($offers::where("ride_id", $rideAuth->id)->count() > 0)
+                @foreach($offers::where("ride_id", $rideAuth->id)->get() as $offer)
                     <div class="display-none">
-                        {{ $areOffers = true }}
+                        {{ $driveA = $driveAuth::find($offer->drive_id) }}
+                        {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
                     </div>
                     <p>
-                        <div onclick="redirectTo('/ride/{{ $driveA->id }}/request/accepted')" class="display-flex-normal gap-10">
+                        <div onclick="redirectTo('/ride/{{ $offer->request_id }}/request/accepted')" class="display-flex-normal gap-10">
                             <div>
                                 @if($driveD->drive_profile_image == "")
                                 <span class="material-icons-round empty-profile-medium">
@@ -99,14 +98,11 @@
                                         @endif
                                     @endfor
                                 </div>
-                                <!--<span>From <strong>{{ json_decode($rideData->ride_plans, true)[$k]["ride_from"] }}</strong></span><br>
-                                <span>To <strong>{{ json_decode($rideData->ride_plans, true)[$k]["ride_to"] }}</strong></span><br>-->
                             </div>
                         </div>
                     </p>
                 @endforeach
-            @endforeach
-            @if($areOffers == false)
+            @else
                 <div class="text-align-center">
                     <span class="material-icons-round icon-large">
                     local_offer
@@ -122,7 +118,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-           
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -130,7 +126,7 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-           
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -138,7 +134,7 @@
                 <span class="material-icons-round">
                 travel_explore
                 </span><br>
-       
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -146,7 +142,7 @@
                 <span class="material-icons-round">
                 local_taxi
                 </span><br>
-             
+                <span class="title-small">Drivers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -154,15 +150,15 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-      
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/ride/profile">
+            <a href="/ride/chats">
                 <span class="material-icons-round">
-                account_circle
+                question_answer
                 </span><br>
-             
+                <span class="title-small">Chats</span>
             </a>
         </div>
     </div>

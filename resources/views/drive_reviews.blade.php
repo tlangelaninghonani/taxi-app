@@ -23,6 +23,11 @@
                 </span>
             </div>
             <p>
+                <a href="/drive/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -39,18 +44,15 @@
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">Reviews</span>
-        </p>
         <div class="padding-bottom-layout">
-            @if(sizeof(json_decode($driveData->drive_reviews, true)) > 0)
-                @foreach(json_decode($driveData->drive_reviews, true) as $rideId => $driveReviews)
+            @if($reviews::where("drive_id", $driveAuth->id)->count() > 0)
+                @foreach($reviews::where("drive_id", $driveAuth->id)->get() as $review)
                     <div style="display: none">
-                        {{ $rideA = $rideAuth::find($rideId) }}
+                        {{ $rideA = $rideAuth::find($review->drive_id) }}
                         {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                     </div>
                     <p>
-                        <div class="display-flex-normal gap-10" onclick="redirectTo('/drive/review/{{ $rideId }}/view')">
+                        <div class="display-flex-normal gap-10" onclick="redirectTo('/drive/review/{{ $review->id }}/view')">
                             <div>
                                 @if($rideD->ride_profile_image == "")
                                 <span class="material-icons-round empty-profile-medium">
@@ -68,7 +70,7 @@
                                     </div>
                                     <div class="rating-stars-small">
                                         @for($i = 1; $i <= 5; $i++)
-                                            @if($i <= $driveReviews["ratings"])
+                                            @if($i <= $review->ratings)
                                                 <span class="material-icons-round" style="color: orange">
                                                 star
                                                 </span>
@@ -80,7 +82,8 @@
                                         @endfor
                                     </div>
                                 </div>
-                                <span>{{ $driveReviews["comment"] }}</span>
+                                <span>Pick-up <strong>{{ $review->ride_from }}</strong></span><br>
+                                <span>Drop <strong>{{ $review->ride_to }}</strong></span><br>
                             </div>
                         </div>
                     </p>
@@ -100,7 +103,7 @@
                     <span class="material-icons-round">
                     home
                     </span><br>
-        
+                    <span class="title-small">Home</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -108,7 +111,7 @@
                     <span class="material-icons-round">
                     watch_later
                     </span><br>
-                    
+                    <span class="title-small">History</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -116,7 +119,7 @@
                     <span class="material-icons-round">
                     edit
                     </span><br>
-        
+                    <span class="title-small">Reviews</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
@@ -124,27 +127,26 @@
                     <span class="material-icons-round">
                     hail
                     </span><br>
-            
+                    <span class="title-small">Riders</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/drive/offer">
+                <a href="/drive/offers">
                     <span class="material-icons-round">
                     local_offer
                     </span><br>
-                    
+                    <span class="title-small">Offers</span>
                 </a>
             </div>
             <div class="bottom-controls-item">
-                <a href="/drive/profile">
+                <a href="/drive/chats">
                     <span class="material-icons-round">
-                    account_circle
+                    question_answer
                     </span><br>
-        
+                    <span class="title-small">Chats</span>
                 </a>
             </div>
         </div>
-    </div>
     <script src="{{ $links['js'] }}"></script>
 </body>
 </html>

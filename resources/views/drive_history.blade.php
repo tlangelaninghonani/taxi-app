@@ -23,6 +23,11 @@
                 </span>
             </div>
             <p>
+                <a href="/drive/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -39,14 +44,11 @@
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">History</span>
-        </p>
         <div class="padding-bottom-layout">
-            @if(sizeof(json_decode($driveData->drive_history, true)) > 0)
-                @foreach(json_decode($driveData->drive_history, true) as $rideId => $driveHistory)
+            @if(sizeof($history::where("drive_id", $driveAuth->id)->get()) > 0)
+                @foreach($history::where("drive_id", $driveAuth->id)->get() as $driveHistory)
                     <div style="display: none">
-                        {{ $rideA = $rideAuth::find($rideId) }}
+                        {{ $rideA = $rideAuth::find($driveHistory->ride_id) }}
                         {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                     </div>
                     <p>
@@ -71,8 +73,8 @@
                                         <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
                                     @endif
                                 </div>
-                                <span>Picked from <strong>{{ $driveHistory["drive_from"] }}</strong></span><br>
-                                <span>Dropped at <strong>{{ $driveHistory["drive_to"] }}</strong></span>
+                                <span>Picked-up <strong>{{ $driveHistory->ride_from }}</strong></span><br>
+                                <span>Dropped <strong>{{ $driveHistory->ride_to }}</strong></span>
                             </div>
                         </div>
                     </p>
@@ -93,7 +95,7 @@
                 <span class="material-icons-round">
                 home
                 </span><br>
-          
+                <span class="title-small">Home</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -101,7 +103,7 @@
                 <span class="material-icons-round">
                 watch_later
                 </span><br>
-             
+                <span class="title-small">History</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -109,7 +111,7 @@
                 <span class="material-icons-round">
                 edit
                 </span><br>
-  
+                <span class="title-small">Reviews</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -117,7 +119,7 @@
                 <span class="material-icons-round">
                 hail
                 </span><br>
-         
+                <span class="title-small">Riders</span>
             </a>
         </div>
         <div class="bottom-controls-item">
@@ -125,15 +127,15 @@
                 <span class="material-icons-round">
                 local_offer
                 </span><br>
-          
+                <span class="title-small">Offers</span>
             </a>
         </div>
         <div class="bottom-controls-item">
-            <a href="/drive/profile">
+            <a href="/drive/chats">
                 <span class="material-icons-round">
-                account_circle
+                question_answer
                 </span><br>
-             
+                <span class="title-small">Chats</span>
             </a>
         </div>
     </div>

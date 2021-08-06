@@ -28,7 +28,7 @@
                 </span>
             </div>
             <p>
-                <a href="/drive/profile">
+                <a href="/ride/profile">
                     <span>My account</span>
                 </a>
             </p>
@@ -41,22 +41,39 @@
         <p>
             <div class="display-center">
                 <div class="text-align-center">
-                    @if($rideData->ride_profile_image == "")
+                    @if($driveData->drive_profile_image == "")
                         <span class="material-icons-round empty-profile-large">
                         account_circle
                         </span><br>
                     @else
-                        <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                        <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                     @endif
-                    <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
-                    <div class="display-flex-center gender">
-                        @if($rideAuth->ride_gender == "Male")
-                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
-                        @elseif($rideAuth->ride_gender == "Female")
-                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                    <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
+                    <div class="trunc-text">
+                        <span>Drives <strong>{{ $driveData->drive_vehicle }} - </strong></span>
+                        <strong>{{ $driveData->drive_vehicle_type }}</strong>
+                    </div>
+                    <div class="display-flex-center">
+                        @if($driveAuth->drive_gender == "Male")
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                        @elseif($driveAuth->drive_gender == "Female")
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
                         @else
-                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
                         @endif
+                    </div>
+                    <div class="rating-stars-small-center">
+                        @for($i = 1; $i <= 5; $i++)
+                            @if($i <= floor($driveData->drive_ratings))
+                                <span class="material-icons-round" style="color: orange" >
+                                star
+                                </span>
+                            @else
+                                <span class="material-icons-round" >
+                                star
+                                </span>
+                            @endif
+                        @endfor
                     </div>
                 </div>
             </div>
@@ -79,48 +96,27 @@
                         <span class="title">Charges R<strong class="title" id="tripcharges">{{ $request->ride_charges }}</strong></span>
                     </p>
                 </div>
+                <form id="drivertochat" action="/ride/{{ $driveAuth->id }}/chat" method="POST">
+                    @csrf
+                    @method("POST")
+                </form>
                 <p>
                     <div class="display-flex-center">
-                        <div class="display-flex-normal gap-10" onclick="redirectTo('/ride/chats')">
+                        <div class="display-flex-normal" onclick="submitForm('drivertochat')">
                             <span class="material-icons-round">
                             question_answer
                             </span>
-                            <span>Chat with {{ $rideAuth->ride_first_name }}</span>
+                            <span>Chat with {{ $driveAuth->drive_first_name }}</span>
                         </div>
                     </div>
                 </p>
-                <div class="app-padding">
-                    @if($request->pick_up_requested)
-                        @if($request->pick_up_confirmed)
-                            <div class="text-align-center">
-                                <span class="title">Picked {{ $rideAuth->ride_first_name }}?</span>
-                            </div>
-                            <p>
-                                <form action="/drive/{{ $request->id }}/request/trip/start" method="POST">
-                                    @csrf
-                                    @method("POST")
-                                    <button>Drive</button>
-                                </form>
-                            </p>
-                        @else
-                            <p>
-                                <div class="text-align-center">
-                                    <span class="title">{{ $rideAuth->ride_first_name }} requested a pick-up</span>
-                                </div>
-                            </p>
-                            <form action="/drive/{{ $request->id }}/request/pickup/confirm" method="POST">
-                                @csrf
-                                @method("POST")
-                                <button>Confirm pick-up</button>
-                            </form>
-                        @endif
-                        
-                    @else
-                        <div class="text-align-center">
-                            <span class="title">Waiting for {{ $rideAuth->ride_first_name }} to request pick-up...</span>
-                        </div>
-                    @endif
-                </div>
+                <p>
+                    <form action="/ride/{{ $request->id }}/request/cancel" method="POST">
+                    @csrf
+                    @method("POST")
+                        <button>Cancel request</button>
+                    </form>
+                </p>
             </div>
         </div>
     </div>
@@ -161,6 +157,12 @@
                 if (!directionsData) {
                 window.alert('Directions request failed');
                 return;
+                }
+                else {
+                    document.querySelector("#tripinfo").style.display = "block";
+                    document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
+                    document.querySelector("#triptime").innerHTML = directionsData.duration.text;
+                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
                 }
             }
         });

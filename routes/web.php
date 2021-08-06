@@ -35,9 +35,9 @@ Route::get("/drive/history", [App\Http\Controllers\DataController::class, "drive
 Route::get("/drive/{id}/request/accepted", [App\Http\Controllers\DataController::class, "driveRequestAcceptedIndex"]);
 Route::post("/drive/{id}/request/pickup/confirm", [App\Http\Controllers\DataController::class, "driveConfirmPickup"]);
 Route::post("/drive/{id}/request/trip/start", [App\Http\Controllers\DataController::class, "driveOnTrip"]);
-Route::get("/drive/riders/{id}/plans", [App\Http\Controllers\DataController::class, "driveRidersPlansIndex"]);
-Route::post("/drive/{id}/{planCounter}/offer", [App\Http\Controllers\DataController::class, "driveOffer"]);
-//Route::post("/drive/{id}/offer/accept", [App\Http\Controllers\DataController::class, "driveOfferAccept"]);
+Route::get("/drive/{id}/riders/plans", [App\Http\Controllers\DataController::class, "driveRidersPlansIndex"]);
+Route::post("/drive/{id}/offer", [App\Http\Controllers\DataController::class, "driveOffer"]);
+Route::post("/drive/{id}/offer/cancel", [App\Http\Controllers\DataController::class, "driveOfferCancel"]);
 Route::get("/drive/profile", [App\Http\Controllers\DataController::class, "driveProfileIndex"]);
 Route::post("/drive/profile/update", [App\Http\Controllers\DataController::class, "driveProfileUpdate"]);
 Route::get("/drive/reviews", [App\Http\Controllers\DataController::class, "driveReviewsIndex"]);
@@ -49,7 +49,9 @@ Route::get("/drive/signup/vehicle", [App\Http\Controllers\SignupController::clas
 Route::post("/drive/signup/vehicle", [App\Http\Controllers\SignupController::class, "driveVehicle"]);
 Route::post("/drive/signup", [App\Http\Controllers\SignupController::class, "driveSignup"]);
 Route::post("/drive/profile/upload/image", [App\Http\Controllers\DataController::class, "driveProfilePictureEdit"]);
-
+Route::get("/drive/chats", [App\Http\Controllers\DataController::class, "driveChatsIndex"]);
+Route::post("/drive/{id}/chat", [App\Http\Controllers\DataController::class, "driveChatIndex"]);
+Route::post("/drive/{id}/chat/message", [App\Http\Controllers\DataController::class, "driveChat"]);
 
 Route::get("/ride/dashboard", [App\Http\Controllers\RideDashboardController::class, "index"]);
 Route::get("/ride/signin", [App\Http\Controllers\SigninController::class, "rideSigninIndex"]);
@@ -57,14 +59,17 @@ Route::post("/ride/signin", [App\Http\Controllers\SigninController::class, "ride
 Route::get("/ride/{id}/request", [App\Http\Controllers\DataController::class, "rideRequestIndex"]);
 Route::post("/ride/{id}/request", [App\Http\Controllers\DataController::class, "rideRequest"]);
 Route::match(array("POST", "GET"), "/ride/{id}/request/trip/end", [App\Http\Controllers\DataController::class, "rideRequestTripEnd"]);
-Route::get("/ride/{id}/rate", [App\Http\Controllers\DataController::class, "rateIndex"]);
 Route::post("/ride/{id}/rate", [App\Http\Controllers\DataController::class, "rate"]);
 Route::get("/ride/drivers", [App\Http\Controllers\DataController::class, "driversIndex"]);
 Route::get("/ride/plans", [App\Http\Controllers\DataController::class, "ridePlansIndex"]);
 Route::post("/ride/plans", [App\Http\Controllers\DataController::class, "ridePlans"]);
+Route::get("/ride/{id}/plans/view", [App\Http\Controllers\DataController::class, "ridePlanIndex"]);
+Route::post("/ride/{id}/plans/cancel", [App\Http\Controllers\DataController::class, "ridePlanCancel"]);
 Route::get("/ride/history", [App\Http\Controllers\DataController::class, "rideHistoryIndex"]);
 Route::get("/ride/{id}/request/accepted", [App\Http\Controllers\DataController::class, "rideRequestAcceptedIndex"]);
+Route::get("/ride/{id}/request/pending", [App\Http\Controllers\DataController::class, "rideRequestPendingIndex"]);
 Route::post("/ride/{id}/request/pickup", [App\Http\Controllers\DataController::class, "rideRequestPickup"]);
+Route::post("/ride/{id}/request/cancel", [App\Http\Controllers\DataController::class, "rideRequestCancel"]);
 Route::get("/ride/offers", [App\Http\Controllers\DataController::class, "rideOffersIndex"]);
 Route::get("/ride/profile", [App\Http\Controllers\DataController::class, "rideProfileIndex"]);
 Route::post("/ride/profile/update", [App\Http\Controllers\DataController::class, "rideProfileUpdate"]);
@@ -72,6 +77,9 @@ Route::get("/ride/signup/personal", [App\Http\Controllers\SignupController::clas
 Route::post("/ride/signup/personal", [App\Http\Controllers\SignupController::class, "ridePersonal"]);
 Route::post("/ride/signup", [App\Http\Controllers\SignupController::class, "rideSignup"]);
 Route::post("/ride/profile/upload/image", [App\Http\Controllers\DataController::class, "rideProfilePictureEdit"]);
+Route::get("/ride/chats", [App\Http\Controllers\DataController::class, "rideChatsIndex"]);
+Route::post("/ride/{id}/chat", [App\Http\Controllers\DataController::class, "rideChatIndex"]);
+Route::post("/ride/{id}/chat/message", [App\Http\Controllers\DataController::class, "rideChat"]);
 
 
 

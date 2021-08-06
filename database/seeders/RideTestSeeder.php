@@ -27,8 +27,7 @@ class RideTestSeeder extends Seeder
 
         $rideData = new RideData();
         $rideData->ride_id = $rideAuth->id;
-        $rideData->ride_profile_image = "https://www.telegraph.co.uk/multimedia/archive/03491/Vladimir_Putin_1_3491835k.jpg";
-        $rideData->ride_balance = 200.00;
+        $rideData->ride_profile_image = "";
 
         $rideData->save();
 
@@ -46,7 +45,6 @@ class RideTestSeeder extends Seeder
         $rideData = new RideData();
         $rideData->ride_id = $rideAuth->id;
         $rideData->ride_profile_image = "https://upload.wikimedia.org/wikipedia/commons/a/a0/Andrzej_Person_Kancelaria_Senatu.jpg";
-        $rideData->ride_balance = 500.00;
 
         $rideData->save();
 
@@ -64,7 +62,6 @@ class RideTestSeeder extends Seeder
         $rideData = new RideData();
         $rideData->ride_id = $rideAuth->id;
         $rideData->ride_profile_image = "https://blogs-images.forbes.com/danschawbel/files/2017/12/Dan-Schawbel_avatar_1512422077-400x400.jpg";
-        $rideData->ride_balance = 350.00;
 
         $rideData->save();
 
@@ -81,7 +78,6 @@ class RideTestSeeder extends Seeder
         $rideData = new RideData();
         $rideData->ride_id = $rideAuth->id;
         $rideData->ride_profile_image = "https://www.psypost.org/wp-content/uploads/2018/10/young-attractive-woman.jpg";
-        $rideData->ride_balance = 210.00;
 
         $rideData->save();
     }

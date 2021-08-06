@@ -8,6 +8,7 @@ use App\Models\RideAuth;
 use App\Models\DriveAuth;
 use App\Models\RideData;
 use App\Models\DriveData;
+use App\Models\RideRequest;
 
 class DriveDashboardController extends Controller
 {
@@ -21,25 +22,17 @@ class DriveDashboardController extends Controller
         $driveData = DriveData::where("drive_id", $drive_id)->first();
 
         $rideData = new RideData();
+ 
+        $trip = RideRequest::where("drive_id", $driveAuth->id)->where("on_trip", true)->first();
 
-        $rideRequest = null;
-        foreach($rideData::all() as $ride){
-            foreach(json_decode($ride->ride_requests, true) as $driveId => $requestData){
-                if($driveId == $driveAuth->id){
-                    $rideRequest = json_decode($ride->ride_requests, true)[$driveId];
-                    break;
-                }
-            }
-        }
-        $driveTrip = json_decode($driveData->drive_trip, true);
 
         return view("drive_dashboard", [
             "driveAuth" => $driveAuth,
             "driveData" => $driveData,
             "rideAuth" => new RideAuth(),
             "rideData" => new RideData(),
-            "rideRequest" => $rideRequest,
-            "driveTrip" => $driveTrip
+            "requests" => new RideRequest(),
+            "trip" => $trip,
         ]);
     }
 }

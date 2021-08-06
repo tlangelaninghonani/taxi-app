@@ -28,6 +28,11 @@
                 </span>
             </div>
             <p>
+                <a href="/ride/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -102,7 +107,7 @@
                     <input type="hidden" id="ridefromcoords" name="ridefromcoords">
                     <input type="hidden" id="ridetocoords" name="ridetocoords">
                     <input type="hidden" id="ridedistance" name="ridedistance">
-                    <input type="hidden" id="ridetime" name="ridetime">
+                    <input type="hidden" id="rideduration" name="rideduration">
 
                     <button id="requestbutton" class="display-none">Request</button>
                 </p>
@@ -114,7 +119,13 @@
         function initAutocomplete() {
             let from, to;
             var points = false;
-            let directionsRenderer = new google.maps.DirectionsRenderer();
+            var directionsOptions = {
+                polylineOptions: {
+                    strokeColor: 'red',
+                    strokeWeight: 2,
+                }
+            }
+            let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
 
             const map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: -33.8688, lng: 151.2195 },
@@ -166,6 +177,7 @@
                         map,
                         title: place.name,
                         position: place.geometry.location,
+                        animation: google.maps.Animation.DROP,
                     })
                 );
         
@@ -214,6 +226,7 @@
                     map,
                     title: place.name,
                     position: place.geometry.location,
+                    animation: google.maps.Animation.DROP,
                     })
                 );
             
@@ -240,6 +253,8 @@
                 travelMode: 'DRIVING'
             }
 
+            
+
             directionsService.route(route,
                 function(response, status) { // anonymous function to capture directions
                 if (status !== 'OK') {
@@ -263,7 +278,7 @@
                     document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
                     document.querySelector("#ridetocoords").value = JSON.stringify(destination);
                     document.querySelector("#ridedistance").value = directionsData.distance.text;
-                    document.querySelector("#ridetime").value = directionsData.duration.text;
+                    document.querySelector("#rideduration").value = directionsData.duration.text;
                   }
                 }
             });

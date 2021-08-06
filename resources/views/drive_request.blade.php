@@ -28,6 +28,11 @@
                 </span>
             </div>
             <p>
+                <a href="/drive/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -61,22 +66,22 @@
             <input type="hidden" id="ridefrom" value="{{ $rideData->ride_from }}">
             <input type="hidden" id="rideto" value="{{ $rideData->ride_to }}">
 
-            <form class="app-padding" action="/drive/{{ $rideAuth->id }}/request/accept" method="POST">
+            <form class="app-padding" action="/drive/{{ $request->id }}/request/accept" method="POST">
                 @csrf
                 @method("POST")
                 <div class="text-align-center">
                 <p>
                     <span class="title">Pick-up</span><br>
-                    <span>{{ $rideRequest["ride_from"] }}</span><br>
+                    <span>{{ $request->ride_from }}</span><br>
                     <span class="title">Drop</span><br>
-                    <span>{{ $rideRequest["ride_to"] }}</span>
+                    <span>{{ $request->ride_to }}</span>
                 </p>
                 </div>
                 <div id="tripinfo" class="text-align-center ">
                     <p>
-                        <span>Distance <strong id="tripdistance">{{ $rideRequest["ride_distance"] }}</strong></span><br>
-                        <span>Estimated time <strong id="triptime">{{ $rideRequest["ride_time"] }}</strong></span><br>
-                        <span class="title">Charges R<strong class="title" id="tripcharges">{{ $rideRequest["ride_charges"] }}</strong></span>
+                        <span>Distance <strong id="tripdistance">{{ $request->ride_distance }}</strong></span><br>
+                        <span>Estimated time <strong id="triptime">{{ $request->ride_duration }}</strong></span><br>
+                        <span class="title">Charges <strong class="title" id="tripcharges">R{{ $request->ride_charges }}</strong></span>
                     </p>
                 </div>
                 <p>
@@ -96,12 +101,18 @@
         });
 
         let directionsService = new google.maps.DirectionsService();
-        directionsRenderer = new google.maps.DirectionsRenderer();
+        var directionsOptions = {
+            polylineOptions: {
+                strokeColor: 'red',
+                strokeWeight: 2,
+            }
+        }
+        let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
         directionsRenderer.setMap(map); // Existing map object displays directions
         // Create route from existing points used for markers
         const route = {
-            origin: {lat: parseFloat("{{ json_decode($rideRequest['ride_from_coords'], true)['lat'] }}"), lng: parseFloat("{{ json_decode($rideRequest['ride_from_coords'], true)['lng'] }}")},
-            destination: {lat: parseFloat("{{ json_decode($rideRequest['ride_to_coords'], true)['lat'] }}"), lng: parseFloat("{{ json_decode($rideRequest['ride_to_coords'], true)['lng'] }}")},
+            origin: {lat: parseFloat("{{ $request->ride_from_lat }}"), lng: parseFloat("{{ $request->ride_from_lng }}")},
+            destination: {lat: parseFloat("{{ $request->ride_to_lat }}"), lng: parseFloat("{{ $request->ride_to_lng }}")},
             travelMode: 'DRIVING'
         }
 
@@ -117,12 +128,7 @@
                 window.alert('Directions request failed');
                 return;
                 }
-                else {
-                    document.querySelector("#tripinfo").style.display = "block";
-                    document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
-                    document.querySelector("#triptime").innerHTML = directionsData.duration.text;
-                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
-                }
+               
             }
         });
     }

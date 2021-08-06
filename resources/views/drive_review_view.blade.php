@@ -23,6 +23,11 @@
                 </span>
             </div>
             <p>
+                <a href="/drive/profile">
+                    <span>My account</span>
+                </a>
+            </p>
+            <p>
                 <a href="/signout">
                     <span> Sign out</span>
                 </a>
@@ -40,12 +45,15 @@
             </span>
         </div>
         <p>
-            <span class="title">{{ $rideAuth->ride_first_name }}'s review</span>
-        </p>
-        <p>
             <div class="display-center">
                 <div class="text-align-center">
-                    <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @if($rideData->ride_profile_image == "")
+                        <span class="material-icons-round empty-profile-large">
+                        account_circle
+                        </span><br>
+                    @else
+                        <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
+                    @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
                 </div>
             </div>
@@ -57,7 +65,7 @@
                 </div>
                 <div class="rating-stars-small">
                     @for($i = 1; $i <= 5; $i++)
-                        @if($i <= $driveReview["ratings"])
+                        @if($i <= $review->ratings)
                             <span class="material-icons-round" style="color: orange" >
                             star
                             </span>
@@ -72,59 +80,17 @@
         </p>
         <p>
             <div class="text-align-center">
-                <span>{{ $driveReview["comment"] }}</span>
+                <span class="title">Picked-up</span><br>
+                <span>{{ $review->ride_from }}</span><br>
+                <span class="title">Dropped</span><br>
+                <span>{{ $review->ride_to }}</span><br>
             </div>
         </p>
-        <div class="bottom-controls">
-            <div class="bottom-controls-item">
-                <a href="/drive/dashboard">
-                    <span class="material-icons-round">
-                    home
-                    </span><br>
-        
-                </a>
+        <p>
+            <div class="text-align-center">
+                <span>{{ $review->comment }}</span>
             </div>
-            <div class="bottom-controls-item">
-                <a href="/drive/history">
-                    <span class="material-icons-round">
-                    watch_later
-                    </span><br>
-                    
-                </a>
-            </div>
-            <div class="bottom-controls-item">
-                <a href="/drive/reviews">
-                    <span class="material-icons-round">
-                    edit
-                    </span><br>
-        
-                </a>
-            </div>
-            <div class="bottom-controls-item">
-                <a href="/drive/riders">
-                    <span class="material-icons-round">
-                    hail
-                    </span><br>
-            
-                </a>
-            </div>
-            <div class="bottom-controls-item">
-                <a href="/drive/offer">
-                    <span class="material-icons-round">
-                    local_offer
-                    </span><br>
-                    
-                </a>
-            </div>
-            <div class="bottom-controls-item">
-                <a href="/drive/profile">
-                    <span class="material-icons-round">
-                    account_circle
-                    </span><br>
-        
-                </a>
-            </div>
-        </div>
+        </p>
     </div>
     <script src="{{ $links['js'] }}"></script>
 </body>

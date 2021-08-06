@@ -19,9 +19,6 @@
            </div>
         </div>
         <p>
-            <span>Signing up for new drive account</span>
-        </p>
-        <p>
            <div class="text-align-center">
                 <span class="material-icons-round shadow-round choose-ride-drive">
                 local_taxi

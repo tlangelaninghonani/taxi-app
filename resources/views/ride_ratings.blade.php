@@ -17,9 +17,6 @@
                 </span>
                 <span class="app-name">InterCityRides</span>
            </div>
-           <span class="material-icons-round ">
-            more_vert
-            </span>
         </div>
         <p>
             <div class="display-center">
@@ -60,7 +57,7 @@
         </p>
         <p>
             <div class="curved-top">
-                <form class="app-padding" action="/ride/{{ $driveData->id }}/rate" method="POST">
+                <form class="app-padding" action="/ride/{{ $trip->id }}/rate" method="POST">
                     @csrf
                     @method("POST")
                     <p>
@@ -90,7 +87,7 @@
                         <input id="ratings" type="hidden" name="ratings" value="1">
                     <p>
                         <span>Comment</span><br>
-                        <input type="text" name="comment" placeholder="We'd love your feedback">
+                        <input type="text" name="comment" placeholder="We'd love your feedback" required>
                     </p>
                     <p>
                         <button>Rate</button>
