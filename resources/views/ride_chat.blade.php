@@ -9,7 +9,7 @@
     <title>Chat with {{ $driveAuth->drive_first_name }}</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container ext-padding">
         <div class="nav">
            <div class="display-flex">
                 <span class="material-icons-round">
