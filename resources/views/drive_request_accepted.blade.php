@@ -79,13 +79,17 @@
                         <span class="title">Charges R<strong class="title" id="tripcharges">{{ $request->ride_charges }}</strong></span>
                     </p>
                 </div>
+                <form id="ridertochat" action="/ride/{{ $rideAuth->id }}/chat" method="POST">
+                    @csrf
+                    @method("POST")
+                </form>
                 <p>
                     <div class="display-flex-center">
-                        <div class="display-flex-normal gap-10" onclick="redirectTo('/ride/chats')">
+                        <div class="display-flex-normal" onclick="submitForm('ridertochat')">
                             <span class="material-icons-round">
                             question_answer
                             </span>
-                            <span>Chat with {{ $rideAuth->ride_first_name }}</span>
+                            <span>Chat with {{ $rideAuth->drive_first_name }}</span>
                         </div>
                     </div>
                 </p>
