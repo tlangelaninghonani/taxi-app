@@ -19,6 +19,9 @@
            </div>
         </div>
         <p>
+            <span class="title">Signning up to ride</span>
+        </p>
+        <p>
            <div class="text-align-center">
                 <span class="material-icons-round shadow-round choose-ride-drive">
                 hail

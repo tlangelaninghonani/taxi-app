@@ -44,7 +44,9 @@
             more_vert
             </span>
         </div>
-
+        <p>
+            <span class="title">Ride plans</span>
+        </p>
         <div class="curved-top" id="plans">
             <div id="map"></div>
             <div class="app-padding">
