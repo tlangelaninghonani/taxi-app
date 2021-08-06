@@ -19,6 +19,8 @@ body{
    display: none !important;
 }
 
+
+
 .title-small{
     font-size: 13px !important;
 }
@@ -42,6 +44,10 @@ body{
 
     .width-100{
         width: 100%;
+    }
+
+    .ext-padding{
+        padding-bottom: 25%;
     }
 
     .display-flex{
