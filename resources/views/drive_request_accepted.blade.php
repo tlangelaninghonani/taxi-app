@@ -79,7 +79,7 @@
                         <span class="title">Charges R<strong class="title" id="tripcharges">{{ $request->ride_charges }}</strong></span>
                     </p>
                 </div>
-                <form id="ridertochat" action="/ride/{{ $rideAuth->id }}/chat" method="POST">
+                <form id="ridertochat" action="/drive/{{ $rideAuth->id }}/chat" method="POST">
                     @csrf
                     @method("POST")
                 </form>

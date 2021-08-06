@@ -65,7 +65,7 @@
             <div id="map"></div>
             <input type="hidden" id="ridefrom" value="{{ $rideData->ride_from }}">
             <input type="hidden" id="rideto" value="{{ $rideData->ride_to }}">
-            <form id="ridertochat" action="/ride/{{ $rideAuth->id }}/chat" method="POST">
+            <form id="ridertochat" action="/drive/{{ $rideAuth->id }}/chat" method="POST">
                 @csrf
                 @method("POST")
             </form>
