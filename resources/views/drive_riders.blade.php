@@ -47,7 +47,7 @@
             </p>
         </div>
         <p>
-            <span class="">Riders plans</span>
+            <span class="title">Riders plans</span>
         </p>
         <p>
             @if($plans::all()->count() > 0)

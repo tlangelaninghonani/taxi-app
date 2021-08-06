@@ -45,7 +45,7 @@
             </span>
         </div>
         <p>
-            <span class="">Reviews</span>
+            <span class="title">Reviews</span>
         </p>
         <div class="padding-bottom-layout">
             @if($reviews::where("drive_id", $driveAuth->id)->count() > 0)

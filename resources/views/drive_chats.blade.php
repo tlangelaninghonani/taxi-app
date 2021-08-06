@@ -115,6 +115,56 @@
         </div>
         @endif
     </div>
+    <div class="bottom-controls">
+        <div class="bottom-controls-item">
+            <a href="/drive/dashboard">
+                <span class="material-icons-round">
+                home
+                </span><br>
+                <span class="title-small">Home</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/history">
+                <span class="material-icons-round">
+                watch_later
+                </span><br>
+                <span class="title-small">History</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/reviews">
+                <span class="material-icons-round">
+                edit
+                </span><br>
+                <span class="title-small">Reviews</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/riders">
+                <span class="material-icons-round">
+                hail
+                </span><br>
+                <span class="title-small">Riders</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/offers">
+                <span class="material-icons-round">
+                local_offer
+                </span><br>
+                <span class="title-small">Offers</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/chats">
+                <span class="material-icons-round">
+                question_answer
+                </span><br>
+                <span class="title-small">Chats</span>
+            </a>
+        </div>
+    </div>
     <script src="{{ $links['js'] }}"></script>
 </body>
 </html>
