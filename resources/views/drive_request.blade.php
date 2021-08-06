@@ -65,7 +65,10 @@
             <div id="map"></div>
             <input type="hidden" id="ridefrom" value="{{ $rideData->ride_from }}">
             <input type="hidden" id="rideto" value="{{ $rideData->ride_to }}">
-
+            <form id="ridertochat" action="/ride/{{ $rideAuth->id }}/chat" method="POST">
+                @csrf
+                @method("POST")
+            </form>
             <form class="app-padding" action="/drive/{{ $request->id }}/request/accept" method="POST">
                 @csrf
                 @method("POST")
@@ -84,17 +87,13 @@
                         <span class="title">Charges <strong class="title" id="tripcharges">R{{ $request->ride_charges }}</strong></span>
                     </p>
                 </div>
-                <form id="ridertochat" action="/ride/{{ $rideAuth->id }}/chat" method="POST">
-                    @csrf
-                    @method("POST")
-                </form>
                 <p>
                     <div class="display-flex-center">
                         <div class="display-flex-normal" onclick="submitForm('ridertochat')">
                             <span class="material-icons-round">
                             question_answer
                             </span>
-                            <span>Chat with {{ $rideAuth->drive_first_name }}</span>
+                            <span>Chat with {{ $rideAuth->ride_first_name }}</span>
                         </div>
                     </div>
                 </p>

@@ -74,7 +74,7 @@
             <div id="chats">
                 @if($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->count() > 0)
                     @foreach($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->get() as $chat)   
-                        @if($chat->from == $driveAuth->id)
+                        @if($chat->from == "drive")
                         <div class="display-flex">
                             <div>
                                 @if($driveData->drive_profile_image == "")
