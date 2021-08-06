@@ -113,7 +113,6 @@ class SignupController extends Controller
         $rideData = new RideData();
         $rideData->ride_id = $ride->id;
         $rideData->ride_profile_image = "";
-        $rideData->ride_balance = 0.00;
 
         $rideData->save();
 
