@@ -47,6 +47,9 @@
             </p>
         </div>
         <p>
+            <span class="">Riders plans</span>
+        </p>
+        <p>
             @if($plans::all()->count() > 0)
                 <p>
                     <input type="text" id="search" onkeydown="search('riderscontainer', 'riders', this.value)" placeholder="Search riders">

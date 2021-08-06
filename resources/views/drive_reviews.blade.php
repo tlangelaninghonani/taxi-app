@@ -44,6 +44,9 @@
             more_vert
             </span>
         </div>
+        <p>
+            <span class="">Reviews</span>
+        </p>
         <div class="padding-bottom-layout">
             @if($reviews::where("drive_id", $driveAuth->id)->count() > 0)
                 @foreach($reviews::where("drive_id", $driveAuth->id)->get() as $review)

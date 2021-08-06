@@ -71,6 +71,9 @@
             @endif
         </div>
         <p>
+            <span class="title">Chat with {{ $rideAuth->ride_first_name }}</span>
+        </p>
+        <p>
             <div id="chats">
                 @if($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->count() > 0)
                     @foreach($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->get() as $chat)   

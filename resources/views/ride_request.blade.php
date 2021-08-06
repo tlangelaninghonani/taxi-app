@@ -39,6 +39,9 @@
             </p>
         </div>
         <p>
+            <span class="title">Requesting a ride to {{ $driveAuth->drive_first_name }}</span>
+        </p>
+        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($driveData->drive_profile_image == "")

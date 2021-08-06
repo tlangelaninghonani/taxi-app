@@ -39,6 +39,9 @@
             </p>
         </div>
         <p>
+            <span class="title">{{ $rideAuth->ride_first_name }}'s ride plans</span>
+        </p>
+        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($rideData->ride_profile_image == "")

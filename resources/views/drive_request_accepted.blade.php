@@ -39,6 +39,9 @@
             </p>
         </div>
         <p>
+            <span class="title">Accepted ride request</span>
+        </p>
+        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($rideData->ride_profile_image == "")
@@ -93,38 +96,36 @@
                         </div>
                     </div>
                 </p>
-                <div class="app-padding">
-                    @if($request->pick_up_requested)
-                        @if($request->pick_up_confirmed)
-                            <div class="text-align-center">
-                                <span class="title">Picked {{ $rideAuth->ride_first_name }}?</span>
-                            </div>
-                            <p>
-                                <form action="/drive/{{ $request->id }}/request/trip/start" method="POST">
-                                    @csrf
-                                    @method("POST")
-                                    <button>Drive</button>
-                                </form>
-                            </p>
-                        @else
-                            <div class="text-align-center">
-                                <span class="title">{{ $rideAuth->ride_first_name }} requested a pick-up</span>
-                            </div>
-                            <p>
-                                <form action="/drive/{{ $request->id }}/request/pickup/confirm" method="POST">
-                                    @csrf
-                                    @method("POST")
-                                    <button>Confirm pick-up</button>
-                                </form>
-                            </p>
-                        @endif
-                        
+                @if($request->pick_up_requested)
+                    @if($request->pick_up_confirmed)
+                        <div class="text-align-center">
+                            <span class="title">Picked {{ $rideAuth->ride_first_name }}?</span>
+                        </div>
+                        <p>
+                            <form action="/drive/{{ $request->id }}/request/trip/start" method="POST">
+                                @csrf
+                                @method("POST")
+                                <button>Drive</button>
+                            </form>
+                        </p>
                     @else
                         <div class="text-align-center">
-                            <span class="title">Waiting for {{ $rideAuth->ride_first_name }} to request pick-up...</span>
+                            <span class="title">{{ $rideAuth->ride_first_name }} requested a pick-up</span>
                         </div>
+                        <p>
+                            <form action="/drive/{{ $request->id }}/request/pickup/confirm" method="POST">
+                                @csrf
+                                @method("POST")
+                                <button>Confirm pick-up</button>
+                            </form>
+                        </p>
                     @endif
-                </div>
+                    
+                @else
+                    <div class="text-align-center">
+                        <span class="title">Waiting for {{ $rideAuth->ride_first_name }} to request pick-up...</span>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

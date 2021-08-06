@@ -44,6 +44,9 @@
             more_vert
             </span>
         </div>
+        <p>
+            <span class="title">Chats</span>
+        </p>
         @if($history::where("drive_id", $driveAuth->id)->exists() || $requests::where("drive_id", $driveAuth->id)->exists())
         <p>
             <input type="text" onkeydown="search('riderscontainer', 'riders', this.value)" placeholder="Search riders">

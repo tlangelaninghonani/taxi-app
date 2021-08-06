@@ -44,6 +44,9 @@
             more_vert
             </span>
         </div>
+        <p>
+            <span class="title">History with drivers</span>
+        </p>
         <div class="padding-bottom-layout">
             @if(sizeof($history::where("ride_id", $rideAuth->id)->get()) > 0)
                 @foreach($history::where("ride_id", $rideAuth->id)->get() as $rideHistory)

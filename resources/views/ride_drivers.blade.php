@@ -44,6 +44,9 @@
             more_vert
             </span>
         </div>
+        <p>
+            <span class="title">Drivers</span>
+        </p>
         @if(sizeof($driveAuths) > 0)
         <p>
             <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">

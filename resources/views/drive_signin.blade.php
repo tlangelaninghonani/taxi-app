@@ -19,16 +19,14 @@
            </div>
         </div>
         <p>
+            <span class="title">Signing in to drive</span>
+        </p>
+        <p>
            <div class="text-align-center">
                 <span class="material-icons-round shadow-round choose-ride-drive">
                 local_taxi
                 </span>
            </div>
-        </p>
-        <p>
-            <div class="text-align-center">
-                <span class="title">Keep your ride clean always to get better ratings</span>
-            </div>
         </p>
         <div class="curved-top app-padding">
             <p>

@@ -45,12 +45,15 @@
             </span>
         </div>
         <p>
-            <div class="display-flex-end">
-                <div class="display-flex-normal" onclick="openClosePlan('closenewplan', 'newplan')">
-                    <span class="material-icons-round new-plan-icon" id="closenewplan">
-                    add
-                    </span>
-                    <span>New plan</span>
+            <div class="display-flex-space-between">
+                <span class="title">Ride plans</span>
+                <div class="display-flex-end">
+                    <div class="display-flex-normal" onclick="openClosePlan('closenewplan', 'newplan')">
+                        <span class="material-icons-round new-plan-icon" id="closenewplan">
+                        add
+                        </span>
+                  
+                    </div>
                 </div>
             </div>
         </p>

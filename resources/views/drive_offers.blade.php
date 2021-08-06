@@ -49,6 +49,9 @@
             more_vert
             </span>
         </div>
+        <p>
+            <span class="title">Offers to riders plans</span>
+        </p>
         <div class="offers">
             @if($offers::where("drive_id", $driveAuth->id)->count() > 0)
                 @foreach($offers::where("drive_id", $driveAuth->id)->get() as $offer)

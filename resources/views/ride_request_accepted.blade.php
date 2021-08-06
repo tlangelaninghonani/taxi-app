@@ -39,6 +39,9 @@
             </p>
         </div>
         <p>
+            <span class="title">Accepted ride request</span>
+        </p>
+        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($driveData->drive_profile_image == "")
@@ -110,7 +113,7 @@
                         </div>
                     </div>
                 </p>
-                <div class="app-padding">
+                <div>
                     @if($request->pick_up_requested )
                         @if($request->pick_up_confirmed)
                             @if($rideData->ride_on_trip)

@@ -39,6 +39,9 @@
             </p>
         </div>
         <p>
+            <span class="title">Pending ride request</span>
+        </p>
+        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($driveData->drive_profile_image == "")

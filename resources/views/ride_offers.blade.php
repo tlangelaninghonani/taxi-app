@@ -49,6 +49,9 @@
             more_vert
             </span>
         </div>
+        <p>
+            <span class="title">Ride offers for your plans</span>
+        </p>
         <div class="offers">
             <div class="display-none">
                 {{ $areOffers = false }}

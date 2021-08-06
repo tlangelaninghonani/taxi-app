@@ -61,6 +61,9 @@
                 </div>
             </div>
         </p>
+        <p>
+            <span class="title">Ride request</span>
+        </p>
         <div class="curved-top padding-none">
             <div id="map"></div>
             <input type="hidden" id="ridefrom" value="{{ $rideData->ride_from }}">
