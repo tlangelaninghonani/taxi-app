@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <div class="menu display-none" id="menu">
-            <div class="text-align-right">
+            <div class="text-align-right ">
                 <span class="material-icons-round" onclick="closePopup('menu')">
                 close
                 </span>
@@ -70,7 +70,7 @@
         </form>
         <div id="profileedit" class="profile-edit display-none">
             <div>
-                <div class="text-align-right">
+                <div class="text-align-right picture-edit-close">
                     <span class="material-icons-round" onclick="closePopup('profileedit')">
                     close
                     </span>

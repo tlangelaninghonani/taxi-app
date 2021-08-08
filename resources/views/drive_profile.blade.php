@@ -98,7 +98,7 @@
         </form>
         <div id="profileedit" class="profile-edit display-none">
             <div>
-                <div class="text-align-right">
+                <div class="text-align-right picture-edit-close">
                     <span class="material-icons-round" onclick="closePopup('profileedit')">
                     close
                     </span>
