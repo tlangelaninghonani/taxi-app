@@ -228,26 +228,28 @@ let map;
     zoom: 12,
     mapId: "4cce301a9d6797df",
     disableDefaultUI: true,
+    fullscreenControl: true
   });
+  /*setInterval(function() {
+    }, 60 * 1000);*/
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          const myLocation = new google.maps.Marker({
-            position: {lat: position.coords.latitude, lng: position.coords.longitude},
-            map: map,
-            title: "Me",
-            animation: google.maps.Animation.DROP,
-            icon: "https://img.icons8.com/color/48/000000/street-view.png"
-        });
-        },
-      );
-    } else {
-        console.log("Browser doesn't support Geolocation");
-    }
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            const myLocation = new google.maps.Marker({
+              position: {lat: position.coords.latitude, lng: position.coords.longitude},
+              map: map,
+              title: "Me",
+              animation: google.maps.Animation.DROP,
+          });
+          },
+        );
+      } else {
+          console.log("Browser doesn't support Geolocation");
+      }
 }
 
 function initMapCurrentLocDrive() {
@@ -257,6 +259,7 @@ let map;
     zoom: 12,
     mapId: "4cce301a9d6797df",
     disableDefaultUI: true,
+    fullscreenControl: true
   });
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -270,7 +273,6 @@ let map;
             map: map,
             title: "Me",
             animation: google.maps.Animation.DROP,
-            icon: "https://img.icons8.com/color/48/000000/street-view.png"
         });
         },
       );
@@ -278,6 +280,7 @@ let map;
         console.log("Browser doesn't support Geolocation");
     }
 }
+
 
 
 
