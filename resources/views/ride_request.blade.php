@@ -126,7 +126,8 @@
                 polylineOptions: {
                     strokeColor: 'red',
                     strokeWeight: 2,
-                }
+                },
+                suppressMarkers: true
             }
             let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
 
@@ -181,6 +182,7 @@
                         title: place.name,
                         position: place.geometry.location,
                         animation: google.maps.Animation.DROP,
+                        icon: "https://img.icons8.com/color/48/000000/street-view.png"
                     })
                 );
         
@@ -204,10 +206,10 @@
                 return;
                 }
                 // Clear out the old markers.
-                markers.forEach((marker) => {
+                /*markers.forEach((marker) => {
                 marker.setMap(null);
                 });
-                markers = [];
+                markers = [];*/
                 // For each place, get the icon, name and location.
                 const bounds = new google.maps.LatLngBounds();
                 places.forEach((place) => {
@@ -230,6 +232,7 @@
                     title: place.name,
                     position: place.geometry.location,
                     animation: google.maps.Animation.DROP,
+                    icon: "https://img.icons8.com/color/48/000000/filled-flag2.png"
                     })
                 );
             
@@ -255,9 +258,6 @@
                 destination: destination,
                 travelMode: 'DRIVING'
             }
-
-            
-
             directionsService.route(route,
                 function(response, status) { // anonymous function to capture directions
                 if (status !== 'OK') {
