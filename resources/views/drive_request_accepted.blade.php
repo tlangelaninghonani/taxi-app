@@ -64,6 +64,7 @@
                             <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
                         @endif
                     </div>
+                    <span>Phone <strong>{{ $rideAuth->ride_phone }}</strong></span>
                 </div>
             </div>
         </p>
@@ -72,9 +73,19 @@
             <div class="app-padding">
                 <p>
                     <div class="text-align-center">
-                        <span class="title">Pick-up</span><br>
+                        <div class="display-flex-justify-center">
+                            <span class="material-icons-round">
+                            local_taxi
+                            </span>
+                            <span class="title">Pick-up</span><br>
+                        </div>
                         <span>{{ $request->ride_from }}</span><br>
-                        <span class="title">Drop</span><br>
+                        <div class="display-flex-justify-center">
+                            <span class="material-icons-round">
+                            my_location
+                            </span>
+                            <span class="title">Drop</span><br>
+                        </div>
                         <span>{{ $request->ride_to }}</span>
                     </div>
                 </p>

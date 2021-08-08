@@ -64,6 +64,7 @@
                             <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
                         @endif
                     </div>
+                    <span>Phone <strong>{{ $rideAuth->ride_phone }}</strong></span>
                 </div>
             </div>
         </p>

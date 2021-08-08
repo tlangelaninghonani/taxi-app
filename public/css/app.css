@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 :root{
     --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-    --padding: 10px;
+    --padding: 3px;
     --cust-black: black;
 }
 
@@ -139,7 +139,7 @@ body{
         display: flex;
         justify-content: space-between;
         box-shadow: var(--shadow);
-        padding: 10px;
+        padding: 5px 3px;
         position: fixed;
         top: 0;
         left: 0;

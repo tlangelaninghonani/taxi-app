@@ -223,10 +223,22 @@
                     </p>
                     <div id="tripinfo" class="text-align-center ">
                         <p>
-                            <span class="title">Picked-up</span><br>
-                            <span>{{ $trip->ride_from }}</span><br>
-                            <span class="title">Dropping</span><br>
-                            <span>{{ $trip->ride_to }}</span>
+                            <div class="text-align-center">
+                                <div class="display-flex-justify-center">
+                                    <span class="material-icons-round">
+                                    local_taxi
+                                    </span>
+                                    <span class="title">Pick-up</span><br>
+                                </div>
+                                <span>{{ $trip->ride_from }}</span><br>
+                                <div class="display-flex-justify-center">
+                                    <span class="material-icons-round">
+                                    my_location
+                                    </span>
+                                    <span class="title">Drop</span><br>
+                                </div>
+                                <span>{{ $trip->ride_to }}</span>
+                            </div>
                         </p>
                         <p>
                             <span>Distance <strong id="tripdistance">{{ $trip->ride_distance }}</strong></span><br>

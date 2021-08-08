@@ -86,10 +86,20 @@
         </p>
         <p>
             <div class="text-align-center">
-                <span class="title">Picked-up</span><br>
+                <div class="display-flex-justify-center">
+                    <span class="material-icons-round">
+                    local_taxi
+                    </span>
+                    <span class="title">Pick-up</span><br>
+                </div>
                 <span>{{ $review->ride_from }}</span><br>
-                <span class="title">Dropped</span><br>
-                <span>{{ $review->ride_to }}</span><br>
+                <div class="display-flex-justify-center">
+                    <span class="material-icons-round">
+                    my_location
+                    </span>
+                    <span class="title">Drop</span><br>
+                </div>
+                <span>{{ $review->ride_to }}</span>
             </div>
         </p>
         <p>

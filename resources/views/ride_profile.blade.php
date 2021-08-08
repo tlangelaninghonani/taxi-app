@@ -65,6 +65,15 @@
                         </div>
                     @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
+                    <div class="display-flex-center gender">
+                        @if($rideAuth->ride_gender == "Male")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @elseif($rideAuth->ride_gender == "Female")
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @else
+                            <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
+                        @endif
+                    </div>
                     <span>Phone <strong>{{ $rideAuth->ride_phone }}</strong></span>
                 </div>
             </div>
