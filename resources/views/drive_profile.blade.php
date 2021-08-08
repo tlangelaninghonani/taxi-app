@@ -41,6 +41,9 @@
         <p>
             <span class="title">Account</span>
         </p>
+        <span onclick="redirectBack()" class="material-icons-round arrow-back">
+        arrow_back
+        </span>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
