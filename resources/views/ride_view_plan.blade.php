@@ -47,6 +47,9 @@
         <p>
             <span class="title">Ride plans</span>
         </p>
+        <span onclick="redirectBack()" class="material-icons-round arrow-back">
+        arrow_back
+        </span>
         <div class="curved-top" id="plans">
             <div id="map"></div>
             <div class="app-padding">
@@ -73,7 +76,7 @@
                     <form action="/ride/{{ $plan->id }}/plans/cancel" method="POST">
                         @csrf
                         @method("POST")
-                        <button>Cancel plan</button>
+                        <button>Cancel plans</button>
                     </form>
                 </p>
             </div>

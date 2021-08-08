@@ -248,6 +248,7 @@
                 zoom: 13,
                 mapId: "4cce301a9d6797df",
                 disableDefaultUI: true,
+                fullscreenControl: true
                 });
 
                 let directionsService = new google.maps.DirectionsService();

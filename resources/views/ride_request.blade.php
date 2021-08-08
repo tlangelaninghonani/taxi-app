@@ -41,6 +41,9 @@
         <p>
             <span class="title">Requesting a ride to {{ $driveAuth->drive_first_name }}</span>
         </p>
+        <span onclick="redirectBack()" class="material-icons-round arrow-back">
+        arrow_back
+        </span>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -102,7 +105,7 @@
                     <p>
                         <span>Distance <strong id="tripdistance"></strong></span><br>
                         <span>Estimated time <strong id="triptime"></strong></span><br>
-                        <span class="title">Charges R<strong class="title" id="tripcharges"></strong></span>
+                        <span class="title">Charges <strong>R</strong><strong class="title" id="tripcharges"></strong></span>
                     </p>
                 </div>
                 <p>
@@ -126,8 +129,7 @@
                 polylineOptions: {
                     strokeColor: 'red',
                     strokeWeight: 2,
-                },
-                suppressMarkers: true
+                }
             }
             let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
 
@@ -136,6 +138,7 @@
             zoom: 13,
             mapId: "4cce301a9d6797df",
             disableDefaultUI: true,
+            fullscreenControl: true
             });
 
             // Create the search box and link it to the UI element.
@@ -182,7 +185,6 @@
                         title: place.name,
                         position: place.geometry.location,
                         animation: google.maps.Animation.DROP,
-                        icon: "https://img.icons8.com/color/48/000000/street-view.png"
                     })
                 );
         
@@ -232,7 +234,6 @@
                     title: place.name,
                     position: place.geometry.location,
                     animation: google.maps.Animation.DROP,
-                    icon: "https://img.icons8.com/color/48/000000/filled-flag2.png"
                     })
                 );
             

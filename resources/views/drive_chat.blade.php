@@ -39,6 +39,12 @@
             </p>
         </div>
         <p>
+            <span class="title">Chat with {{ $rideAuth->ride_first_name }}</span>
+        </p>
+        <span onclick="redirectBack()" class="material-icons-round arrow-back">
+        arrow_back
+        </span>
+        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($rideData->ride_profile_image == "")
@@ -70,9 +76,6 @@
             <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt="">
             @endif
         </div>
-        <p>
-            <span class="title">Chat with {{ $rideAuth->ride_first_name }}</span>
-        </p>
         <p>
             <div id="chats">
                 @if($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->count() > 0)

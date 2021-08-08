@@ -72,6 +72,9 @@
                             <span>Gender <strong>{{ $rideAuth->ride_gender }}</strong></span>
                         @endif
                     </div>
+                    <div class="display-flex-center">
+                        <span>Phone <strong>{{ $rideAuth->ride_phone }}</strong></span>
+                    </div>
                 </div>
             </div>
         </p>
@@ -275,6 +278,7 @@
                 zoom: 13,
                 mapId: "4cce301a9d6797df",
                 disableDefaultUI: true,
+                fullscreenControl: true
                 });
 
                 let directionsService = new google.maps.DirectionsService();

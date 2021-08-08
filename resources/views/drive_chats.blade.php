@@ -94,6 +94,7 @@
                                                         <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
                                                     @endif
                                                 </div>
+                                                <span>Phone <strong>{{ $rideA->ride_phone }}</strong></span>
                                                 <!--<span>Pick-up <strong>{{ $rideToChat->ride_from }}</strong></span><br>
                                                 <span>Drop <strong>{{ $rideToChat->ride_to }}</strong></span><br>-->
                                             </div>  

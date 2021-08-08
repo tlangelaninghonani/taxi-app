@@ -39,6 +39,12 @@
             </p>
         </div>
         <p>
+            <span class="title">Ride request</span>
+        </p>
+        <span onclick="redirectBack()" class="material-icons-round arrow-back">
+        arrow_back
+        </span>
+        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($rideData->ride_profile_image == "")
@@ -60,9 +66,6 @@
                     </div>
                 </div>
             </div>
-        </p>
-        <p>
-            <span class="title">Ride request</span>
         </p>
         <div class="curved-top padding-none">
             <div id="map"></div>
@@ -114,6 +117,7 @@
         zoom: 12,
         mapId: "4cce301a9d6797df",
         disableDefaultUI: true,
+        fullscreenControl: true
         });
 
         let directionsService = new google.maps.DirectionsService();

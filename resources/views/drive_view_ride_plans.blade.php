@@ -41,6 +41,9 @@
         <p>
             <span class="title">{{ $rideAuth->ride_first_name }}'s ride plans</span>
         </p>
+        <span onclick="redirectBack()" class="material-icons-round arrow-back">
+        arrow_back
+        </span>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -119,6 +122,7 @@
         zoom: 2,
         mapId: "4cce301a9d6797df",
         disableDefaultUI: true,
+        fullscreenControl: true
         });
 
 

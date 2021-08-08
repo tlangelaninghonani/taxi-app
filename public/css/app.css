@@ -361,6 +361,25 @@ body{
         resize: none;
     }
 
+    .badge1 {
+        position: absolute;
+      }
+  
+     .badge1[data-badge]:after {
+        content:attr(data-badge);
+        position:absolute;
+        top:-36px;
+        right:-6px;
+        font-size: 15px !important;
+        background:rgb(55, 55, 245);
+        color:white;
+        width:25px;height:25px;
+        text-align:center;
+        line-height:25px;
+        border-radius:50%;
+        z-index: 999;
+     }
+
     button{
         box-sizing: border-box;
         width: 100%;

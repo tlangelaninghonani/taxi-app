@@ -15,6 +15,7 @@ use App\Models\History;
 use App\Models\Review;
 use App\Models\Plan;
 use App\Models\Offer;
+use App\Models\Notification;
 
 class DataController extends Controller
 {
@@ -119,7 +120,10 @@ class DataController extends Controller
     }
 
     public function driveRequestAccept($id){
-        $rideAuth = RideAuth::find($id);
+        
+        $request = RideRequest::find($id);
+
+        $rideAuth = RideAuth::find($request->ride_id);
         $rideData = RideData::where("ride_id", $rideAuth->id)->first();
 
         $drive_id =  intval(Session::get("drive_id"));
@@ -132,6 +136,7 @@ class DataController extends Controller
 
 
         $request->save();
+
 
         return redirect("/drive/dashboard");
     }
