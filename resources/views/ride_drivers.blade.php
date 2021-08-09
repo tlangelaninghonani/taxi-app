@@ -15,6 +15,23 @@
     }
 </style>
 <body>
+    <div id="securitytip" class="filter-gender-notice display-none">
+        <p>
+           <div class="text-align-center">
+                <span class="material-icons-round font-size-big">
+                privacy_tip
+                </span>
+           </div>
+        </p>
+        <p>
+            <div class="text-align-center">
+                <span>Security tip. It's more safer to choose a drive of the same gender than of the opposite</span>
+            </div>
+        </p>
+        <p>
+            <button onclick="closePopup('securitytip')">Got it</button>
+        </p>
+    </div>
     <div class="container">
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
@@ -208,5 +225,10 @@
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+        setTimeout(() => {
+            document.querySelector("#securitytip").style.display = "block";
+        }, 1000);
+    </script>
 </body>
 </html>

@@ -208,10 +208,10 @@
                 return;
                 }
                 // Clear out the old markers.
-                /*markers.forEach((marker) => {
+                markers.forEach((marker) => {
                 marker.setMap(null);
                 });
-                markers = [];*/
+                markers = [];
                 // For each place, get the icon, name and location.
                 const bounds = new google.maps.LatLngBounds();
                 places.forEach((place) => {
@@ -246,6 +246,10 @@
                 });
                 map.fitBounds(bounds);
                 points = true;
+                markers.forEach((marker) => {
+                marker.setMap(null);
+                });
+                markers = [];
                 drawLine(from, to, map, directionsRenderer);
             });
         }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 :root{
     --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
     --padding: 3px;
@@ -8,6 +8,11 @@
 *{
     font-family: "Montserrat", sans-serif;
     color: var(--cust-black);
+
+}
+
+.bolder-font{
+    font-family: 'Montserrat', sans-serif;
 }
 
 body{
@@ -36,7 +41,6 @@ body{
         width: 100%;
         padding: var(--padding);
         padding-bottom: 15%;
-        margin-top: 40px;
     }
     .new-plan-icon{
        
@@ -135,15 +139,9 @@ body{
     }
 
     .nav{
-        margin-bottom: 5%;
         display: flex;
         justify-content: space-between;
-        box-shadow: var(--shadow);
         padding: 5px 3px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
         background-color: white;
         z-index: 99999999;
     }
@@ -364,6 +362,21 @@ body{
         resize: none;
     }
 
+    .filter-gender-notice{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 60px 20px;
+        z-index: 999999999;
+        background-color: white;
+        box-shadow: var(--shadow);
+        padding: var(--padding);
+        border-radius: 30px;
+    
+    }
+
     .badge1 {
         position: absolute;
       }
@@ -566,6 +579,10 @@ body{
         text-decoration: none;
         color: black;
       
+    }
+
+    .font-size-big{
+        font-size: 100px !important;
     }
 
     .choose-ride-drive{
