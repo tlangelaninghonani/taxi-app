@@ -15,7 +15,7 @@
                 <span class="material-icons-round app-icon">
                 apartment
                 </span><br>
-                <span class="title-large">InterCityRides</span><br>
+                <span class="title">InterCityRides</span><br>
                 <span class="cl-silver logo-marketing title-small">App from DevOpsFactory</span>
            </div>
         </div>

@@ -46,6 +46,9 @@
                 </p>
             </div>
         </div>
+        <div class="text-align-center">
+            <span class="cl-silver logo-marketing title-small">App from DevOpsFactory</span>
+        </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
 </body>

@@ -39,7 +39,7 @@
             </span>
         </div>
         <p>
-            <span class="title">Account</span>
+            <span class="title">My account</span>
         </p>
         <span onclick="redirectBack()" class="material-icons-round arrow-back">
         arrow_back

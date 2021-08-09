@@ -25,7 +25,7 @@
         </p>
         <p>
             <div class="text-align-center">
-                <span>Security tip. It's more safer to choose a drive of the same gender than of the opposite</span>
+                <span>Security tip. It's more safer to choose a driver of the same gender than of the opposite</span>
             </div>
         </p>
         <p>
@@ -62,7 +62,7 @@
             </span>
         </div>
         <p>
-            <span class="title">Drivers</span>
+            <span class="title">You have an option to pick a driver you like</span>
         </p>
         @if(sizeof($driveAuths) > 0)
         <p>

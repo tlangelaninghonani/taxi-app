@@ -10,23 +10,14 @@
 </head>
 <body>
     <div class="container">
-        <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
+        <p>
+            <div class="text-align-center">
+                <span class="material-icons-round app-icon">
                 apartment
-                </span>
-                <span class="app-name">InterCityRides</span>
-           </div>
-        </div>
-        <p>
-            <span class="title">Signning up to ride</span>
-        </p>
-        <p>
-           <div class="text-align-center">
-                <span class="material-icons-round shadow-round choose-ride-drive">
-                hail
-                </span>
-           </div>
+                </span><br>
+                <span class="title">InterCityRides</span><br>
+                <span>Signing up to ride</span>
+            </div>
         </p>
         <div class="curved-top app-padding">
             <p>
