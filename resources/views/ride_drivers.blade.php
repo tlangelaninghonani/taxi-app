@@ -50,89 +50,204 @@
                 </a>
             </p>
         </div>
-        <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
-                </span>
-                <span class="app-name">InterCityRides</span>
-           </div>
-           <span class="material-icons-round " onclick="closePopup('menu')">
-            more_vert
-            </span>
-        </div>
-        <p>
-            <span class="title">You have an option to pick a driver you like</span>
-        </p>
-        @if(sizeof($driveAuths) > 0)
-        <p>
-            <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
-            <div class="display-flex-center-align gap-small">
-                <span class="material-icons-round">
-                tune
-                </span>
-                <span class="title-small">Type Male/Female/Other to filter by gender</span>
+        <div class="box-shadow">
+            <div class="nav">
+                <div class="display-flex-normal gap-10">
+                    <span class="material-icons-round" onclick="redirectBack()">
+                    arrow_back
+                    </span>
+                    <span class="">Drivers near you</span>
             </div>
-        </p>
-        <p>
-            <div id="driverscontainer" class="padding-bottom-layout">
-                @foreach($driveAuths as $driveAuth)
-                    <div id="{{ $driveAuth->drive_first_name.$driveAuth->drive_last_name.$driveAuth->id.$driveAuth->drive_gender }}" class="drivers">
-                        <div style="display: none">
-                            {{ $driveAuth->drive_first_name = ucwords($driveAuth->drive_first_name) }}
-                            {{ $driveAuth->drive_last_name = ucwords($driveAuth->drive_last_name) }}
-
-                            {{ $driveData = $driveData::find($driveAuth->id) }}
-                            {{ $driveData->drive_vehicle = ucwords($driveData->drive_vehicle) }}
-                        </div>
-                        <p>
-                            <div class="display-flex-normal gap-10">
-                                <div>
-                                    @if($driveData->drive_profile_image == "")
-                                    <span class="material-icons-round empty-profile-medium">
-                                    account_circle
-                                    </span><br>
-                                    @else
-                                    <img class="profile-image" src="{{ $driveData->drive_profile_image }}" alt="">
-                                    @endif
-                                </div>
-                                <div class="trunc-text">
-                                    @if($driveData->on_trip == true)
-                                        <div class="status-driving">
-                                            <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br> 
-                                            <div id="{{ $driveAuth->drive_gender.$driveAuth->id }}" class="display-flex-normal gender">
-                                                @if($driveAuth->drive_gender == "Male")
-                                                    <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
-                                                @elseif($driveAuth->drive_gender == "Female")
-                                                    <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
-                                                @else
-                                                    <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
-                                                @endif
-                                            </div>
-                                            <span>Drives <strong>{{ $driveData->drive_vehicle }}</strong></span><br>
-                                            <div class="rating-stars-small">
-                                                @for($i = 1; $i <= 5; $i++)
-                                                    @if($i <= floor($driveData->drive_ratings))
-                                                        <span class="material-icons-round" style="color: orange" >
-                                                        star
-                                                        </span>
-                                                    @else
-                                                        <span class="material-icons-round" >
-                                                        star
-                                                        </span>
-                                                    @endif
-                                                @endfor
-                                            </div>
-                                            <span>Completing a trip</span>
+            <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+            </div>
+            <div class="text-align-center">
+                <p>
+                    <span class="title">With <strong>InterCityRides</strong> you can choose a driver near you and send a request</span>
+                </p>
+            </div>
+            @if($requests::where("ride_id", $rideAuth->id)->count() > 0)
+            <p>
+                <div class="drivers-requests">
+                    <div onclick="displayComp(this, 'drivers')" class="display-flex-center-align">
+                        <span class="material-icons-round">
+                        local_taxi
+                        </span>
+                        <span>Drivers</span>
+                    </div>
+                    <div onclick="displayComp(this, 'requests')" class="display-flex-center-align">
+                        <span class="material-icons-round">
+                        waving_hand
+                        </span>
+                        <span>Requests</span>
+                    </div>
+                    <div onclick="displayComp(this, 'requestsaccepted')" class="display-flex-center-align">
+                        <span class="material-icons-round">
+                        check_circle
+                        </span>
+                        <span>Accepted</span>
+                    </div>
+                </div>
+            </p>
+            @endif
+        </div>
+        @if(sizeof($driveAuths) > 0)
+            @if($requests::where("ride_id", $rideAuth->id)->count() > 0)
+                <div class="">
+                    
+                    <div id="requests" class="app-padding display-none" style="padding-top: 0">
+                        @foreach($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->get() as $request)   
+                            <div class="display-none">
+                                {{ $driveA = $driveAuth::find($request->drive_id) }}
+                                {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
+                            </div>
+                            <p>
+                                <div class="display-flex-normal gap-10" onclick="redirectTo('/ride/{{ $request->id }}/request/pending')">
+                                    <div>
+                                        @if($driveD->drive_profile_image == "")
+                                        <span class="material-icons-round empty-profile-medium">
+                                        account_circle
+                                        </span><br>
+                                        @else
+                                        <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
+                                        @endif
+                                    </div>
+                                    <div class="trunc-text">
+                                        <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
+                                        <div class="trunc-text">
+                                            <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
+                                            <strong>{{ $driveD->drive_vehicle_type }}</strong>
                                         </div>
-                                    @else
-                                        <a href="/ride/{{ $driveAuth->id }}/request">
-                                            <div>
+                                        <div class="display-flex-normal gender">
+                                            @if($driveA->drive_gender == "Male")
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @elseif($driveA->drive_gender == "Female")
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @else
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @endif
+                                        </div>
+                                        <div class="rating-stars-small">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                @if($i <= floor($driveD->drive_ratings))
+                                                    <span class="material-icons-round" style="color: orange" >
+                                                    star
+                                                    </span>
+                                                @else
+                                                    <span class="material-icons-round" >
+                                                    star
+                                                    </span>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                    </div>
+                                </div>
+                            </p>
+                        @endforeach
+                        <p>
+                            @if($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->count() == 0)
+                                <div class="text-align-center">
+                                    <span>No requests</span>
+                                </div>
+                            @endif
+                        </p>
+                    </div>
+                    <div id="requestsaccepted" class="display-none app-padding" style="padding-top: 0">
+                    @foreach($requests::where("ride_accepted", true)->where("ride_id", $rideAuth->id)->get() as $request)   
+                            <div class="display-none">
+                                {{ $driveA = $driveAuth::find($request->drive_id) }}
+                                {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
+                            </div>
+                            <p>
+                                <div class="display-flex-normal gap-10" onclick="redirectTo('/ride/{{ $request->id }}/request/accepted')">
+                                    <div>
+                                        @if($driveD->drive_profile_image == "")
+                                        <span class="material-icons-round empty-profile-medium">
+                                        account_circle
+                                        </span><br>
+                                        @else
+                                        <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
+                                        @endif
+                                    </div>
+                                    <div class="trunc-text">
+                                        <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
+                                        <div class="trunc-text">
+                                            <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
+                                            <strong>{{ $driveD->drive_vehicle_type }}</strong>
+                                        </div>
+                                        <div class="display-flex-normal gender">
+                                            @if($driveA->drive_gender == "Male")
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @elseif($driveA->drive_gender == "Female")
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @else
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @endif
+                                        </div>
+                                        <div class="rating-stars-small">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                @if($i <= floor($driveD->drive_ratings))
+                                                    <span class="material-icons-round" style="color: orange" >
+                                                    star
+                                                    </span>
+                                                @else
+                                                    <span class="material-icons-round" >
+                                                    star
+                                                    </span>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                    </div>
+                                </div>
+                            </p>
+                        @endforeach
+                        <p>
+                            @if($requests::where("ride_accepted", true)->where("ride_id", $rideAuth->id)->count() == 0)
+                                <div class="text-align-center">
+                                    <span>No accepted requests </span>
+                                </div>
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            @endif
+        <div id="drivers" class="popout-drivers ">
+            <p>
+                <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
+                <div class="display-flex-center-align gap-small">
+                    <span class="material-icons-round">
+                    tune
+                    </span>
+                    <span class="title-small">Type Male/Female/Other to filter by gender</span>
+                </div>
+            </p>
+            <p>
+                <div id="driverscontainer" class="padding-bottom-layout">
+                    @foreach($driveAuths as $driveAuth)
+                        <div id="{{ $driveAuth->drive_first_name.$driveAuth->drive_last_name.$driveAuth->id.$driveAuth->drive_gender }}" class="drivers">
+                            <div style="display: none">
+                                {{ $driveAuth->drive_first_name = ucwords($driveAuth->drive_first_name) }}
+                                {{ $driveAuth->drive_last_name = ucwords($driveAuth->drive_last_name) }}
+
+                                {{ $driveData = $driveData::find($driveAuth->id) }}
+                                {{ $driveData->drive_vehicle = ucwords($driveData->drive_vehicle) }}
+                            </div>
+                            <p>
+                                <div class="display-flex-normal gap-10">
+                                    <div>
+                                        @if($driveData->drive_profile_image == "")
+                                        <span class="material-icons-round empty-profile-medium">
+                                        account_circle
+                                        </span><br>
+                                        @else
+                                        <img class="profile-image" src="{{ $driveData->drive_profile_image }}" alt="">
+                                        @endif
+                                    </div>
+                                    <div class="trunc-text">
+                                        @if($driveData->on_trip == true)
+                                            <div class="status-driving">
                                                 <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br> 
-                                                <div class="trunc-text">
-                                                <span>Drives <strong>{{ $driveData->drive_vehicle }} - </strong></span>
-                                                <strong>{{ $driveData->drive_vehicle_type }}</strong>
-                                                </div>
                                                 <div id="{{ $driveAuth->drive_gender.$driveAuth->id }}" class="display-flex-normal gender">
                                                     @if($driveAuth->drive_gender == "Male")
                                                         <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
@@ -142,6 +257,7 @@
                                                         <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
                                                     @endif
                                                 </div>
+                                                <span>Drives <strong>{{ $driveData->drive_vehicle }}</strong></span><br>
                                                 <div class="rating-stars-small">
                                                     @for($i = 1; $i <= 5; $i++)
                                                         @if($i <= floor($driveData->drive_ratings))
@@ -154,23 +270,56 @@
                                                             </span>
                                                         @endif
                                                     @endfor
-                                                </div>    
+                                                </div>
+                                                <span>Completing a trip</span>
                                             </div>
-                                        </a>
-                                    @endif
+                                        @else
+                                            <a href="/ride/{{ $driveAuth->id }}/request">
+                                                <div>
+                                                    <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br> 
+                                                    <div class="trunc-text">
+                                                    <span>Drives <strong>{{ $driveData->drive_vehicle }} - </strong></span>
+                                                    <strong>{{ $driveData->drive_vehicle_type }}</strong>
+                                                    </div>
+                                                    <div id="{{ $driveAuth->drive_gender.$driveAuth->id }}" class="display-flex-normal gender">
+                                                        @if($driveAuth->drive_gender == "Male")
+                                                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                        @elseif($driveAuth->drive_gender == "Female")
+                                                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                        @else
+                                                            <span>Gender <strong>{{ $driveAuth->drive_gender }}</strong></span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="rating-stars-small">
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            @if($i <= floor($driveData->drive_ratings))
+                                                                <span class="material-icons-round" style="color: orange" >
+                                                                star
+                                                                </span>
+                                                            @else
+                                                                <span class="material-icons-round" >
+                                                                star
+                                                                </span>
+                                                            @endif
+                                                        @endfor
+                                                    </div>    
+                                                </div>
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                        </p>
-                    </div>
-                @endforeach
-            </div>
-        </p>
+                            </p>
+                        </div>
+                    @endforeach
+                </div>
+            </p>
+        </div>
         @else
         <div class="text-align-center">
             <span class="material-icons-round icon-large">
-            hail
+            local_taxi
             </span><br>
-            <span>No riders</span>
+            <span>No drivers</span>
         </div>
         @endif
     </div>
@@ -228,7 +377,7 @@
     <script>
         setTimeout(() => {
             document.querySelector("#securitytip").style.display = "block";
-        }, 1000);
+        }, 1000000);
     </script>
 </body>
 </html>

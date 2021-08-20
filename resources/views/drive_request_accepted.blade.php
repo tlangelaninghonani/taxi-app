@@ -28,22 +28,27 @@
                 </span>
             </div>
             <p>
-                <a href="/drive/profile">
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/drive/profile')">
+                    @if($driveData->drive_profile_image == "")
+                        <div class="position-relative">
+                            <span class="material-icons-round empty-profile-small">
+                            account_circle
+                            </span><br>
+                        </div>
+                    @else
+                        <div class="position-relative">
+                            <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                        </div>
+                    @endif
                     <span>My account</span>
-                </a>
+                </div>
             </p>
             <p>
-                <a href="/signout">
-                    <span> Sign out</span>
-                </a>
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
+                    <span>Sign out</span>
+                </div>
             </p>
         </div>
-        <p>
-            <span class="title">Accepted ride request</span>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -74,16 +79,10 @@
                 <p>
                     <div class="text-align-center">
                         <div class="display-flex-justify-center">
-                            <span class="material-icons-round">
-                            local_taxi
-                            </span>
                             <span class="title">Pick-up</span><br>
                         </div>
                         <span>{{ $request->ride_from }}</span><br>
                         <div class="display-flex-justify-center">
-                            <span class="material-icons-round">
-                            my_location
-                            </span>
                             <span class="title">Drop</span><br>
                         </div>
                         <span>{{ $request->ride_to }}</span>

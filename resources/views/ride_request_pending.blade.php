@@ -39,12 +39,6 @@
             </p>
         </div>
         <p>
-            <span class="title">Pending ride request</span>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
-        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($driveData->drive_profile_image == "")
@@ -90,16 +84,10 @@
                 <p>
                     <div class="text-align-center">
                         <div class="display-flex-justify-center">
-                            <span class="material-icons-round">
-                            hail
-                            </span>
                             <span class="title">Pick-up</span><br>
                         </div>
                         <span>{{ $request->ride_from }}</span><br>
                         <div class="display-flex-justify-center">
-                            <span class="material-icons-round">
-                            my_location
-                            </span>
                             <span class="title">Drop</span><br>
                         </div>
                         <span>{{ $request->ride_to }}</span>

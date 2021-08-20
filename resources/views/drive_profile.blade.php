@@ -17,51 +17,50 @@
                 </span>
             </div>
             <p>
-                <a href="/drive/profile">
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/drive/profile')">
+                    @if($driveData->drive_profile_image == "")
+                        <div class="position-relative">
+                            <span class="material-icons-round empty-profile-small">
+                            account_circle
+                            </span><br>
+                        </div>
+                    @else
+                        <div class="position-relative">
+                            <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                        </div>
+                    @endif
                     <span>My account</span>
-                </a>
+                </div>
             </p>
             <p>
-                <a href="/signout">
-                    <span> Sign out</span>
-                </a>
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
+                    <span>Sign out</span>
+                </div>
             </p>
         </div>
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">My account</span>
            </div>
            <span class="material-icons-round" onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
         <p>
-            <span class="title">My account</span>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
-        <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($driveData->drive_profile_image == "")
                         <div class="position-relative">
-                            <span class="material-icons-round empty-profile-large">
+                            <span onclick="closePopup('profileedit')" class="material-icons-round empty-profile-large">
                             account_circle
                             </span><br>
-                            <span onclick="closePopup('profileedit')" class="material-icons-round change-profile-image">
-                            edit
-                            </span>
                         </div>
                     @else
                         <div class="position-relative">
-                            <img class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
-                            <span onclick="closePopup('profileedit')" class="material-icons-round change-profile-image">
-                            edit
-                            </span>
+                            <img onclick="closePopup('profileedit')" class="profile-image-large" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                         </div>
                     @endif
                     <span class="title">{{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}</span><br>
@@ -137,25 +136,70 @@
             </div>
         </div>
         <p>
+            <div class="city-container">
+                @foreach(json_decode($driveData->drive_cities, true) as $city)
+                    <div class="city">
+                        {{ $city }}
+                    </div>
+                @endforeach
+            </div>
+        </p>
+        <p>
+            <div class="display-flex-center-align gap-10">
+                <span class="material-icons-round">
+                travel_explore
+                </span>
+                <span onclick="closePopup('editcities')">Edit my cities</span>
+            </div>
+        </p>
+        <div id="editcities" class="edit-cities">
+            <div class="nav display-flex-space-between">
+                <span>Edit cities</span>
+                <span class="material-icons-round newplan" onclick="closePopup('editcities')">
+                close
+                </span>
+            </div>
+            <div id="map"></div>
+            <p>
+                <div class="text-align-center">
+                    <span class="title">Choose maximum of 5 cities you want to drive at</span>
+                </div>
+            </p>
+            <p>
+                <div id="citycontainer" class="city-container">
+
+                </div>
+            </p>
+            <p>
+                <form id="citiesform" action="/drive/edit/cities" method="POST">
+                    @csrf
+                    @method("POST")
+                    <div class="display-flex-normal gap-10">
+                        <input id="ridefrom" type="text" placeholder="Type a city">
+                        <input type="hidden" id="cities" name="cities">
+                        <span onclick="addCity()" class="material-icons-round black-background">
+                        add
+                        </span>
+                    </div>
+                    <p>
+                        <button type="button" onclick="jsonCitiesAndSubmit('citiesform')">Save</button>
+                    </p>
+                </form>
+            </p>
+        </div>
+        <p>
             <div class="curved-top">
-                <p>
-                    <span class="title title-margin-left">Edit your details</span>
-                </p>
                 <form class="app-padding" action="/drive/profile/update" method="POST">
                     @csrf
                     @method("POST")
-                    <span>First name</span><br>
                     <input type="text" name="firstname" value="{{ $driveAuth->drive_first_name }}" placeholder="Enter First name">
                     <p>
-                        <span>Last name</span><br>
                         <input type="text" name="lastname" value="{{ $driveAuth->drive_last_name }}" placeholder="Enter Last name">
                     </p>
                     <p>
-                        <span>Vehicle name </span><br>
                         <input type="text" name="vehiclename" value="{{ $driveData->drive_vehicle }}" placeholder="Enter Vehicle name">
                     </p>
                     <p>
-                        <span>Vehicle type</span><br>
                         <input type="text" name="vehicletype" value="{{ $driveData->drive_vehicle_type }}" placeholder="Enter Vehicle type">
                     </p>
                     <p>
@@ -165,6 +209,131 @@
             </div>
         </p>
     </div>
+    <div class="bottom-controls">
+        <div class="bottom-controls-item">
+            <a href="/drive/dashboard">
+                <span class="material-icons-round">
+                home
+                </span><br>
+                <span class="title-small">Home</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/history">
+                <span class="material-icons-round">
+                watch_later
+                </span><br>
+                <span class="title-small">History</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/reviews">
+                <span class="material-icons-round">
+                edit
+                </span><br>
+                <span class="title-small">Revie..</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/riders">
+                <span class="material-icons-round">
+                hail
+                </span><br>
+                <span class="title-small">Riders</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/offers">
+                <span class="material-icons-round">
+                local_offer
+                </span><br>
+                <span class="title-small">Offers</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/drive/chats">
+                <span class="material-icons-round">
+                question_answer
+                </span><br>
+                <span class="title-small">Chats</span>
+            </a>
+        </div>
+    </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+        function initAutocompleteNow() {
+            let from, to;
+            var points = false;
+            var directionsOptions = {
+                polylineOptions: {
+                    strokeColor: 'red',
+                    strokeWeight: 2,
+                }
+            }
+            let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -33.8688, lng: 151.2195 },
+            zoom: 13,
+            mapId: "4cce301a9d6797df",
+            disableDefaultUI: true,
+            fullscreenControl: true
+            });
+
+            // Create the search box and link it to the UI element.
+            const inputFrom = document.getElementById("ridefrom");
+            const searchBoxFrom = new google.maps.places.SearchBox(inputFrom);
+            
+            map.addListener("bounds_changed", () => {
+                searchBoxFrom.setBounds(map.getBounds());
+            });
+
+            let markers = [];
+
+            searchBoxFrom.addListener("places_changed", () => {
+            const places = searchBoxFrom.getPlaces();
+        
+            if (places.length == 0) {
+                return;
+            }
+            // Clear out the old markers.
+            markers.forEach((marker) => {
+                marker.setMap(null);
+            });
+            markers = [];
+            // For each place, get the icon, name and location.
+            const bounds = new google.maps.LatLngBounds();
+            places.forEach((place) => {
+                if (!place.geometry || !place.geometry.location) {
+                console.log("Returned place contains no geometry");
+                return;
+                }
+                from = place.geometry.location;
+                
+                // Create a marker for each place.
+                markers.push(
+                    new google.maps.Marker({
+                        map,
+                        title: place.name,
+                        position: place.geometry.location,
+                        animation: google.maps.Animation.DROP,
+                    })
+                );
+        
+                if (place.geometry.viewport) {
+                // Only geocodes have viewport.
+                bounds.union(place.geometry.viewport);
+                } else {
+                bounds.extend(place.geometry.location);
+                }
+            });
+            map.fitBounds(bounds);
+            });
+        }
+    </script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initAutocompleteNow&libraries=places&v=weekly"
+    async
+    ></script>
 </body>
 </html>

@@ -11,11 +11,11 @@
 <body>
     <div class="container ext-padding">
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">Chat with {{ $rideAuth->ride_first_name }}</span>
            </div>
            <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
@@ -28,23 +28,28 @@
                 </span>
             </div>
             <p>
-                <a href="/ride/profile">
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/drive/profile')">
+                    @if($driveData->drive_profile_image == "")
+                        <div class="position-relative">
+                            <span class="material-icons-round empty-profile-small">
+                            account_circle
+                            </span><br>
+                        </div>
+                    @else
+                        <div class="position-relative">
+                            <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                        </div>
+                    @endif
                     <span>My account</span>
-                </a>
+                </div>
             </p>
             <p>
-                <a href="/signout">
-                    <span> Sign out</span>
-                </a>
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
+                    <span>Sign out</span>
+                </div>
             </p>
         </div>
-        <p>
-            <span class="title">Chat with {{ $rideAuth->ride_first_name }}</span>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
-        <p>
+        <!--<p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($rideData->ride_profile_image == "")
@@ -67,7 +72,7 @@
                     <span>Phone <strong>{{ $rideAuth->ride_phone }}</strong></span>
                 </div>
             </div>
-        </p>
+        </p>-->
         <div id="driveprofileimage" class="ride-profile-image display-none">
             @if($driveData->drive_profile_image == "")
             <span class="material-icons-round empty-profile-small">
@@ -99,26 +104,26 @@
                             </div>
                         </div>
                         @else
-                        <div class="display-flex-end chat-padding ride-chat-container">
+                        <div id="chatdiv{{ $chat->id }}" class="display-flex-end chat-padding ride-chat-container">
                             <div class="ride-chat">
                                 <span>
                                 {{ $chat->chat }}
                                 </span>
                             </div>
                             <div class="ride-profile-image">
-                                @if($rideAuth->ride_profile_image == "")
+                                @if($rideData->ride_profile_image == "")
                                 <span class="material-icons-round empty-profile-small">
                                 account_circle
                                 </span><br>
                                 @else
-                                <img class="profile-image" src="{{ $rideAuth->ride_profile_image }}" alt="">
+                                <img class="profile-image-small" src="{{ $rideData->ride_profile_image }}" alt="">
                                 @endif
                             </div>
                         </div>
                         @endif
                     @endforeach
                 @else
-                    <div id="nocomment" class="text-align-center">
+                    <div id="nochats" class="text-align-center">
                         <span class="material-icons-round icon-large">
                         question_answer
                         </span><br>
@@ -140,5 +145,61 @@
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+        let chatsContainer = document.querySelector("#chats");
+        let rideImg = "{{ $rideData->ride_profile_image }}";
+        var xmlhttp = new XMLHttpRequest();
+        setInterval(() => {
+            xmlhttp.onreadystatechange = function() { 
+                if (this.readyState == 4 && this.status == 200) {
+                    let chatsObj = JSON.parse(this.responseText);
+                    //console.log(chatsObj);
+                 
+                    for (let i = 1; i <= chatsObj.length; i++) {
+                        if(! document.querySelector("#chatdiv"+chatsObj[i-1].id) && chatsObj[i-1].from == "ride"){
+                            if(document.querySelector("#nochats")){
+                                document.querySelector("#nochats").style.display = "none";
+                            }
+
+                            let flexDiv = document.createElement("div");
+                            let flexChild1 = document.createElement("div");
+                            let flexChild2 = document.createElement("div");
+
+                            let flexChild1Span = document.createElement("span");
+                            let flexChild1Img = document.createElement("img");
+
+                            let flexChild2Span = document.createElement("span");
+
+                            flexDiv.setAttribute("class", "display-flex-end chat-padding ride-chat-container");
+
+                            flexChild1Span.setAttribute("class", "material-icons-round empty-profile-small");
+                            flexChild1Span.innerHTML = "account_circle";
+
+                            flexChild1Img.setAttribute("src", rideImg);
+                            flexChild1Img.setAttribute("class", "profile-image-small");
+
+                            flexChild2.setAttribute("class", "ride-chat");
+                            flexChild2Span.innerHTML = chatsObj[i-1].chat;
+                            
+
+                            if(rideImg == ""){
+                                flexChild1.appendChild(flexChild1Span);
+                            }else{
+                                flexChild1.appendChild(flexChild1Img);
+                            }
+                            flexChild2.appendChild(flexChild2Span);
+                            flexDiv.appendChild(flexChild2);
+                            flexDiv.appendChild(flexChild1);
+                            flexDiv.setAttribute("id", "chatdiv"+chatsObj[i-1].id);
+                            chatsContainer.appendChild(flexDiv);
+                            
+                        }
+                    }
+                }
+            };
+            xmlhttp.open("GET", "/drive/{{ $rideAuth->id }}/getchats", true);
+            xmlhttp.send();
+        }, 5000);  
+    </script>
 </body>
 </html>

@@ -11,11 +11,11 @@
 <body>
     <div class="container">
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+           <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">Request to {{ $driveAuth->drive_first_name }}</span>
            </div>
            <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
@@ -38,12 +38,7 @@
                 </a>
             </p>
         </div>
-        <p>
-            <span class="title">Requesting a ride to {{ $driveAuth->drive_first_name }}</span>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
+
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -82,11 +77,6 @@
                 </div>
             </div>
         </p>
-        <p>
-            <div class="text-align-center">
-                <span class="title">Where are you going?</span>
-            </div>
-        </p>
         <div class="curved-top">
             <div id="map"></div>
             <form class="app-padding" action="/ride/{{ $driveAuth->id }}/request" method="POST">
@@ -95,19 +85,11 @@
                 <input type="hidden" value="{{  $driveAuth->id }}" name="rideid" id="rideid">
                 <p>
                     <div class="display-flex-normal">
-                        <span class="material-icons-round">
-                        hail
-                        </span>
-                        <span class="title">Pick-up</span><br>
                     </div>
-                    <input type="text" name="ridefrom" id="ridefrom" placeholder="Pick-up place" required>
+                    <input type="text" name="ridefrom" id="ridefrom" placeholder="Pick-up" required>
                 </p>
                 <p>
                     <div class="display-flex-normal">
-                        <span class="material-icons-round">
-                        my_location
-                        </span>
-                        <span class="title">Drop</span><br>
                     </div>
                     <input type="text" name="rideto" id="rideto" placeholder="Your destination"  required>
                 </p>
@@ -125,145 +107,13 @@
                     <input type="hidden" id="ridedistance" name="ridedistance">
                     <input type="hidden" id="rideduration" name="rideduration">
 
-                    <button id="requestbutton" class="display-none">Request</button>
+                    <button id="mapbutton" class="display-none">Request</button>
                 </p>
             </form>
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
     <script>
-        function initAutocomplete() {
-            let from, to;
-            var points = false;
-            var directionsOptions = {
-                polylineOptions: {
-                    strokeColor: 'red',
-                    strokeWeight: 2,
-                }
-            }
-            let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
-
-            const map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: -33.8688, lng: 151.2195 },
-            zoom: 13,
-            mapId: "4cce301a9d6797df",
-            disableDefaultUI: true,
-            fullscreenControl: true
-            });
-
-            // Create the search box and link it to the UI element.
-            const inputFrom = document.getElementById("ridefrom");
-            const searchBoxFrom = new google.maps.places.SearchBox(inputFrom);
-            
-            const inputTo = document.getElementById("rideto");
-            const searchBoxTo = new google.maps.places.SearchBox(inputTo);
-
-            map.addListener("bounds_changed", () => {
-                searchBoxFrom.setBounds(map.getBounds());
-            });
-
-            map.addListener("bounds_changed", () => {
-                searchBoxTo.setBounds(map.getBounds());
-            });
-
-            let markers = [];
-
-            searchBoxFrom.addListener("places_changed", () => {
-            const places = searchBoxFrom.getPlaces();
-        
-            if (places.length == 0) {
-                return;
-            }
-            // Clear out the old markers.
-            markers.forEach((marker) => {
-                marker.setMap(null);
-            });
-            markers = [];
-            // For each place, get the icon, name and location.
-            const bounds = new google.maps.LatLngBounds();
-            places.forEach((place) => {
-                if (!place.geometry || !place.geometry.location) {
-                console.log("Returned place contains no geometry");
-                return;
-                }
-                from = place.geometry.location;
-                
-                // Create a marker for each place.
-                markers.push(
-                    new google.maps.Marker({
-                        map,
-                        title: place.name,
-                        position: place.geometry.location,
-                        animation: google.maps.Animation.DROP,
-                    })
-                );
-        
-                if (place.geometry.viewport) {
-                // Only geocodes have viewport.
-                bounds.union(place.geometry.viewport);
-                } else {
-                bounds.extend(place.geometry.location);
-                }
-            });
-            map.fitBounds(bounds);
-            if(points){
-                drawLine(from, to, map, directionsRenderer);
-            }
-            });
-
-            searchBoxTo.addListener("places_changed", () => {
-                const places = searchBoxTo.getPlaces();
-            
-                if (places.length == 0) {
-                return;
-                }
-                // Clear out the old markers.
-                markers.forEach((marker) => {
-                marker.setMap(null);
-                });
-                markers = [];
-                // For each place, get the icon, name and location.
-                const bounds = new google.maps.LatLngBounds();
-                places.forEach((place) => {
-                if (!place.geometry || !place.geometry.location) {
-                    console.log("Returned place contains no geometry");
-                    return;
-                }
-                to = place.geometry.location;
-                /*const icon = {
-                    url: place.icon,
-                    size: new google.maps.Size(71, 71),
-                    origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(17, 34),
-                    scaledSize: new google.maps.Size(25, 25),
-                };*/
-                // Create a marker for each place.
-                markers.push(
-                    new google.maps.Marker({
-                    map,
-                    title: place.name,
-                    position: place.geometry.location,
-                    animation: google.maps.Animation.DROP,
-                    })
-                );
-            
-                if (place.geometry.viewport) {
-                    // Only geocodes have viewport.
-                    bounds.union(place.geometry.viewport);
-                } else {
-                    bounds.extend(place.geometry.location);
-                }
-                });
-                map.fitBounds(bounds);
-                points = true;
-                markers.forEach((marker) => {
-                marker.setMap(null);
-                });
-                markers = [];
-                drawLine(from, to, map, directionsRenderer);
-            });
-        }
-        
         function drawLine(origin, destination, map, directionsRenderer){
             let directionsService = new google.maps.DirectionsService();
             directionsRenderer.setMap(map); // Existing map object displays directions
@@ -287,17 +137,20 @@
                     }
                     else {
                     document.querySelector("#tripinfo").style.display = "block";
-                    document.querySelector("#requestbutton").style.display = "block";
+                    document.querySelector("#mapbutton").style.display = "block";
                     document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
                     document.querySelector("#triptime").innerHTML = directionsData.duration.text;
                     document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
                     
-                    document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
-                    document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
-                    document.querySelector("#ridetocoords").value = JSON.stringify(destination);
-                    document.querySelector("#ridedistance").value = directionsData.distance.text;
-                    document.querySelector("#rideduration").value = directionsData.duration.text;
-                  }
+                    if(document.querySelector("#ridecharges")){
+                        document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
+                        document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
+                        document.querySelector("#ridetocoords").value = JSON.stringify(destination);
+                        document.querySelector("#ridedistance").value = directionsData.distance.text;
+                        document.querySelector("#rideduration").value = directionsData.duration.text;
+                    }
+                
+                }
                 }
             });
         }

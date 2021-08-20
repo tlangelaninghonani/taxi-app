@@ -11,11 +11,11 @@
 <body>
     <div class="container ext-padding">
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">Chat with {{ $driveAuth->drive_first_name }}</span>
            </div>
            <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
@@ -38,13 +38,7 @@
                 </a>
             </p>
         </div>
-        <p>
-            <span class="title">Chat with {{ $driveAuth->drive_first_name }}</span>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
-        <p>
+        <!--<p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($driveData->drive_profile_image == "")
@@ -83,14 +77,14 @@
                     </div>
                 </div>
             </div>
-        </p>
+        </p>-->
         <div id="rideprofileimage" class="ride-profile-image display-none">
-            @if($rideAuth->ride_profile_image == "")
+            @if($rideData->ride_profile_image == "")
             <span class="material-icons-round empty-profile-small">
             account_circle
             </span><br>
             @else
-            <img class="profile-image-small" src="{{ $rideAuth->ride_profile_image }}" alt="">
+            <img class="profile-image-small" src="{{ $rideData->ride_profile_image }}" alt="">
             @endif
         </div>
         <p>
@@ -98,7 +92,7 @@
                 @if($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->count() > 0)
                     @foreach($chats::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->get() as $chat)   
                         @if($chat->from == "drive")
-                            <div class="display-flex chat-padding-drive">
+                            <div id="chatdiv{{ $chat->id }}" class="display-flex chat-padding-drive">
                                 <div>
                                     @if($driveData->drive_profile_image == "")
                                     <span class="material-icons-round empty-profile-small">
@@ -115,7 +109,6 @@
                                 </div>
                             </div>
                         @else
-                        
                             <div class="display-flex-end chat-padding">
                                 <div class="ride-chat">
                                     <span>
@@ -123,19 +116,19 @@
                                     </span>
                                 </div>
                                 <div class="ride-profile-image">
-                                    @if($rideAuth->ride_profile_image == "")
+                                    @if($rideData->ride_profile_image == "")
                                     <span class="material-icons-round empty-profile-small">
                                     account_circle
                                     </span><br>
                                     @else
-                                    <img class="profile-image" src="{{ $rideAuth->ride_profile_image }}" alt="">
+                                    <img class="profile-image-small" src="{{ $rideData->ride_profile_image }}" alt="">
                                     @endif
                                 </div>
                             </div>
                         @endif
                     @endforeach
                 @else
-                    <div id="nocomment" class="text-align-center">
+                    <div id="nochats" class="text-align-center">
                         <span class="material-icons-round icon-large">
                         question_answer
                         </span><br>
@@ -157,5 +150,58 @@
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+        let chatsContainer = document.querySelector("#chats");
+        let driverImg = "{{ $driveData->drive_profile_image }}";
+        var xmlhttp = new XMLHttpRequest();
+        setInterval(() => {
+            xmlhttp.onreadystatechange = function() { 
+                if (this.readyState == 4 && this.status == 200) {
+                    let chatsObj = JSON.parse(this.responseText);
+                    //console.log(chatsObj);
+
+                    for (let i = 1; i <= chatsObj.length; i++) {
+                        if(! document.querySelector("#chatdiv"+chatsObj[i-1].id) && chatsObj[i-1].from == "drive"){
+                            if(document.querySelector("#nochats")){
+                                document.querySelector("#nochats").style.display = "none";
+                            }
+                            let flexDiv = document.createElement("div");
+                            let flexChild1 = document.createElement("div");
+                            let flexChild2 = document.createElement("div");
+
+                            let flexChild1Span = document.createElement("span");
+                            let flexChild1Img = document.createElement("img");
+
+                            let flexChild2Span = document.createElement("span");
+
+                            flexDiv.setAttribute("class", "display-flex chat-padding-drive");
+
+                            flexChild1Span.setAttribute("class", "material-icons-round empty-profile-small");
+                            flexChild1Span.innerHTML = "account_circle";
+
+                            flexChild1Img.setAttribute("src", driverImg);
+                            flexChild1Img.setAttribute("class", "profile-image-small");
+
+                            flexChild2.setAttribute("class", "drive-chat");
+                            flexChild2Span.innerHTML = chatsObj[i-1].chat;
+
+                            if(driverImg == ""){
+                                flexChild1.appendChild(flexChild1Span);
+                            }else{
+                                flexChild1.appendChild(flexChild1Img);
+                            }
+                            flexChild2.appendChild(flexChild2Span);
+                            flexDiv.appendChild(flexChild1);
+                            flexDiv.appendChild(flexChild2);
+                            flexDiv.setAttribute("id", "chatdiv"+chatsObj[i-1].id);
+                            chatsContainer.appendChild(flexDiv);
+                        }
+                    }
+                }
+            };
+            xmlhttp.open("GET", "/ride/{{ $driveAuth->id }}/getchats", true);
+            xmlhttp.send();
+        }, 1000);  
+    </script>
 </body>
 </html>

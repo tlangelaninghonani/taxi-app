@@ -28,40 +28,29 @@
             </p>
         </div>
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">My account</span>
            </div>
            <span class="material-icons-round" onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">My account</span><br>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
+
         <p>
             <div class="display-center">
                 <div class="text-align-center">
                     @if($rideData->ride_profile_image == "")
                         <div class="position-relative">
-                            <span class="material-icons-round empty-profile-large">
+                            <span onclick="closePopup('profileedit')" class="material-icons-round empty-profile-large">
                             account_circle
                             </span><br>
-                            <span onclick="closePopup('profileedit')" class="material-icons-round change-profile-image">
-                            edit
-                            </span>
                         </div>
                     @else
                         <div class="position-relative">
-                            <img class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
-                            <span onclick="closePopup('profileedit')" class="material-icons-round change-profile-image">
-                            edit
-                            </span>
+                            <img onclick="closePopup('profileedit')" class="profile-image-large" src="{{ $rideData->ride_profile_image }}" alt=""><br>
                         </div>
                     @endif
                     <span class="title">{{ $rideAuth->ride_first_name." ".$rideAuth->ride_last_name }}</span><br>
@@ -122,20 +111,14 @@
         </div>
         <p>
             <div class="curved-top">
-                <p>
-                    <span class="title title-margin-left">Edit your details</span>
-                </p>
                 <form class="app-padding" action="/ride/profile/update" method="POST">
                     @csrf
                     @method("POST")
-                    <span>First name</span><br>
                     <input type="text" name="firstname" value="{{ $rideAuth->ride_first_name }}" placeholder="Enter First name">
                     <p>
-                        <span>Last name</span><br>
                         <input type="text" name="lastname" value="{{ $rideAuth->ride_last_name }}" placeholder="Enter Last name">
                     </p>
                     <p>
-                        <span>Phone</span><br>
                         <input type="text" name="phone" value="{{ $rideAuth->ride_phone }}" placeholder="Enter Phone">
                     </p>
                     <p>

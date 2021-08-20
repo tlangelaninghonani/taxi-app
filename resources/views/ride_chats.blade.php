@@ -34,22 +34,19 @@
             </p>
         </div>
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">Chat with drivers</span>
            </div>
            <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">Chats</span>
-        </p>
         @if($history::where("ride_id", $rideAuth->id)->exists() || $requests::where("ride_id", $rideAuth->id)->exists())
         <p>
-            <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
+            <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers to chat with">
             <div class="display-flex-center-align gap-small">
                 <span class="material-icons-round">
                 tune

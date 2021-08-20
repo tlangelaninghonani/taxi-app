@@ -22,7 +22,8 @@ class CreateDriveDataTable extends Migration
             $table->text("drive_vehicle_plate");
             $table->text("drive_vehicle_color");
             $table->decimal("drive_ratings", 4, 2)->default(0.0);
-             $table->boolean("drive_on_trip")->default(false);
+            $table->boolean("drive_on_trip")->default(false);
+            $table->text("drive_cities")->default("[]");
             $table->timestamps();
         });
     }

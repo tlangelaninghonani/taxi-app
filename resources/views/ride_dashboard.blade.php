@@ -14,14 +14,10 @@
         text-decoration: none;
         color: black;
     }
+
 </style>
 <body>
     <div class="container">
-        <!--<p>
-            <a href="/signout">
-                <button>Sign out</button>
-            </a>
-        </p>-->
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
                 <span class="material-icons-round" onclick="closePopup('menu')">
@@ -40,11 +36,8 @@
             </p>
         </div>
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
-                </span>
-                <span class="app-name">InterCityRides</span>
+            <div class="display-flex-normal gap-10">
+                <span class="">Where you going today?</span>
            </div>
            <div class="display-flex-normal">
                 <span class="material-icons-round " onclick="closePopup('menu')">
@@ -52,7 +45,7 @@
                 </span>
            </div>
         </div>
-        <p>
+        <!--<p>
             <div class="display-center border-bottom-curved">
                 <div class="text-align-center">
                     @if($rideData->ride_profile_image == "")
@@ -77,217 +70,107 @@
                     </div>
                 </div>
             </div>
-        </p>
+        </p>-->
         @if($rideData->ride_on_trip == false)
-            @if($requests::where("ride_id", $rideAuth->id)->count() > 0)
-                <div class="curved-top padding-none">
-                    <div id="map"></div>
-                    <p>
-                        <div class="display-flex-center gap">
-                            <div onclick="displayComp(this, 'requests')" class="display-flex-center-align">
-                                <span class="material-icons-round">
-                                local_taxi
-                                </span>
-                                <span>Requests</span>
-                            </div>
-                            <div onclick="displayComp(this, 'requestsaccepted')" class="display-flex-center-align">
-                                <span class="material-icons-round">
-                                check_circle
-                                </span>
-                                <span>Accepted & offers</span>
-                            </div>
-                        </div>
-                    </p>
-                    <div id="requests" class="app-padding" style="padding-top: 0">
-                        @foreach($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->get() as $request)   
-                            <div class="display-none">
-                                {{ $driveA = $driveAuth::find($request->drive_id) }}
-                                {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
-                            </div>
-                            <p>
-                                <div class="display-flex-normal gap-10" onclick="redirectTo('/ride/{{ $request->id }}/request/pending')">
-                                    <div>
-                                        @if($driveD->drive_profile_image == "")
-                                        <span class="material-icons-round empty-profile-medium">
-                                        account_circle
-                                        </span><br>
-                                        @else
-                                        <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
-                                        @endif
-                                    </div>
-                                    <div class="trunc-text">
-                                        <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
-                                        <div class="trunc-text">
-                                            <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
-                                            <strong>{{ $driveD->drive_vehicle_type }}</strong>
-                                        </div>
-                                        <div class="display-flex-normal gender">
-                                            @if($driveA->drive_gender == "Male")
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
-                                            @elseif($driveA->drive_gender == "Female")
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
-                                            @else
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
-                                            @endif
-                                        </div>
-                                        <div class="rating-stars-small">
-                                            @for($i = 1; $i <= 5; $i++)
-                                                @if($i <= floor($driveD->drive_ratings))
-                                                    <span class="material-icons-round" style="color: orange" >
-                                                    star
-                                                    </span>
-                                                @else
-                                                    <span class="material-icons-round" >
-                                                    star
-                                                    </span>
-                                                @endif
-                                            @endfor
-                                        </div>
-                                    </div>
-                                </div>
-                            </p>
-                        @endforeach
-                        <p>
-                            @if($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->count() == 0)
-                                <div class="text-align-center">
-                                    <span>No requests</span>
-                                </div>
-                            @endif
-                        </p>
-                    </div>
-                    <div id="requestsaccepted" class="display-none app-padding" style="padding-top: 0">
-                    @foreach($requests::where("ride_accepted", true)->where("ride_id", $rideAuth->id)->get() as $request)   
-                            <div class="display-none">
-                                {{ $driveA = $driveAuth::find($request->drive_id) }}
-                                {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
-                            </div>
-                            <p>
-                                <div class="display-flex-normal gap-10" onclick="redirectTo('/ride/{{ $request->id }}/request/accepted')">
-                                    <div>
-                                        @if($driveD->drive_profile_image == "")
-                                        <span class="material-icons-round empty-profile-medium">
-                                        account_circle
-                                        </span><br>
-                                        @else
-                                        <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
-                                        @endif
-                                    </div>
-                                    <div class="trunc-text">
-                                        <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
-                                        <div class="trunc-text">
-                                            <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
-                                            <strong>{{ $driveD->drive_vehicle_type }}</strong>
-                                        </div>
-                                        <div class="display-flex-normal gender">
-                                            @if($driveA->drive_gender == "Male")
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
-                                            @elseif($driveA->drive_gender == "Female")
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
-                                            @else
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
-                                            @endif
-                                        </div>
-                                        <div class="rating-stars-small">
-                                            @for($i = 1; $i <= 5; $i++)
-                                                @if($i <= floor($driveD->drive_ratings))
-                                                    <span class="material-icons-round" style="color: orange" >
-                                                    star
-                                                    </span>
-                                                @else
-                                                    <span class="material-icons-round" >
-                                                    star
-                                                    </span>
-                                                @endif
-                                            @endfor
-                                        </div>
-                                    </div>
-                                </div>
-                            </p>
-                        @endforeach
-                        <p>
-                            @if($requests::where("ride_accepted", true)->where("ride_id", $rideAuth->id)->count() == 0)
-                                <div class="text-align-center">
-                                    <span>No accepted requests or offers</span>
-                                </div>
-                            @endif
-                        </p>
-                    </div>
-                    <script
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initMapCurrentLoc&libraries=&v=weekly"
-                    async
-                    ></script>
-                </div>
-            @else
-                <div class="curved-top padding-none">
-                    <div id="map"></div>
+            @if($requestInstant)
+            <div class="curved-top">
+                <div id="map"></div>
                     <div class="app-padding">
                         <p>
                             <div class="text-align-center">
-                                <span class="title">Hello {{ $rideAuth->ride_first_name }}, where are you going today?</span>
-                            </div>
-                        </p>
-                        <p>
-                            <a href="/ride/drivers">
-                                <button>See drivers</button>
-                            </a>
-                        </p>
-                    </div>
-                    <script
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initMapCurrentLoc&libraries=&v=weekly"
-                    async
-                    ></script>
-                </div>
-            @endif
-        @else
-            <div class="display-none">
-                {{ $driveAuth = $driveAuth::find($trip->drive_id) }}
-                {{ $driveData = $driveData::where("drive_id", $driveAuth->id)->first() }}
-            </div>
-            <div class="curved-top padding-none">
-                <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116716.15173817966!2d29.381065563392927!3d-23.91160360229813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ec6d8401183307b%3A0xa720ddd4b18e4df7!2sPolokwane!5e0!3m2!1sen!2sza!4v1626522553343!5m2!1sen!2sza" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
-                <div id="map"></div>
-                <div class="curved-top-padding">
-                    <p>
-                        <div class="text-align-center">
-                            <span class="title">On trip wth {{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}...</span><br>
-                        </div>
-                        <div id="tripinfo" class="text-align-center ">
-                        <p>
-                            <div class="text-align-center">
                                 <div class="display-flex-justify-center">
-                                    <span class="material-icons-round">
-                                    hail
-                                    </span>
                                     <span class="title">Pick-up</span><br>
                                 </div>
-                                <span>{{ $trip->ride_from }}</span><br>
+                                <span>{{ $requestInstant->ride_from }}</span><br>
                                 <div class="display-flex-justify-center">
-                                    <span class="material-icons-round">
-                                    my_location
-                                    </span>
                                     <span class="title">Drop</span><br>
                                 </div>
-                                <span>{{ $trip->ride_to }}</span>
+                                <span>{{ $requestInstant->ride_to }}</span>
                             </div>
                         </p>
+                        <div id="tripinfo" class="text-align-center ">
+                            <p>
+                                <span>Distance <strong id="tripdistance">{{ $requestInstant->ride_distance }}</strong></span><br>
+                                <span>Estimated time <strong id="triptime">{{ $requestInstant->ride_duration }}</strong></span><br>
+                                <span class="title">Charges R<strong class="title" id="tripcharges">{{ $requestInstant->ride_charges }}</strong></span>
+                            </p>
+                        </div>
+                        <div class="display-none">
+                            {{ $driveA = $driveAuth::find($requestInstant->drive_id) }}
+                        </div>
+                        @if($driveA)
+                            <div class="display-none">
+                                {{ $driveD = $driveData::where("drive_id", $driveA->id)->first() }}
+                            </div>
+                            <p>
+                                <div class="display-flex-normal gap-10" onclick="redirectTo('')">
+                                    <div>
+                                        @if($driveD->drive_profile_image == "")
+                                        <span class="material-icons-round empty-profile-medium">
+                                        account_circle
+                                        </span><br>
+                                        @else
+                                        <img class="profile-image" src="{{ $driveD->drive_profile_image }}" alt="">
+                                        @endif
+                                    </div>
+                                    <div class="trunc-text">
+                                        <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
+                                        <div class="trunc-text">
+                                            <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
+                                            <strong>{{ $driveD->drive_vehicle_type }}</strong>
+                                        </div>
+                                        <div class="display-flex-normal gender">
+                                            @if($driveA->drive_gender == "Male")
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @elseif($driveA->drive_gender == "Female")
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @else
+                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                            @endif
+                                        </div>
+                                        <div class="rating-stars-small">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                @if($i <= floor($driveD->drive_ratings))
+                                                    <span class="material-icons-round" style="color: orange" >
+                                                    star
+                                                    </span>
+                                                @else
+                                                    <span class="material-icons-round" >
+                                                    star
+                                                    </span>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                    </div>
+                                </div>
+                            </p>
+                            <p>
+                                <div class="text-align-center">
+                                    <span class="title">{{ $driveA->drive_first_name }} is on the way to pick you up</span>
+                                </div>
+                            </p>
+                        @else
                         <p>
-                            <span>Distance <strong id="tripdistance">{{ $trip->ride_distance }}</strong></span><br>
-                            <span>Estimated time <strong id="triptime">{{ $trip->ride_duration }}</strong></span><br>
-                            <span class="title">Charges R<strong class="title" id="tripcharges">{{$trip->ride_charges }}</strong></span>
+                            <div class="text-align-center">
+                                <span class="title">Waiting for drivers to accept your request</span>
+                            </div>
+                        </p>
+                        @endif
+                        <p>
+                            <form action="/ride/{{ $requestInstant->id }}/request/instant/cancel" method="POST">
+                            @csrf
+                            @method("POST")
+                                <button>Cancel request</button>
+                            </form>
                         </p>
                     </div>
-                    <form action="/ride/{{ $trip->id }}/request/trip/end" method="POST">
-                        @csrf
-                        @method("POST")
-                        <button>End trip</button>
-                    </form>
                 </div>
             </div>
             <script>
-            function drawLine(){
+            function drawLineInl(){
                 const map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: -33.8688, lng: 151.2195 },
-                zoom: 13,
+                zoom: 12,
                 mapId: "4cce301a9d6797df",
                 disableDefaultUI: true,
                 fullscreenControl: true
@@ -304,8 +187,8 @@
                 directionsRenderer.setMap(map); // Existing map object displays directions
                 // Create route from existing points used for markers
                 const route = {
-                    origin: {lat: parseFloat("{{ $trip->ride_from_lat }}"), lng: parseFloat("{{  $trip->ride_from_lng }}")},
-                    destination: {lat: parseFloat("{{  $trip->ride_to_lat }}"), lng: parseFloat("{{  $trip->ride_to_lng }}")},
+                    origin: {lat: parseFloat("{{ $requestInstant->ride_from_lat }}"), lng: parseFloat("{{ $requestInstant->ride_from_lng }}")},
+                    destination: {lat: parseFloat("{{ $requestInstant->ride_to_lat }}"), lng: parseFloat("{{ $requestInstant->ride_to_lng }}")},
                     travelMode: 'DRIVING'
                 }
 
@@ -322,14 +205,187 @@
                         return;
                         }
                         else {
-
+                            document.querySelector("#tripinfo").style.display = "block";
+                            document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
+                            document.querySelector("#triptime").innerHTML = directionsData.duration.text;
+                            document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
                         }
                     }
                 });
             }
             </script>
             <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=drawLine&libraries=places&v=weekly"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=drawLineInl&libraries=places&v=weekly"
+            async
+            ></script>
+            @else
+                <div class="curved-top">
+                    <div id="map"></div>
+                    <div class="app-padding">
+                        <form action="/ride/request/instant" method="POST">
+                            @csrf
+                            @method("POST")
+                            <p>
+                                <div class="display-flex-normal">
+                                </div>
+                                <input type="text" name="ridefrom" id="ridefrom" placeholder="Pick-up" required>
+                            </p>
+                            <p>
+                                <div class="display-flex-normal">
+                                </div>
+                                <input type="text" name="rideto" id="rideto" placeholder="Your destination"  required>
+                            </p>
+                            <div id="choosecarcontainer" class="choose-car-container display-none">
+                                <div class="nav display-flex-space-between">
+                                    <span>Choose a ride</span>
+                                    <span class="material-icons-round newplan" onclick="closePopup('choosecarcontainer')">
+                                    close
+                                    </span>
+                                </div>
+                                <img class="welcome-page-banner-1" src="https://cdn.dribbble.com/users/1138006/screenshots/12921013/arterndesign_uberlibrary_sfo_2x.png" alt="">
+                                <div class="text-align-center">
+                                    <p>
+                                        <span class="title">Choose a <strong>sutaible</strong> ride for your trip</span>
+                                    </p>
+                                </div>    
+                                <div class="box-shadow-abs">
+                                    <div class="choose-car">
+                                        <img src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_558,h_372/v1548646935/assets/64/93c255-87c8-4e2e-9429-cf709bf1b838/original/3.png" alt="">
+                                        <div>
+                                            <span class="title-mid">InterCityRides <strong>Go</strong></span><br>
+                                            <span class="title-small">2 door</span>
+                                        </div>
+                                    </div>
+                                    <div class="choose-car">
+                                        <img src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_558,h_372/v1548646935/assets/64/93c255-87c8-4e2e-9429-cf709bf1b838/original/3.png" alt="">
+                                        <div>
+                                        <span class="title-mid">InterCityRides <strong>X</strong></span><br>
+                                            <span class="title-small">4 door</span>
+                                        </div>
+                                    </div>
+                                    <div class="choose-car">
+                                        <img src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_558,h_372/v1548646918/assets/e9/2eeb8f-3764-4e26-8b17-5905a75e7e85/original/2.png" alt="">
+                                        <div>
+                                            <span class="title-mid">InterCityRides <strong>XL</strong></span><br>
+                                            <span class="title-small">2 door (SUV)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tripinfo" class="text-align-center display-none">
+                                <p>
+                                    <span>Distance <strong id="tripdistance"></strong></span><br>
+                                    <span>Estimated time <strong id="triptime"></strong></span><br>
+                                    <span class="title">Charges <strong>R</strong><strong class="title" id="tripcharges"></strong></span>
+                                </p>
+                            </div>
+                            <p>
+                                <input type="hidden" id="ridecharges" name="ridecharges">
+                                <input type="hidden" id="ridefromcoords" name="ridefromcoords">
+                                <input type="hidden" id="ridetocoords" name="ridetocoords">
+                                <input type="hidden" id="ridedistance" name="ridedistance">
+                                <input type="hidden" id="rideduration" name="rideduration">
+
+                                <button id="mapbutton" class="display-none">Request</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+                <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initAutocomplete&libraries=places&v=weekly"
+                async
+                ></script>
+            @endif
+        @else
+            <div class="display-none">
+                {{ $driveAuth = $driveAuth::find($trip->drive_id) }}
+                {{ $driveData = $driveData::where("drive_id", $driveAuth->id)->first() }}
+            </div>
+            <div class="curved-top padding-none">
+                <div id="map"></div>
+                <div class="curved-top-padding">
+                    <p>
+                        <div class="text-align-center">
+                            <span class="title">On trip wth {{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}...</span><br>
+                        </div>
+                        <div id="tripinfo" class="text-align-center ">
+                        <p>
+                            <div class="text-align-center">
+                                <div class="display-flex-justify-center">
+                                    <span class="title">Pick-up</span><br>
+                                </div>
+                                <span>{{ $trip->ride_from }}</span><br>
+                                <div class="display-flex-justify-center">
+                                    <span class="title">Drop</span><br>
+                                </div>
+                                <span>{{ $trip->ride_to }}</span>
+                            </div>
+                        </p>
+                        <p>
+                            <span>Distance <strong id="tripdistance">{{ $trip->ride_distance }}</strong></span><br>
+                            <span>Estimated time <strong id="triptime">{{ $trip->ride_duration }}</strong></span><br>
+                            <span class="title">Charges R<strong class="title" id="tripcharges">{{$trip->ride_charges }}</strong></span>
+                        </p>
+                    </div>
+                    <form action="/ride/{{ $trip->id }}/request/trip/end" method="POST">
+                        @csrf
+                        @method("POST")
+                        <div class="display-flex-normal gap-10">
+                            <button>End trip</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+            function drawLineInl(){
+                const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -33.8688, lng: 151.2195 },
+                zoom: 12,
+                mapId: "4cce301a9d6797df",
+                disableDefaultUI: true,
+                fullscreenControl: true
+                });
+
+                let directionsService = new google.maps.DirectionsService();
+                var directionsOptions = {
+                    polylineOptions: {
+                        strokeColor: 'red',
+                        strokeWeight: 2,
+                    }
+                }
+                let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
+                directionsRenderer.setMap(map); // Existing map object displays directions
+                // Create route from existing points used for markers
+                const route = {
+                    origin: {lat: parseFloat("{{ $request->ride_from_lat }}"), lng: parseFloat("{{ $request->ride_from_lng }}")},
+                    destination: {lat: parseFloat("{{ $request->ride_to_lat }}"), lng: parseFloat("{{ $request->ride_to_lng }}")},
+                    travelMode: 'DRIVING'
+                }
+
+                directionsService.route(route,
+                    function(response, status) { // anonymous function to capture directions
+                    if (status !== 'OK') {
+                        window.alert('Directions request failed due to ' + status);
+                        return;
+                    } else {
+                        directionsRenderer.setDirections(response); // Add route to the map
+                        var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                        if (!directionsData) {
+                        window.alert('Directions request failed');
+                        return;
+                        }
+                        else {
+                            document.querySelector("#tripinfo").style.display = "block";
+                            document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
+                            document.querySelector("#triptime").innerHTML = directionsData.duration.text;
+                            document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
+                        }
+                    }
+                });
+            }
+            </script>
+            <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=drawLineInl&libraries=places&v=weekly"
             async
             ></script>
         @endif

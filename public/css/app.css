@@ -1,14 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
 :root{
-    --shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    --shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;;
     --padding: 3px;
-    --cust-black: black;
+    --cust-black: rgb(0, 0, 0);
 }
 
 *{
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: var(--cust-black);
 
+}
+
+.instant-request{
+ 
+}
+
+.city-container{
+    display: flex;
+    gap: 10px;
+    overflow: auto;
+}
+
+.city{
+    background-color: black;
+    color: white;
+    padding: 18px 20px;
+    border-radius: 30px;
+    min-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
 .bolder-font{
@@ -27,7 +50,7 @@ body{
 
 
 .title-small{
-    font-size: 13px !important;
+    font-size: 12px !important;
 }
 
 .bottom-controls{
@@ -39,8 +62,7 @@ body{
         box-sizing: border-box;
         display: block !important;
         width: 100%;
-        padding: var(--padding);
-        padding-bottom: 15%;
+        padding-bottom: 20px;
     }
     .new-plan-icon{
        
@@ -66,6 +88,62 @@ body{
         border-radius: 50%;
     }
 
+    .black-background{
+        padding: 14px;
+        background-color: black;
+        border-radius: 50%;
+        color: white;
+    }
+
+    .choose-car-container{
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: white;
+        z-index: 999;
+        padding: var(--padding);
+        overflow: auto;
+    }
+    
+    .choose-car{
+        display: flex;
+        align-items: center;
+        gap: 10px;  
+    }
+
+    .choose-car img{
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+    }
+
+    .signin-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .div-controls{
+        padding: 14px;
+        background-color: rgb(243, 243, 243);
+        border-radius: 30px;
+        margin: 0 50px;
+    }
+
+    .make-new-plan{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .display-flex-center{
         display: flex;
         justify-content: center;
@@ -80,8 +158,8 @@ body{
     }
 
     .gray-padding{
-        padding: 10px !important;
-        background-color: rgb(238, 238, 238);
+        padding: 16px !important;
+        background-color: rgb(233, 233, 233);
         border-radius: 50%;
     }
 
@@ -113,10 +191,23 @@ body{
     .display-flex-end{
         display: flex;
         justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .edit-cities{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 999;
+        background-color: white;
+        display: none;
+        overflow: auto;
     }
 
     .gap-10{
-        gap: 10px;
+        gap: 8px;
     }
 
     .new-plan-icon{
@@ -140,7 +231,7 @@ body{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 5px 3px;
+        padding: 10px 3px;
         background-color: white;
         z-index: 99999999;
     }
@@ -150,8 +241,8 @@ body{
         
     }
 
-    .border-bottom-curved{
-
+    .border-bottom{
+     
     }
     
     
@@ -166,6 +257,10 @@ body{
         font-size: 100px !important;
     }
 
+    .icon-padding{
+        padding: 10px;
+    }
+    
     .padding-none{
         padding: 0 0 20% 0 !important;
     }
@@ -175,6 +270,7 @@ body{
         height: 250px;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
+        box-shadow: var(--shadow);
     }
 
     .map{
@@ -182,6 +278,24 @@ body{
         height: 250px;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
+        box-shadow: var(--shadow);
+    }
+
+    .box-shadow{
+        box-shadow: var(--shadow);
+        padding: var(--padding);
+    
+    }
+
+    .box-shadow-abs{
+        box-shadow: var(--shadow);
+        padding: var(--padding);
+        border-top-right-radius: 40px;
+        border-top-left-radius: 40px;
+        position: absolute;
+
+        left: 0;
+        right: 0;
     }
 
     #map button{
@@ -222,12 +336,6 @@ body{
         border-radius: 50%;
     }
 
-    .gray-padding-button{
-        background-color: rgb(243, 243, 243);
-        padding: 2%;
-        border-radius: 30px;
-    }
-
     input:focus, button:focus, a:focus{
 
         outline: none;
@@ -245,11 +353,10 @@ body{
         position: fixed;
         bottom: 0;
         right: 0;
-        margin: 20% 5%;
-        padding: 3%;
-        background-color: black;
-        border-radius: 50%;
-        color: white;
+        top: 0;
+        left: 0;
+        background-color: white;
+        overflow: auto;
     }
 
     .offered{
@@ -273,7 +380,7 @@ body{
     }
 
     .gap-small{
-        gap: 8px
+        gap: 5px
     }
 
     .app-icon{
@@ -285,13 +392,14 @@ body{
     }
 
     .curved-top{
-        box-shadow: var(--shadow);
-        border-top-right-radius: 40px;
-        border-top-left-radius: 40px;
+        /*box-shadow: var(--shadow);*/
         position: absolute;
         left: 0;
         right: 0;
-        padding-bottom: 20%;
+        border-top-right-radius: 40px;
+        border-top-left-radius: 40px;
+        
+        padding-bottom: 70px;
     }
 
     .curved-top-padding{
@@ -317,7 +425,8 @@ body{
         border-top-right-radius: 30px;
         border-bottom-right-radius: 30px;
         border-bottom-left-radius: 30px;
-        background-color: rgb(243, 243, 243);
+        background-color: white;
+        border: 1px solid rgb(243, 243, 243);
         padding: 18px;
         max-width: 65%;
     }
@@ -372,7 +481,8 @@ body{
         background-color: white;
         box-shadow: var(--shadow);
         padding: var(--padding);
-        border-radius: 40px;
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
     
     }
 
@@ -429,6 +539,10 @@ body{
     .title{
         font-size: 25px;
     }
+
+    .title-mid{
+        font-size: 20px;
+    }
     
     .title-large{
         font-size: 30px;
@@ -450,10 +564,19 @@ body{
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: white;
     }
 
     .position-relative{
         position: relative;
+    }
+
+    .instant-request-absolute{
+    
+    }
+
+    .position-absolute{
+        position: absolute;
     }
 
     .status-color-active{
@@ -465,14 +588,38 @@ body{
         border: 2px solid gray;
     }
 
-
+    .drivers-requests{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
 
     ::-webkit-scrollbar {
     display: none;
     }
 
+    .see-drivers{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        background-color: black;
+        padding: 15px 50px;
+        border-radius: 30px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 80px 40px;
+    }
+
+    .see-drivers *{
+        color: white;
+    }
+
     .welcome-page-banner-1{
         width: 100%;
+        height: 180px;
         border-radius: 30px;
     }
 
@@ -612,9 +759,6 @@ body{
         left: 0;
         bottom: 0;
         background-color:white !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         z-index: 10;
     }
     
@@ -646,7 +790,7 @@ body{
 
     .empty-profile-small{
         font-size: 42px !important;
-        margin-left: 3px;
+       
     }
     
     .profile-image-large{
@@ -663,8 +807,8 @@ body{
         width: 200px;
         z-index: 10;
         background-color: white;
-        padding: var(--padding) var(--padding) var(--padding) 20px;
-        box-shadow: 0px 0px 5px 0px gray;
+        padding: 10px var(--padding) var(--padding) 20px;
+        box-shadow: var(--shadow);
         z-index: 99999999999999999;
     }
 

@@ -73,38 +73,32 @@
                 </div>
             </div>
         </p>
-        <div class="curved-top padding-none">
+        <div class="curved-top">
             <div id="map"></div>
-            <input type="hidden" id="ridefrom" value="{{ $rideData->ride_from }}">
-            <input type="hidden" id="rideto" value="{{ $rideData->ride_to }}">
-            <form id="ridertochat" action="/drive/{{ $rideAuth->id }}/chat" method="POST">
-                @csrf
-                @method("POST")
-            </form>
-            <form class="app-padding" action="/drive/{{ $request->id }}/request/accept" method="POST">
-                @csrf
-                @method("POST")
-                <div class="text-align-center">
+            <div class="app-padding">
                 <p>
                     <div class="text-align-center">
                         <div class="display-flex-justify-center">
                             <span class="title">Pick-up</span><br>
                         </div>
-                        <span>{{ $request->ride_from }}</span><br>
+                        <span>{{ $requestInstant->ride_from }}</span><br>
                         <div class="display-flex-justify-center">
                             <span class="title">Drop</span><br>
                         </div>
-                        <span>{{ $request->ride_to }}</span>
+                        <span>{{ $requestInstant->ride_to }}</span>
                     </div>
                 </p>
-                </div>
                 <div id="tripinfo" class="text-align-center ">
                     <p>
-                        <span>Distance <strong id="tripdistance">{{ $request->ride_distance }}</strong></span><br>
-                        <span>Estimated time <strong id="triptime">{{ $request->ride_duration }}</strong></span><br>
-                        <span class="title">Charges <strong class="title" id="tripcharges">R{{ $request->ride_charges }}</strong></span>
+                        <span>Distance <strong id="tripdistance">{{ $requestInstant->ride_distance }}</strong></span><br>
+                        <span>Estimated time <strong id="triptime">{{ $requestInstant->ride_duration }}</strong></span><br>
+                        <span class="title">Charges R<strong class="title" id="tripcharges">{{ $requestInstant->ride_charges }}</strong></span>
                     </p>
                 </div>
+                <form id="ridertochat" action="/drive/{{ $rideAuth->id }}/chat" method="POST">
+                    @csrf
+                    @method("POST")
+                </form>
                 <p>
                     <div class="display-flex-center">
                         <div class="display-flex-normal" onclick="submitForm('ridertochat')">
@@ -115,10 +109,37 @@
                         </div>
                     </div>
                 </p>
-                <p>
-                    <button>Accept</button>
-                </p>
-            </form>
+                @if($requestInstant->pick_up_requested)
+                    @if($requestInstant->pick_up_confirmed)
+                        <div class="text-align-center">
+                            <span class="title">Picked {{ $rideAuth->ride_first_name }}?</span>
+                        </div>
+                        <p>
+                            <form action="/drive/{{ $requestInstant->id }}/request/trip/start" method="POST">
+                                @csrf
+                                @method("POST")
+                                <button>Drive</button>
+                            </form>
+                        </p>
+                    @else
+                        <div class="text-align-center">
+                            <span class="title">{{ $rideAuth->ride_first_name }} requested a pick-up</span>
+                        </div>
+                        <p>
+                            <form action="/drive/{{ $requestInstant->id }}/request/pickup/confirm" method="POST">
+                                @csrf
+                                @method("POST")
+                                <button>Confirm pick-up</button>
+                            </form>
+                        </p>
+                    @endif
+                    
+                @else
+                    <div class="text-align-center">
+                        <span class="title">Waiting for {{ $rideAuth->ride_first_name }} to request pick-up...</span>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
@@ -143,8 +164,8 @@
         directionsRenderer.setMap(map); // Existing map object displays directions
         // Create route from existing points used for markers
         const route = {
-            origin: {lat: parseFloat("{{ $request->ride_from_lat }}"), lng: parseFloat("{{ $request->ride_from_lng }}")},
-            destination: {lat: parseFloat("{{ $request->ride_to_lat }}"), lng: parseFloat("{{ $request->ride_to_lng }}")},
+            origin: {lat: parseFloat("{{ $requestInstant->ride_from_lat }}"), lng: parseFloat("{{ $requestInstant->ride_from_lng }}")},
+            destination: {lat: parseFloat("{{ $requestInstant->ride_to_lat }}"), lng: parseFloat("{{ $requestInstant->ride_to_lng }}")},
             travelMode: 'DRIVING'
         }
 
@@ -160,7 +181,6 @@
                 window.alert('Directions request failed');
                 return;
                 }
-               
             }
         });
     }

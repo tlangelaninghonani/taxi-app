@@ -11,13 +11,18 @@
 <body>
     <div class="container">
         <div class="logo" id="logo">
+            <div class="nav">
+                <div class="display-flex">
+                        <span class="material-icons-round">
+                        apartment
+                        </span>
+                        <span class="app-name">InterCityRides</span>
+                </div>
+            </div>
             <div class="text-align-center">
-                <span class="material-icons-round app-icon">
-                apartment
-                </span><br>
-                <span class="title">InterCityRides</span><br>
-                <span class="cl-silver logo-marketing title-small">App from DevOpsFactory</span>
-           </div>
+                <img class="welcome-page-banner-1" src="https://cdn.dribbble.com/users/1138006/screenshots/12920961/media/e9c536ccdb39ed2944bea2951299f559.png?compress=1&resize=400x300" alt="">
+                <span class="title">Choose your own driver with <strong>InterCityRides</strong></span><br>
+            </div>
         </div>
         <div class="nav">
            <div class="display-flex">
@@ -27,28 +32,24 @@
                 <span class="app-name">InterCityRides</span>
            </div>
         </div>
-        <p>
-            <div>
-                <img class="welcome-page-banner-1" src="https://www.uber-assets.com/image/upload/q_auto:eco,c_fill,w_956,h_537/v1565734756/assets/fa/dc4e40-8aee-4a48-af4c-0475c1e01d26/original/singup_mobile.svg" alt="">
+        <div>
+            <img class="welcome-page-banner-1" src="https://cdn.dribbble.com/users/1138006/screenshots/12920961/media/e9c536ccdb39ed2944bea2951299f559.png?compress=1&resize=400x300" alt="">
+        </div>
+        <div class="curved-top app-padding">
+            <div class="text-align-center">
+                <span class="title-large">Get where you like at your own pace</span>
             </div>
-        </p>
-        <p>
-            <div class="curved-top app-padding">
-                 <p>
-                    <div class="text-align-center">
-                        <span class="title-large">Get where you like at your own pace</span>
-                    </div>
-                </p>
+            <p>
                 <a href="/signin">
                     <button>Sign in</button>
                 </a>
-                <p>
-                    <div class="text-align-center">
-                        <span class="cl-silver title-small">App from DevOpsFactory</span>
-                    </div>
-                </p>
-            </div>
-        </p>
+            </p>
+            <p>
+                <div class="text-align-center">
+                    <strong class="cl-silver title-small">App from DevOpsFactory</strong>
+                </div>
+            </p>
+        </div>
     </div>
 
     <script src="{{ $links['js'] }}"></script>

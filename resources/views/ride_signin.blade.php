@@ -10,29 +10,29 @@
 </head>
 <body>
     <div class="container">
-        <p>
-            <div class="text-align-center">
-                <span class="material-icons-round app-icon">
-                apartment
-                </span><br>
-                <span class="title">InterCityRides</span><br>
-                <span>Signing in to ride</span>
-            </div>
-        </p>
-        <div class="curved-top app-padding">
+        <div class="nav">
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
+                </span>
+                <span class="">Signing in to ride</span>
+           </div>
+        </div>
+        <img class="welcome-page-banner-1" src="https://wolffolins.b-cdn.net/wolffolins%2F0f486af5-7c91-438c-a984-69ba0c16d85d_uber_cs_image_illustration_01.jpg?auto=compress,format" alt="">
+        <div class="curved-top app-padding ">
             <p>
-                <span class="title title-margin-left">Enter your details</span>
+                <div class="text-align-center">
+                <span class="title">Security is our priority with <strong>InterCityRides</strong></span>
+                </div>
             </p>
             <p>
                 <form action="/ride/signin" method="POST">
                     @csrf
                     @method("POST")
                     <p>
-                        <span>Phone</span><br>
                         <input type="tel" id="phone" name="phone" placeholder="Enter Phone" required>
                     </p>
                     <p>
-                        <span>Password</span><br>
                         <input type="password" id="password" name="password" placeholder="Enter password" required>
                     </p>
                     <p>
@@ -48,13 +48,19 @@
                     </p>
                 </form>
             </p>
-            <p>
+            <!--<p>
                 <div class="text-align-center">
                     <span>Don't have an account yet? <strong onclick="redirectTo('/ride/signup/personal')">Sign up</strong></span>
                 </div>
-            </p>
+            </p>-->
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+        setTimeout(() => {
+            document.querySelector("#phone").value = "";
+            document.querySelector("#password").value = "";
+        }, 1000);
+    </script>
 </body>
 </html>

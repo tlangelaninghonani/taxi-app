@@ -9,6 +9,7 @@ use App\Models\DriveAuth;
 use App\Models\RideData;
 use App\Models\DriveData;
 use App\Models\RideRequest;
+use App\Models\RideRequestInstant;
 use App\Models\Notification;
 
 class DriveDashboardController extends Controller
@@ -27,6 +28,7 @@ class DriveDashboardController extends Controller
         $trip = RideRequest::where("drive_id", $driveAuth->id)->where("on_trip", true)->first();
 
         $notifications = Notification::where("drive_id", $driveAuth->id)->first();
+        
 
         return view("drive_dashboard", [
             "driveAuth" => $driveAuth,
@@ -35,7 +37,18 @@ class DriveDashboardController extends Controller
             "rideData" => new RideData(),
             "requests" => new RideRequest(),
             "trip" => $trip,
-            "notifications" => $notifications
+            "notifications" => $notifications,
+            "requestInstants" => new RideRequestInstant(),
         ]);
+    }
+
+
+    public function driveGetRequests(){
+        $drive_id =  intval(Session::get("drive_id"));
+        $requests = RideRequest::where("drive_id", $drive_id)->get();
+        return array(
+            "requests" => $requests,
+            "rideAuth" => new RideAuth(),
+        );
     }
 }

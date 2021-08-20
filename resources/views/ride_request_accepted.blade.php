@@ -11,11 +11,11 @@
 <body>
     <div class="container">
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+           <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">{{ $driveAuth->drive_first_name }} accepted your request</span>
            </div>
            <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
@@ -38,12 +38,6 @@
                 </a>
             </p>
         </div>
-        <p>
-            <span class="title">Accepted ride request</span>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -90,16 +84,10 @@
                 <p>
                     <div class="text-align-center">
                         <div class="display-flex-justify-center">
-                            <span class="material-icons-round">
-                            hail
-                            </span>
                             <span class="title">Pick-up</span><br>
                         </div>
                         <span>{{ $request->ride_from }}</span><br>
                         <div class="display-flex-justify-center">
-                            <span class="material-icons-round">
-                            my_location
-                            </span>
                             <span class="title">Drop</span><br>
                         </div>
                         <span>{{ $request->ride_to }}</span>

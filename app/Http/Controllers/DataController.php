@@ -14,6 +14,7 @@ use App\Models\RideRequest;
 use App\Models\History;
 use App\Models\Review;
 use App\Models\Plan;
+use App\Models\RideRequestInstant;
 use App\Models\Offer;
 use App\Models\Notification;
 
@@ -119,6 +120,44 @@ class DataController extends Controller
         ]);
     }
 
+    public function driveRequestInstantIndex($id){
+        if(! Session::has("hasLogged")){
+            return redirect("/signin");
+        }
+
+        $requestInstant = RideRequestInstant::find($id);
+
+        $rideAuth = RideAuth::find($requestInstant->ride_id);
+        $rideData = RideData::where("ride_id", $rideAuth->id)->first();
+
+        return view("drive_request_instant", [
+            "rideAuth" => $rideAuth,
+            "rideData" => $rideData,
+            "requestInstant" => $requestInstant,
+        ]);
+    }
+
+     public function driveRequestInstantAccept($id){
+        
+        $requestInstant = RideRequestInstant::find($id);
+
+        $rideAuth = RideAuth::find($requestInstant->ride_id);
+        $rideData = RideData::where("ride_id", $rideAuth->id)->first();
+
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
+
+        $requestInstant->drive_id = $driveAuth->id;
+        $requestInstant->ride_accepted = true;
+
+        $requestInstant->save();
+
+
+        return redirect("/drive/dashboard");
+    }
+
     public function driveRequestAccept($id){
         
         $request = RideRequest::find($id);
@@ -149,8 +188,6 @@ class DataController extends Controller
 
         $rideAuth = RideAuth::findorfail($ride_id);
         $rideData = RideData::where("ride_id", $ride_id)->first();
-
-        
 
         return back();
     }
@@ -205,6 +242,8 @@ class DataController extends Controller
             "rideData" => $rideData,
             "driveAuths" => $driveAuths,
             "driveData" => $driveData,
+            "requests" => new RideRequest(),
+            "driveAuth" => new DriveAuth(),
         ]);
     }
 
@@ -681,6 +720,7 @@ class DataController extends Controller
             "driveData" => $driveData,
             "history" => new History(),
             "requests" => new RideRequest(),
+            "requestInstants" => new RideRequestInstant(),
         ]);
     }
 
@@ -721,6 +761,7 @@ class DataController extends Controller
             "rideData" => $rideData,
             "history" => new History(),
             "requests" => new RideRequest(),
+            "requestInstants" => new RideRequestInstant(),
         ]);
     }
 
@@ -741,6 +782,35 @@ class DataController extends Controller
             "rideData" => $rideData,
             "chats" => new Chat(),
         ]);
+    }
+
+
+    public function rideGetChats($id){
+        $driveAuth = DriveAuth::find($id);
+        $driveData = DriveData::where("drive_id", $driveAuth->id)->first();
+
+        $ride_id =  intval(Session::get("ride_id"));
+
+        $rideAuth = RideAuth::findorfail($ride_id);
+        $rideData = RideData::where("ride_id", $ride_id)->first();
+
+        $chats = Chat::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->get();
+
+        return $chats;
+    }
+
+    public function driveGetChats($id){
+        $rideAuth = RideAuth::find($id);
+        $rideData = RideData::where("ride_id", $rideAuth->id)->first();
+
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
+
+        $chats = Chat::where("drive_id", $driveAuth->id)->where("ride_id", $rideAuth->id)->get();
+
+        return $chats;
     }
 
     public function rideChat(Request $req, $id){
@@ -817,6 +887,19 @@ class DataController extends Controller
         return back();
     }
 
+    public function driveEditCities(Request $req){
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
+
+        $driveData->drive_cities = $req->cities;
+
+        $driveData->save();
+
+        return back();
+    }
+
     public function driveConfirmPickup($id){
         $rideAuth = RideAuth::find($id);
         $rideData = RideData::where("ride_id", $rideAuth->id)->first();
@@ -861,8 +944,42 @@ class DataController extends Controller
         return redirect("/ride/dashboard");
     }
 
+    public function rideRequestInstant(Request $req){
+
+        $ride_id =  intval(Session::get("ride_id"));
+
+        $rideAuth = RideAuth::findorfail($ride_id);
+        $rideData = RideData::where("ride_id", $ride_id)->first();
+
+        if(RideRequestInstant::where("ride_id", $rideAuth->id)->exists()){
+            DB::table("ride_request_instants")->where("id", $id)->delete();
+        }
+
+        $rideRequest = new RideRequestInstant();
+        $rideRequest->ride_id = $rideAuth->id;
+        $rideRequest->ride_from = ucwords($req->ridefrom);
+        $rideRequest->ride_to = ucwords($req->rideto);
+        $rideRequest->ride_from_lat = json_decode($req->ridefromcoords, true)["lat"];
+        $rideRequest->ride_from_lng = json_decode($req->ridefromcoords, true)["lng"];
+        $rideRequest->ride_to_lat = json_decode($req->ridetocoords, true)["lat"];
+        $rideRequest->ride_to_lng = json_decode($req->ridetocoords, true)["lng"];
+        $rideRequest->ride_distance = $req->ridedistance;
+        $rideRequest->ride_duration = $req->rideduration;
+        $rideRequest->ride_charges = $req->ridecharges;
+
+        $rideRequest->save();
+
+        return redirect("/ride/dashboard");
+    }
+
     public function rideRequestCancel($id){
         DB::table("ride_requests")->where("id", $id)->delete();
+
+        return redirect("/ride/dashboard");
+    }
+
+    public function rideRequestInstantCancel($id){
+        DB::table("ride_request_instants")->where("id", $id)->delete();
 
         return redirect("/ride/dashboard");
     }

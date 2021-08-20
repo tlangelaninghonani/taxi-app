@@ -23,33 +23,38 @@
                 </span>
             </div>
             <p>
-                <a href="/drive/profile">
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/drive/profile')">
+                    @if($driveData->drive_profile_image == "")
+                        <div class="position-relative">
+                            <span class="material-icons-round empty-profile-small">
+                            account_circle
+                            </span><br>
+                        </div>
+                    @else
+                        <div class="position-relative">
+                            <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                        </div>
+                    @endif
                     <span>My account</span>
-                </a>
+                </div>
             </p>
             <p>
-                <a href="/signout">
-                    <span> Sign out</span>
-                </a>
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
+                    <span>Sign out</span>
+                </div>
             </p>
         </div>
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">{{ $rideAuth->ride_first_name }}'s review</span>
            </div>
            <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">{{ $rideAuth->ride_first_name }}'s review</span>
-        </p>
-        <span onclick="redirectBack()" class="material-icons-round arrow-back">
-        arrow_back
-        </span>
         <p>
             <div class="display-center">
                 <div class="text-align-center">

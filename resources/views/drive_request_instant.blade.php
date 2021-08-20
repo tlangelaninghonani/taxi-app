@@ -81,7 +81,7 @@
                 @csrf
                 @method("POST")
             </form>
-            <form class="app-padding" action="/drive/{{ $request->id }}/request/accept" method="POST">
+            <form class="app-padding" action="/drive/{{ $requestInstant->id }}/request/instant/accept" method="POST">
                 @csrf
                 @method("POST")
                 <div class="text-align-center">
@@ -90,19 +90,19 @@
                         <div class="display-flex-justify-center">
                             <span class="title">Pick-up</span><br>
                         </div>
-                        <span>{{ $request->ride_from }}</span><br>
+                        <span>{{ $requestInstant->ride_from }}</span><br>
                         <div class="display-flex-justify-center">
                             <span class="title">Drop</span><br>
                         </div>
-                        <span>{{ $request->ride_to }}</span>
+                        <span>{{ $requestInstant->ride_to }}</span>
                     </div>
                 </p>
                 </div>
                 <div id="tripinfo" class="text-align-center ">
                     <p>
-                        <span>Distance <strong id="tripdistance">{{ $request->ride_distance }}</strong></span><br>
-                        <span>Estimated time <strong id="triptime">{{ $request->ride_duration }}</strong></span><br>
-                        <span class="title">Charges <strong class="title" id="tripcharges">R{{ $request->ride_charges }}</strong></span>
+                        <span>Distance <strong id="tripdistance">{{ $requestInstant->ride_distance }}</strong></span><br>
+                        <span>Estimated time <strong id="triptime">{{ $requestInstant->ride_duration }}</strong></span><br>
+                        <span class="title">Charges <strong class="title" id="tripcharges">R{{ $requestInstant->ride_charges }}</strong></span>
                     </p>
                 </div>
                 <p>
@@ -143,8 +143,8 @@
         directionsRenderer.setMap(map); // Existing map object displays directions
         // Create route from existing points used for markers
         const route = {
-            origin: {lat: parseFloat("{{ $request->ride_from_lat }}"), lng: parseFloat("{{ $request->ride_from_lng }}")},
-            destination: {lat: parseFloat("{{ $request->ride_to_lat }}"), lng: parseFloat("{{ $request->ride_to_lng }}")},
+            origin: {lat: parseFloat("{{ $requestInstant->ride_from_lat }}"), lng: parseFloat("{{ $requestInstant->ride_from_lng }}")},
+            destination: {lat: parseFloat("{{ $requestInstant->ride_to_lat }}"), lng: parseFloat("{{ $requestInstant->ride_to_lng }}")},
             travelMode: 'DRIVING'
         }
 

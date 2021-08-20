@@ -28,30 +28,38 @@
                 </span>
             </div>
             <p>
-                <a href="/drive/profile">
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/drive/profile')">
+                    @if($driveData->drive_profile_image == "")
+                        <div class="position-relative">
+                            <span class="material-icons-round empty-profile-small">
+                            account_circle
+                            </span><br>
+                        </div>
+                    @else
+                        <div class="position-relative">
+                            <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
+                        </div>
+                    @endif
                     <span>My account</span>
-                </a>
+                </div>
             </p>
             <p>
-                <a href="/signout">
-                    <span> Sign out</span>
-                </a>
+                <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
+                    <span>Sign out</span>
+                </div>
             </p>
         </div>
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">Offers to riders' plans</span>
            </div>
            <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">Offers to riders plans</span>
-        </p>
         <div class="offers">
             @if($offers::where("drive_id", $driveAuth->id)->count() > 0)
                 @foreach($offers::where("drive_id", $driveAuth->id)->get() as $offer)
@@ -119,7 +127,7 @@
                 <span class="material-icons-round">
                 edit
                 </span><br>
-                <span class="title-small">Reviews</span>
+                <span class="title-small">Revie..</span>
             </a>
         </div>
         <div class="bottom-controls-item">

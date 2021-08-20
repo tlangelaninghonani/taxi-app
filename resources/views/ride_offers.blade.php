@@ -39,19 +39,16 @@
             </p>
         </div>
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">Offers from drivers</span>
            </div>
            <span class="material-icons-round " onclick="closePopup('menu')">
             more_vert
             </span>
         </div>
-        <p>
-            <span class="title">Ride offers for your plans</span>
-        </p>
         <div class="offers">
             <div class="display-none">
                 {{ $areOffers = false }}

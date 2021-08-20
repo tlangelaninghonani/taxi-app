@@ -16,6 +16,10 @@ class SignupController extends Controller
         return view("drive_signup_personal");
     }
 
+    public function driveSignupCities(){
+        return view("drive_signup_cities");
+    }
+
     public function drivePersonal(Request $req){
         Session::put("firstname", ucwords($req->firstname));
         Session::put("lastname", ucwords($req->lastname));
@@ -31,8 +35,12 @@ class SignupController extends Controller
             Session::put("error", true);
             return back();
         }
-        Session::put("drivedetails", true);
-        return redirect("/drive/signup/vehicle");
+        return view("drive_signup_vehicle");
+    }
+
+    public function driveCities(Request $req){
+        Session::put("cities", $req->cities);
+        return view("drive_signup_password");
     }
 
     public function driveVehicle(Request $req){
@@ -41,15 +49,7 @@ class SignupController extends Controller
         Session::put("vehicleplate", $req->vehicleplate);
         Session::put("vehiclecolor", ucwords($req->vehiclecolor));
 
-        return view("drive_signup_password");
-    }
-
-    public function driveVehicleIndex(){
-        if(Session::has("drivedetails")){
-            return view("drive_signup_vehicle");
-        }else{
-            return redirect("/drive/signup/personal");
-        }
+        return view("drive_signup_cities");
     }
 
 
@@ -70,6 +70,7 @@ class SignupController extends Controller
         $driveData->drive_vehicle_type = Session::get("vehicletype");
         $driveData->drive_vehicle_plate = Session::get("vehicleplate");
         $driveData->drive_vehicle_color = Session::get("vehiclecolor");
+        $driveData->drive_cities = Session::get("cities");
 
         $driveData->save();
 

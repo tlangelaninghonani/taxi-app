@@ -21,18 +21,13 @@
         </p>
         <div class="curved-top app-padding">
             <p>
-                <span class="title title-margin-left">Enter your password</span>
-            </p>
-            <p>
                 <form action="/drive/signup" method="POST">
                     @csrf
                     @method("POST")
                     <p>
-                        <span>Password</span><br>
                         <input type="password" id="password" onkeyup="verifyPasswords('signupubutton')" name="password" placeholder="Enter Password" required>
                     </p>
                     <p>
-                        <span>Confirm password</span><br>
                         <input type="password" id="confirm" onkeyup="verifyPasswords('signupubutton')" placeholder="Confirm password" required>
                     </p>
                     <p>

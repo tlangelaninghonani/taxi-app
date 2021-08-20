@@ -10,29 +10,27 @@
 </head>
 <body>
     <div class="container">
-        <p>
-            <div class="text-align-center">
-                <span class="material-icons-round app-icon">
-                apartment
-                </span><br>
-                <span class="title">InterCityRides</span><br>
-                <span>Signing up to drive</span>
-            </div>
-        </p>
+        <div class="nav">
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
+                </span>
+                <span class="">Vehicle details</span>
+           </div>
+        </div>
+        <div class="text-align-center">
+            <img class="welcome-page-banner-1" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_956,h_537/v1571217564/assets/1d/9c8c86-fe11-48ba-be15-832d3b0200aa/original/Vehicle-requirements.png" alt="">
+            <span class="title">Signing up to drive with <strong>InterCityRides</strong></span><br>
+        </div>
         <div class="curved-top app-padding">
-            <p>
-                <span class="title title-margin-left">Vehicle details</span>
-            </p>
             <p>
                 <form action="/drive/signup/vehicle" method="POST">
                     @csrf
                     @method("POST")
                     <p>
-                        <span>Vehicle name</span><br>
                         <input type="text" id="vehiclename" name="vehiclename" placeholder="Enter Vehicle name" required>
                     </p>
                     <p>
-                        <span>Vehicle type</span><br>
                         <select name="vehicletype" id="vehicletype">
                             <option value="hatchback">Hatchback</option>
                             <option value="sedan">Sedan</option>
@@ -42,11 +40,9 @@
                         </select>
                     </p>
                     <p>
-                        <span>Vehicle plate</span><br>
                         <input type="text" id="vehicleplate" name="vehicleplate" placeholder="Enter Vehicle plate" required>
                     </p>
                     <p>
-                        <span>Vehicle color</span><br>
                         <input type="text" id="vehiclecolor" name="vehiclecolor" placeholder="Enter Vehicle color" required>
                     </p>
                     <p>
