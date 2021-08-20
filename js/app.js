@@ -9,6 +9,37 @@ var elementPrev = {};
 for (let i = 0; i < materialClass.length; i++) {
     materialClass[i].classList.add("material-icons-font");
 }*/
+var cities = new Array();
+
+function jsonCitiesAndSubmit(formId){
+    document.querySelector("#cities").value = JSON.stringify(cities);
+    document.querySelector("#"+formId).submit();
+}
+
+function addCity(){
+    if(cities.length < 5){
+        let city = document.querySelector("#ridefrom").value;
+        let cityContainer = document.querySelector("#citycontainer");
+        let cityDiv = document.createElement("div");
+        cityDiv.setAttribute("class", "city");
+        cityDiv.innerHTML = city;
+        cityContainer.appendChild(cityDiv);
+    
+        cities.push(city);
+
+        city.value = "";
+       
+    }else{
+        
+    }
+    
+
+}
+
+function closePopupStill(id){
+    let toClosePopup = document.querySelector("#"+id);
+    toClosePopup.style.display = "block";
+}
 
 function closePopup(id){
     let toClosePopup = document.querySelector("#"+id);
@@ -57,11 +88,13 @@ function displayComp(self, id){
     
     document.querySelector("#requests").style.display = "none";
     document.querySelector("#requestsaccepted").style.display = "none";
+    if(document.querySelector("#drivers")){
+        document.querySelector("#drivers").style.display = "none";
+    }
 
     let comp = document.querySelector("#"+id);
     comp.style.display = "block";
 
-    comp.scrollIntoView();
 
     self.classList.add("border-bottom");
 
@@ -127,8 +160,8 @@ function sendMessageDrive(chatsId, profilePictureId, messageId, driveId){
     profilePicture.innerHTML = document.querySelector("#"+profilePictureId).innerHTML;
 
     if(message.value !== ""){
-        if(document.querySelector("#nocomment")){
-            document.querySelector("#nocomment").style.display = "none";
+        if(document.querySelector("#nochats")){
+            document.querySelector("#nochats").style.display = "none";
         }
         driveChatContainer.setAttribute("class", "display-flex chat-padding-drive");
         rideChat.setAttribute("class", "drive-chat");
@@ -167,8 +200,8 @@ function sendMessage(chatsId, profilePictureId, messageId, driveId){
     profilePicture.innerHTML = document.querySelector("#"+profilePictureId).innerHTML;
 
     if(message.value !== ""){
-        if(document.querySelector("#nocomment")){
-            document.querySelector("#nocomment").style.display = "none";
+        if(document.querySelector("#nochats")){
+            document.querySelector("#nochats").style.display = "none";
         }
         rideChatContainer.setAttribute("class", "display-flex-end chat-padding");
         rideChat.setAttribute("class", "ride-chat");
@@ -283,6 +316,193 @@ let map;
 
 
 
+
+function initAutocomplete() {
+    let from, to;
+    var points = false;
+    var directionsOptions = {
+        polylineOptions: {
+            strokeColor: 'red',
+            strokeWeight: 2,
+        }
+    }
+    let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -23.30246, lng: 30.71868},
+    zoom: 12,
+    mapId: "4cce301a9d6797df",
+    disableDefaultUI: true,
+    fullscreenControl: true
+    });
+
+    let markers = [];
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            markers.push(
+                new google.maps.Marker({
+                    position: {lat: position.coords.latitude, lng: position.coords.longitude},
+                    map: map,
+                    title: "Me",
+                    animation: google.maps.Animation.DROP,
+                })
+            );
+          },
+        );
+      } else {
+          console.log("Browser doesn't support Geolocation");
+      }
+
+    // Create the search box and link it to the UI element.
+    const inputFrom = document.getElementById("ridefrom");
+    const searchBoxFrom = new google.maps.places.SearchBox(inputFrom);
+    
+    const inputTo = document.getElementById("rideto");
+    const searchBoxTo = new google.maps.places.SearchBox(inputTo);
+
+    map.addListener("bounds_changed", () => {
+        searchBoxFrom.setBounds(map.getBounds());
+    });
+
+    map.addListener("bounds_changed", () => {
+        searchBoxTo.setBounds(map.getBounds());
+    });
+
+    searchBoxFrom.addListener("places_changed", () => {
+    const places = searchBoxFrom.getPlaces();
+
+    if (places.length == 0) {
+        return;
+    }
+    // Clear out the old markers.
+    markers.forEach((marker) => {
+        marker.setMap(null);
+    });
+    markers = [];
+    // For each place, get the icon, name and location.
+    const bounds = new google.maps.LatLngBounds();
+    places.forEach((place) => {
+        if (!place.geometry || !place.geometry.location) {
+        console.log("Returned place contains no geometry");
+        return;
+        }
+        from = place.geometry.location;
+        
+        // Create a marker for each place.
+        markers.push(
+            new google.maps.Marker({
+                map,
+                title: place.name,
+                position: place.geometry.location,
+                animation: google.maps.Animation.DROP,
+            })
+        );
+
+        if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+        } else {
+        bounds.extend(place.geometry.location);
+        }
+    });
+    map.fitBounds(bounds);
+    if(points){
+        drawLine(from, to, map, directionsRenderer);
+    }
+    });
+
+    searchBoxTo.addListener("places_changed", () => {
+        const places = searchBoxTo.getPlaces();
+    
+        if (places.length == 0) {
+        return;
+        }
+        // Clear out the old markers.
+        markers.forEach((marker) => {
+        marker.setMap(null);
+        });
+        markers = [];
+        // For each place, get the icon, name and location.
+        const bounds = new google.maps.LatLngBounds();
+        places.forEach((place) => {
+        if (!place.geometry || !place.geometry.location) {
+            console.log("Returned place contains no geometry");
+            return;
+        }
+        to = place.geometry.location;
+        // Create a marker for each place.
+        markers.push(
+            new google.maps.Marker({
+            map,
+            title: place.name,
+            position: place.geometry.location,
+            animation: google.maps.Animation.DROP,
+            })
+        );
+    
+        if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+        } else {
+            bounds.extend(place.geometry.location);
+        }
+        });
+        map.fitBounds(bounds);
+        points = true;
+        markers.forEach((marker) => {
+        marker.setMap(null);
+        });
+        markers = [];
+        drawLine(from, to, map, directionsRenderer);
+    });
+}
+
+function drawLine(origin, destination, map, directionsRenderer){
+    let directionsService = new google.maps.DirectionsService();
+    directionsRenderer.setMap(map); // Existing map object displays directions
+    // Create route from existing points used for markers
+    const route = {
+        origin: origin,
+        destination: destination,
+        travelMode: 'DRIVING'
+    }
+    directionsService.route(route,
+        function(response, status) { // anonymous function to capture directions
+        if (status !== 'OK') {
+            window.alert('Directions request failed due to ' + status);
+            return;
+        } else {
+            directionsRenderer.setDirections(response); // Add route to the map
+            var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+            if (!directionsData) {
+            window.alert('Directions request failed');
+            return;
+            }
+            else {
+            document.querySelector("#tripinfo").style.display = "block";
+            document.querySelector("#mapbutton").style.display = "block";
+            document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
+            document.querySelector("#triptime").innerHTML = directionsData.duration.text;
+            document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
+            
+            if(document.querySelector("#ridecharges")){
+                document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
+                document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
+                document.querySelector("#ridetocoords").value = JSON.stringify(destination);
+                document.querySelector("#ridedistance").value = directionsData.distance.text;
+                document.querySelector("#rideduration").value = directionsData.duration.text;
+            }
+        
+        }
+        }
+    });
+}
 
 
 

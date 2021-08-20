@@ -10,29 +10,27 @@
 </head>
 <body>
     <div class="container">
-        <p>
-            <div class="text-align-center">
-                <span class="material-icons-round app-icon">
-                apartment
-                </span><br>
-                <span class="title">InterCityRides</span><br>
-                <span>Signing up to ride</span>
+        <div class="nav">
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
+                </span>
+                <span class="">Password</span>
             </div>
-        </p>
+        </div>
+        <div class="text-align-center">
+            <img class="welcome-page-banner-1" src="https://i.pinimg.com/originals/97/2c/96/972c9683ddca85fb5c163d79fcb169ce.png" alt="">
+            <span class="title">Signing up to ride with <strong>InterCityRides</strong></span>
+        </div>
         <div class="curved-top app-padding">
-            <p>
-                <span class="title title-margin-left">Enter your password</span>
-            </p>
             <p>
                 <form action="/ride/signup" method="POST">
                     @csrf
                     @method("POST")
                     <p>
-                        <span>Password</span><br>
                         <input type="password" id="password" onkeyup="verifyPasswords('signupubutton')" name="password" placeholder="Enter Password" required>
                     </p>
                     <p>
-                        <span>Confirm password</span><br>
                         <input type="password" id="confirm" onkeyup="verifyPasswords('signupubutton')" placeholder="Confirm password" required>
                     </p>
                     <p>
