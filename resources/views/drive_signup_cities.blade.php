@@ -21,8 +21,8 @@
         <div class="curved-top">
             <div id="map"></div>
             <p>
-                <div class="text-align-center">
-                    <span class="title">Choose maximum of 5 cities you want to drive at</span>
+                <div class="text-align-center app-padding">
+                    <span class="title">Choose a maximum of 5 cities you want to drive back-forth</span>
                 </div>
             </p>
             <p>

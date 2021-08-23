@@ -96,6 +96,7 @@ class DataController extends Controller
         $driveData->save();
 
         DB::table("ride_requests")->where("id", $request->id)->delete();
+        DB::table("ride_request_instants")->where("ride_id", $rideAuth->id)->delete();
 
         return redirect("/ride/dashboard");
     }
@@ -116,6 +117,8 @@ class DataController extends Controller
         return view("drive_request", [
             "rideAuth" => $rideAuth,
             "rideData" => $rideData,
+            "driveAuth" => $driveAuth,
+            "driveData" => $driveData,
             "request" => $request,
         ]);
     }
@@ -124,6 +127,10 @@ class DataController extends Controller
         if(! Session::has("hasLogged")){
             return redirect("/signin");
         }
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
 
         $requestInstant = RideRequestInstant::find($id);
 
@@ -133,6 +140,8 @@ class DataController extends Controller
         return view("drive_request_instant", [
             "rideAuth" => $rideAuth,
             "rideData" => $rideData,
+            "driveAuth" => $driveAuth,
+            "driveData" => $driveData,
             "requestInstant" => $requestInstant,
         ]);
     }
@@ -153,6 +162,34 @@ class DataController extends Controller
         $requestInstant->ride_accepted = true;
 
         $requestInstant->save();
+
+
+        $request = new RideRequest();
+        $request->drive_id = $driveAuth->id;
+        $request->ride_id = $rideAuth->id;
+        $request->ride_from = $requestInstant->ride_from;
+        $request->ride_to = $requestInstant->ride_to;
+        $request->ride_from_lat = $requestInstant->ride_from_lat;
+        $request->ride_from_lng = $requestInstant->ride_from_lng;
+        $request->ride_to_lat = $requestInstant->ride_to_lat;
+        $request->ride_to_lng = $requestInstant->ride_to_lng;
+        $request->ride_distance = $requestInstant->ride_distance;
+        $request->ride_duration = $requestInstant->ride_duration;
+        $request->ride_charges = $requestInstant->ride_charges;
+        $request->ride_accepted = true;
+        $request->pick_up_requested = true;
+        $request->pick_up_confirmed = true;
+        $request->on_trip = true;
+        $request->action = "instant";
+        $request->save();
+
+
+        $rideData->ride_on_trip = true;
+        $driveData->drive_on_trip = true;
+
+
+        $rideData->save();
+        $driveData->save();
 
 
         return redirect("/drive/dashboard");
@@ -479,10 +516,17 @@ class DataController extends Controller
         if(! Session::has("hasLogged")){
             return redirect("/signin");
         }
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
 
         return view("drive_riders", [
             "rideAuth" => new RideAuth(),
             "rideData" => new RideData(),
+            "driveAuth" => $driveAuth,
+            "requests" => new RideRequest(),
+            "driveData" => $driveData,
             "plans" => new Plan()
         ]);
     }

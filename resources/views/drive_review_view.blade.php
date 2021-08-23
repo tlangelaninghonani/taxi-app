@@ -35,8 +35,26 @@
                             <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                         </div>
                     @endif
+                    <div>
                     <span>My account</span>
+                        <div class="rating-stars-small-center">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= floor($driveData->drive_ratings))
+                                    <span class="material-icons-round" style="color: orange" >
+                                    star
+                                    </span>
+                                @else
+                                    <span class="material-icons-round" >
+                                    star
+                                    </span>
+                                @endif
+                            @endfor
+                        </div>
+                    </div>
                 </div>
+            </p>
+            <p>
+                <span>Send feedback</span>
             </p>
             <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
@@ -51,9 +69,14 @@
                 </span>
                 <span class="">{{ $rideAuth->ride_first_name }}'s review</span>
            </div>
-           <span class="material-icons-round " onclick="closePopup('menu')">
-            more_vert
-            </span>
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         <p>
             <div class="display-center">
@@ -92,16 +115,10 @@
         <p>
             <div class="text-align-center">
                 <div class="display-flex-justify-center">
-                    <span class="material-icons-round">
-                    local_taxi
-                    </span>
                     <span class="title">Pick-up</span><br>
                 </div>
                 <span>{{ $review->ride_from }}</span><br>
                 <div class="display-flex-justify-center">
-                    <span class="material-icons-round">
-                    my_location
-                    </span>
                     <span class="title">Drop</span><br>
                 </div>
                 <span>{{ $review->ride_to }}</span>

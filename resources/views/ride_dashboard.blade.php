@@ -41,6 +41,9 @@
                 </div>
             </p>
             <p>
+                <span>Send feedback</span>
+            </p>
+            <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
                     <span>Sign out</span>
                 </div>
@@ -50,7 +53,10 @@
             <div class="display-flex-normal gap-10">
                 <span class="">Where you going today?</span>
            </div>
-           <div class="display-flex-normal">
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
                 <span class="material-icons-round " onclick="closePopup('menu')">
                 more_vert
                 </span>
@@ -368,8 +374,8 @@
                 directionsRenderer.setMap(map); // Existing map object displays directions
                 // Create route from existing points used for markers
                 const route = {
-                    origin: {lat: parseFloat("{{ $request->ride_from_lat }}"), lng: parseFloat("{{ $request->ride_from_lng }}")},
-                    destination: {lat: parseFloat("{{ $request->ride_to_lat }}"), lng: parseFloat("{{ $request->ride_to_lng }}")},
+                    origin: {lat: parseFloat("{{ $trip->ride_from_lat }}"), lng: parseFloat("{{ $trip->ride_from_lng }}")},
+                    destination: {lat: parseFloat("{{ $trip->ride_to_lat }}"), lng: parseFloat("{{ $trip->ride_to_lng }}")},
                     travelMode: 'DRIVING'
                 }
 

@@ -21,9 +21,14 @@
             <div class="display-flex-normal gap-10">
                 <span class="">Hey {{ $driveAuth->drive_first_name }}, keep your ride clean</span>
            </div>
-            <span class="material-icons-round " onclick="closePopup('menu')">
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
                 more_vert
                 </span>
+           </div>
         </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
@@ -44,8 +49,26 @@
                             <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                         </div>
                     @endif
+                    <div>
                     <span>My account</span>
+                        <div class="rating-stars-small-center">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= floor($driveData->drive_ratings))
+                                    <span class="material-icons-round" style="color: orange" >
+                                    star
+                                    </span>
+                                @else
+                                    <span class="material-icons-round" >
+                                    star
+                                    </span>
+                                @endif
+                            @endfor
+                        </div>
+                    </div>
                 </div>
+            </p>
+            <p>
+                <span>Send feedback</span>
             </p>
             <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
@@ -97,6 +120,22 @@
         @if($driveData->drive_on_trip == false)
             <div class="curved-top padding-none">
                 <div id="map"></div>
+                @if(sizeof(json_decode($driveData->drive_cities, true)))
+                    <p>
+                        <div class="display-flex-normal gap-small">
+                            <span class="material-icons-round icon-padding">
+                            swipe
+                            </span>
+                            <div class="city-container">
+                                @foreach(json_decode($driveData->drive_cities, true) as $city)
+                                    <div class="city">
+                                        {{ $city }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </p>
+                @endif
                 @if(sizeof($requestInstants::all()) > 0)
                     <p>
                         <div class="display-flex-center gap">
@@ -569,9 +608,9 @@
         <div class="bottom-controls-item">
             <a href="/drive/riders">
                 <span class="material-icons-round">
-                hail
+                travel_explore
                 </span><br>
-                <span class="title-small">Riders</span>
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">

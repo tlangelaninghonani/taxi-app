@@ -44,6 +44,9 @@
                 </div>
             </p>
             <p>
+                <span>Send feedback</span>
+            </p>
+            <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
                     <span>Sign out</span>
                 </div>
@@ -56,9 +59,14 @@
                 </span>
                 <span class="">Offers from drivers</span>
            </div>
-           <span class="material-icons-round " onclick="closePopup('menu')">
-            more_vert
-            </span>
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         <div class="offers">
             <div class="display-none">

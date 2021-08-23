@@ -33,6 +33,9 @@
                 </div>
             </p>
             <p>
+                <span>Send feedback</span>
+            </p>
+            <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
                     <span>Sign out</span>
                 </div>
@@ -45,11 +48,15 @@
                 </span>
                 <span class="">My account</span>
            </div>
-           <span class="material-icons-round" onclick="closePopup('menu')">
-            more_vert
-            </span>
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
-
         <p>
             <div class="display-center">
                 <div class="text-align-center">
@@ -138,6 +145,56 @@
                 </form>
             </div>
         </p>
+    </div>
+    <div class="bottom-controls">
+        <div class="bottom-controls-item">
+            <a href="/ride/dashboard">
+                <span class="material-icons-round">
+                home
+                </span><br>
+                <span class="title-small">Home</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/ride/history">
+                <span class="material-icons-round">
+                watch_later
+                </span><br>
+                <span class="title-small">History</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/ride/plans">
+                <span class="material-icons-round">
+                travel_explore
+                </span><br>
+                <span class="title-small">Plans</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/ride/drivers">
+                <span class="material-icons-round">
+                local_taxi
+                </span><br>
+                <span class="title-small">Drivers</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/ride/offers">
+                <span class="material-icons-round">
+                local_offer
+                </span><br>
+                <span class="title-small">Offers</span>
+            </a>
+        </div>
+        <div class="bottom-controls-item">
+            <a href="/ride/chats">
+                <span class="material-icons-round">
+                question_answer
+                </span><br>
+                <span class="title-small">Chats</span>
+            </a>
+        </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
 </body>

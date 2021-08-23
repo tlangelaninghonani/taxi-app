@@ -11,29 +11,13 @@
 <body>
     <div class="container">
         <div class="logo" id="logo">
-            <div class="nav">
-                <div class="display-flex">
-                        <span class="material-icons-round">
-                        apartment
-                        </span>
-                        <span class="app-name">InterCityRides</span>
-                </div>
-            </div>
             <div class="text-align-center">
-                <img class="welcome-page-banner-1" src="https://cdn.dribbble.com/users/1138006/screenshots/12920961/media/e9c536ccdb39ed2944bea2951299f559.png?compress=1&resize=400x300" alt="">
+                <img class="welcome-page-banner-1" src="https://blogapi.uber.com/wp-content/uploads/2020/06/uber-shield-blog_white.png" alt="">
                 <span class="title">Choose your own driver with <strong>InterCityRides</strong></span><br>
             </div>
         </div>
-        <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
-                </span>
-                <span class="app-name">InterCityRides</span>
-           </div>
-        </div>
         <div>
-            <img class="welcome-page-banner-1" src="https://cdn.dribbble.com/users/1138006/screenshots/12920961/media/e9c536ccdb39ed2944bea2951299f559.png?compress=1&resize=400x300" alt="">
+            <img class="welcome-page-banner-1" src="https://blogapi.uber.com/wp-content/uploads/2020/06/uber-shield-blog_white.png" alt="">
         </div>
         <div class="curved-top app-padding">
             <div class="text-align-center">

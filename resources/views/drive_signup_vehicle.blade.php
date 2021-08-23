@@ -20,7 +20,9 @@
         </div>
         <div class="text-align-center">
             <img class="welcome-page-banner-1" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_956,h_537/v1571217564/assets/1d/9c8c86-fe11-48ba-be15-832d3b0200aa/original/Vehicle-requirements.png" alt="">
-            <span class="title">Signing up to drive with <strong>InterCityRides</strong></span><br>
+            <div class="app-padding">
+                <span class="title">Signing up to drive with <strong>InterCityRides</strong></span>
+            </div>
         </div>
         <div class="curved-top app-padding">
             <p>

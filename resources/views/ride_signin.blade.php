@@ -29,23 +29,30 @@
                 <form action="/ride/signin" method="POST">
                     @csrf
                     @method("POST")
-                    <p>
-                        <input type="tel" id="phone" name="phone" placeholder="Enter Phone" required>
-                    </p>
-                    <p>
-                        <input type="password" id="password" name="password" placeholder="Enter password" required>
-                    </p>
-                    <p>
-                        <div class="text-align-center">
-                            @if(Session::has("error"))
-                                <span>Account does not exists</span>
-                                {{ Session::forget("error") }}
-                            @endif
-                        </div>
-                    </p>
-                    <p>
-                        <button>Sign in</button>
-                    </p>
+                    <div id="signin-phone">
+                        <p>
+                            <input type="tel" id="phone" name="phone" placeholder="Enter Phone" required>
+                        </p>
+                        <p>
+                            <button type="button" onclick="showHideElement('signin-phone', 'signin-password')">Next</button>
+                        </p> 
+                    </div>
+                    <div id="signin-password" class="display-none">
+                        <p>
+                            <input type="password" id="password" name="password" placeholder="Enter password" required>
+                        </p>
+                        <p>
+                            <div class="text-align-center">
+                                @if(Session::has("error"))
+                                    <span>Account does not exists</span>
+                                    {{ Session::forget("error") }}
+                                @endif
+                            </div>
+                        </p>
+                        <p>
+                            <button>Sign in</button>
+                        </p>
+                    </div>
                 </form>
             </p>
             <!--<p>

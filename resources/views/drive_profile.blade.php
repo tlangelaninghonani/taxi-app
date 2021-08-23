@@ -29,8 +29,26 @@
                             <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                         </div>
                     @endif
+                    <div>
                     <span>My account</span>
+                        <div class="rating-stars-small-center">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= floor($driveData->drive_ratings))
+                                    <span class="material-icons-round" style="color: orange" >
+                                    star
+                                    </span>
+                                @else
+                                    <span class="material-icons-round" >
+                                    star
+                                    </span>
+                                @endif
+                            @endfor
+                        </div>
+                    </div>
                 </div>
+            </p>
+            <p>
+                <span>Send feedback</span>
             </p>
             <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
@@ -45,12 +63,17 @@
                 </span>
                 <span class="">My account</span>
            </div>
-           <span class="material-icons-round" onclick="closePopup('menu')">
-            more_vert
-            </span>
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         <p>
-            <div class="display-center">
+            <div class="display-center profile-style">
                 <div class="text-align-center">
                     @if($driveData->drive_profile_image == "")
                         <div class="position-relative">
@@ -136,12 +159,17 @@
             </div>
         </div>
         <p>
-            <div class="city-container">
-                @foreach(json_decode($driveData->drive_cities, true) as $city)
-                    <div class="city">
-                        {{ $city }}
-                    </div>
-                @endforeach
+            <div class="display-flex-normal gap-small">
+                <span class="material-icons-round icon-padding">
+                swipe
+                </span>
+                <div class="city-container">
+                    @foreach(json_decode($driveData->drive_cities, true) as $city)
+                        <div class="city">
+                            {{ $city }}
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </p>
         <p>
@@ -159,33 +187,35 @@
                 close
                 </span>
             </div>
-            <div id="map"></div>
-            <p>
-                <div class="text-align-center">
-                    <span class="title">Choose maximum of 5 cities you want to drive at</span>
-                </div>
-            </p>
-            <p>
-                <div id="citycontainer" class="city-container">
-
-                </div>
-            </p>
-            <p>
-                <form id="citiesform" action="/drive/edit/cities" method="POST">
-                    @csrf
-                    @method("POST")
-                    <div class="display-flex-normal gap-10">
-                        <input id="ridefrom" type="text" placeholder="Type a city">
-                        <input type="hidden" id="cities" name="cities">
-                        <span onclick="addCity()" class="material-icons-round black-background">
-                        add
-                        </span>
-                    </div>
+            <div class="curved-top padding-none">
+                <div id="map"></div>
+                <div class="app-padding">
                     <p>
-                        <button type="button" onclick="jsonCitiesAndSubmit('citiesform')">Save</button>
+                        <div class="text-align-center">
+                            <span class="title">Choose a maximum of 5 cities you want to drive back-forth</span>
+                        </div>
                     </p>
-                </form>
-            </p>
+                    <div id="citycontainer" class="city-container">
+
+                    </div>
+                    <form id="citiesform" action="/drive/edit/cities" method="POST">
+                        @csrf
+                        @method("POST")
+                        <p>
+                            <div class="display-flex-normal gap-10">
+                                <input id="ridefrom" type="text" placeholder="Type a city">
+                                <input type="hidden" id="cities" name="cities">
+                                <span onclick="addCity()" class="material-icons-round black-background">
+                                add
+                                </span>
+                            </div>
+                        </p>
+                        <p>
+                            <button type="button" onclick="jsonCitiesAndSubmit('citiesform')">Save</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
         </div>
         <p>
             <div class="curved-top">
@@ -237,9 +267,9 @@
         <div class="bottom-controls-item">
             <a href="/drive/riders">
                 <span class="material-icons-round">
-                hail
+                travel_explore
                 </span><br>
-                <span class="title-small">Riders</span>
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">

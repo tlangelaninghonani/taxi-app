@@ -41,6 +41,22 @@ function closePopupStill(id){
     toClosePopup.style.display = "block";
 }
 
+function showHideElement(hide, show){
+    let toHide = document.querySelector("#"+hide);
+    let toShow = document.querySelector("#"+show);
+
+    toHide.style.display = "none";
+    toShow.style.display = "block";
+}
+
+function showHideElementThree(hide1, hide2, show){
+    document.querySelector("#"+hide1).style.display = "none";
+    document.querySelector("#"+hide2).style.display = "none";
+    let toShow = document.querySelector("#"+show);
+
+    toShow.style.display = "block";
+}
+
 function closePopup(id){
     let toClosePopup = document.querySelector("#"+id);
     if(toClosePopup.style.display == "" || toClosePopup.style.display == "none"){

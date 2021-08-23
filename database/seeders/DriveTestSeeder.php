@@ -31,7 +31,7 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_vehicle_type = ucwords("sedan");
         $driveData->drive_vehicle_plate = strtoupper("sdf 156 gp");
         $driveData->drive_vehicle_color = ucwords("black");
-        $driveData->drive_ratings = 0;
+        $driveData->drive_ratings = rand(0, 6);
         $driveData->save();
 
 
@@ -51,7 +51,7 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_vehicle_type = ucwords("minivan");
         $driveData->drive_vehicle_plate = strtoupper("jhf 895 l");
         $driveData->drive_vehicle_color = ucwords("Red");
-        $driveData->drive_ratings = 0;
+        $driveData->drive_ratings = rand(0, 6);
         $driveData->save();
 
 
@@ -71,7 +71,7 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_vehicle_type = ucwords("Pick-up Truck");
         $driveData->drive_vehicle_plate = strtoupper("hh 22 np");
         $driveData->drive_vehicle_color = ucwords("gray");
-        $driveData->drive_ratings = 0;
+        $driveData->drive_ratings = rand(0, 6);
         $driveData->save();
 
 
@@ -91,7 +91,7 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_vehicle_type = ucwords("electric hatchback");
         $driveData->drive_vehicle_plate = strtoupper("idf 566 l");
         $driveData->drive_vehicle_color = ucwords("gray");
-        $driveData->drive_ratings = 0;
+        $driveData->drive_ratings = rand(0, 6);
         $driveData->save();
 
 
@@ -110,7 +110,7 @@ class DriveTestSeeder extends Seeder
         $driveData->drive_vehicle_type = ucwords("hatchback");
         $driveData->drive_vehicle_plate = strtoupper("jyp 582 nw");
         $driveData->drive_vehicle_color = ucwords("silver");
-        $driveData->drive_ratings = 0;
+        $driveData->drive_ratings = rand(0, 6);
         $driveData->save();
         
     }

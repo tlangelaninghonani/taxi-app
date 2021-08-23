@@ -11,15 +11,20 @@
 <body>
     <div class="container">
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">{{ $rideAuth->ride_first_name }}'s request</span>
            </div>
-           <span class="material-icons-round " onclick="closePopup('menu')">
-            more_vert
-            </span>
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
@@ -40,8 +45,26 @@
                             <img class="profile-image-small" src="{{ $driveData->drive_profile_image }}" alt=""><br>
                         </div>
                     @endif
+                    <div>
                     <span>My account</span>
+                        <div class="rating-stars-small-center">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= floor($driveData->drive_ratings))
+                                    <span class="material-icons-round" style="color: orange" >
+                                    star
+                                    </span>
+                                @else
+                                    <span class="material-icons-round" >
+                                    star
+                                    </span>
+                                @endif
+                            @endfor
+                        </div>
+                    </div>
                 </div>
+            </p>
+            <p>
+                <span>Send feedback</span>
             </p>
             <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">

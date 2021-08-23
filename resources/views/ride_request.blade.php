@@ -17,9 +17,14 @@
                 </span>
                 <span class="">Request to {{ $driveAuth->drive_first_name }}</span>
            </div>
-           <span class="material-icons-round " onclick="closePopup('menu')">
-            more_vert
-            </span>
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
@@ -42,6 +47,9 @@
                     @endif
                     <span>My account</span>
                 </div>
+            </p>
+            <p>
+                <span>Send feedback</span>
             </p>
             <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
@@ -90,15 +98,30 @@
         </p>
         <div class="curved-top">
             <div id="map"></div>
-            <form class="app-padding" action="/ride/{{ $driveAuth->id }}/request" method="POST">
+            @if(sizeof(json_decode($driveData->drive_cities, true)) > 0)
+                <p>
+                    <div class="display-flex-normal gap-small">
+                        <span class="material-icons-round icon-padding">
+                        swipe
+                        </span>
+                        <div class="city-container">
+                            @foreach(json_decode($driveData->drive_cities, true) as $city)
+                                <div class="city">
+                                    {{ $city }}
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </p>
+                <form class="app-padding" action="/ride/{{ $driveAuth->id }}/request" method="POST">
                 @csrf
                 @method("POST")
                 <input type="hidden" value="{{  $driveAuth->id }}" name="rideid" id="rideid">
-                <p>
+
                     <div class="display-flex-normal">
                     </div>
                     <input type="text" name="ridefrom" id="ridefrom" placeholder="Pick-up" required>
-                </p>
+             
                 <p>
                     <div class="display-flex-normal">
                     </div>
@@ -121,6 +144,40 @@
                     <button id="mapbutton" class="display-none">Request</button>
                 </p>
             </form>
+            @else
+                <form class="app-padding" action="/ride/{{ $driveAuth->id }}/request" method="POST">
+                    @csrf
+                    @method("POST")
+                    <input type="hidden" value="{{  $driveAuth->id }}" name="rideid" id="rideid">
+                    <p>
+                        <div class="display-flex-normal">
+                        </div>
+                        <input type="text" name="ridefrom" id="ridefrom" placeholder="Pick-up" required>
+                    </p>
+                    <p>
+                        <div class="display-flex-normal">
+                        </div>
+                        <input type="text" name="rideto" id="rideto" placeholder="Your destination"  required>
+                    </p>
+                    <div id="tripinfo" class="text-align-center display-none">
+                        <p>
+                            <span>Distance <strong id="tripdistance"></strong></span><br>
+                            <span>Estimated time <strong id="triptime"></strong></span><br>
+                            <span class="title">Charges <strong>R</strong><strong class="title" id="tripcharges"></strong></span>
+                        </p>
+                    </div>
+                    <p>
+                        <input type="hidden" id="ridecharges" name="ridecharges">
+                        <input type="hidden" id="ridefromcoords" name="ridefromcoords">
+                        <input type="hidden" id="ridetocoords" name="ridetocoords">
+                        <input type="hidden" id="ridedistance" name="ridedistance">
+                        <input type="hidden" id="rideduration" name="rideduration">
+
+                        <button id="mapbutton" class="display-none">Request</button>
+                    </p>
+                </form>
+            @endif
+            
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>

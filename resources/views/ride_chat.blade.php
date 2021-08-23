@@ -17,9 +17,14 @@
                 </span>
                 <span class="">Chat with {{ $driveAuth->drive_first_name }}</span>
            </div>
-           <span class="material-icons-round " onclick="closePopup('menu')">
-            more_vert
-            </span>
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         <div class="menu display-none" id="menu">
             <div class="text-align-right">
@@ -42,6 +47,9 @@
                     @endif
                     <span>My account</span>
                 </div>
+            </p>
+            <p>
+                <span>Send feedback</span>
             </p>
             <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">

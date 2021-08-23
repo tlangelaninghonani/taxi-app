@@ -56,47 +56,44 @@
                 </div>
             </p>
             <p>
+                <span>Send feedback</span>
+            </p>
+            <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
                     <span>Sign out</span>
                 </div>
             </p>
         </div>
-        <div class="box-shadow">
+        <div class="box-shadow app-padding-bottom">
             <div class="nav">
                 <div class="display-flex-normal gap-10">
                     <span class="material-icons-round" onclick="redirectBack()">
                     arrow_back
                     </span>
                     <span class="">Drivers near you</span>
+                </div>
+                <div class="display-flex-normal gap-mid">
+                    <span class="material-icons-round">
+                    notifications
+                    </span>
+                    <span class="material-icons-round " onclick="closePopup('menu')">
+                    more_vert
+                    </span>
+                </div>
             </div>
-            <span class="material-icons-round " onclick="closePopup('menu')">
-                more_vert
-                </span>
-            </div>
-            <div class="text-align-center">
-                <p>
-                    <span class="title">With <strong>InterCityRides</strong> you can choose a driver near you and send a request</span>
-                </p>
+            <div class="text-align-center app-padding">
+                <span class="title">With <strong>InterCityRides</strong> you can choose a driver near you and send a request</span>
             </div>
             @if($requests::where("ride_id", $rideAuth->id)->count() > 0)
             <p>
                 <div class="drivers-requests">
                     <div onclick="displayComp(this, 'drivers')" class="display-flex-center-align">
-                        <span class="material-icons-round">
-                        local_taxi
-                        </span>
                         <span>Drivers</span>
                     </div>
                     <div onclick="displayComp(this, 'requests')" class="display-flex-center-align">
-                        <span class="material-icons-round">
-                        waving_hand
-                        </span>
                         <span>Requests</span>
                     </div>
                     <div onclick="displayComp(this, 'requestsaccepted')" class="display-flex-center-align">
-                        <span class="material-icons-round">
-                        check_circle
-                        </span>
                         <span>Accepted</span>
                     </div>
                 </div>
@@ -106,7 +103,6 @@
         @if(sizeof($driveAuths) > 0)
             @if($requests::where("ride_id", $rideAuth->id)->count() > 0)
                 <div class="">
-                    
                     <div id="requests" class="app-padding display-none" style="padding-top: 0">
                         @foreach($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->get() as $request)   
                             <div class="display-none">
@@ -225,12 +221,11 @@
             @endif
         <div id="drivers" class="popout-drivers ">
             <p>
-                <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
-                <div class="display-flex-center-align gap-small">
-                    <span class="material-icons-round">
-                    tune
-                    </span>
-                    <span class="title-small">Type Male/Female/Other to filter by gender</span>
+                <div class="app-padding">
+                    <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers">
+                    <div class="text-align-center">
+                        <span class="title-small">Type Male/Female/Other to filter by gender</span>
+                    </div>
                 </div>
             </p>
             <p>

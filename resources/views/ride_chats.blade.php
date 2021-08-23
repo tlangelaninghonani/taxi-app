@@ -39,6 +39,9 @@
                 </div>
             </p>
             <p>
+                <span>Send feedback</span>
+            </p>
+            <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
                     <span>Sign out</span>
                 </div>
@@ -51,9 +54,14 @@
                 </span>
                 <span class="">Chat with drivers</span>
            </div>
-           <span class="material-icons-round " onclick="closePopup('menu')">
-            more_vert
-            </span>
+           <div class="display-flex-normal gap-mid">
+                <span class="material-icons-round">
+                notifications
+                </span>
+                <span class="material-icons-round " onclick="closePopup('menu')">
+                more_vert
+                </span>
+           </div>
         </div>
         @if($history::where("ride_id", $rideAuth->id)->exists() || $requests::where("ride_id", $rideAuth->id)->exists())
         <p>

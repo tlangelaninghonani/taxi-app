@@ -20,7 +20,9 @@
         </div>
         <div class="text-align-center">
             <img class="welcome-page-banner-1" src="https://blogapi.uber.com/wp-content/uploads/2020/06/uber-shield-blog_white.png" alt="">
-            <span class="title">Signing up to drive with <strong>InterCityRides</strong></span>
+            <div class="app-padding">
+                <span class="title">Signing up to drive with <strong>InterCityRides</strong></span>
+            </div>
         </div>
         <div class="curved-top app-padding">
             <p>

@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
 :root{
-    --shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;;
-    --padding: 3px;
+    --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    --padding: 13px;
     --cust-black: rgb(0, 0, 0);
 }
 
@@ -16,10 +16,16 @@
  
 }
 
+.icon-padding{
+    padding: 10px;
+}
+
 .city-container{
     display: flex;
     gap: 10px;
     overflow: auto;
+    align-items: center;
+    padding: 5px;
 }
 
 .city{
@@ -32,7 +38,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
+    font-size: 13px;
 }
+
 
 .bolder-font{
     font-family: 'Montserrat', sans-serif;
@@ -62,7 +70,7 @@ body{
         box-sizing: border-box;
         display: block !important;
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 70px;
     }
     .new-plan-icon{
        
@@ -231,7 +239,7 @@ body{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px;
+        padding: 10px;
         background-color: white;
         z-index: 99999999;
     }
@@ -273,6 +281,7 @@ body{
         box-shadow: var(--shadow);
     }
 
+
     .map{
         width: 100%;
         height: 250px;
@@ -283,7 +292,6 @@ body{
 
     .box-shadow{
         box-shadow: var(--shadow);
-        padding: var(--padding);
     
     }
 
@@ -383,6 +391,10 @@ body{
         gap: 5px
     }
 
+    .gap-mid{
+        gap: 10px
+    }
+
     .app-icon{
         font-size: 60px !important;
     }
@@ -398,7 +410,6 @@ body{
         right: 0;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
-        
         padding-bottom: 70px;
     }
 
@@ -406,10 +417,16 @@ body{
         padding: 2%;
     }
 
+    .profile-style{
+        
+    }
+
     .app-padding{
         padding: var(--padding);
     }
-    
+    .app-padding-bottom{
+        padding-bottom: 1px;
+    }
     input, select, textarea{
         box-sizing: border-box;
         width: 100%;
@@ -620,7 +637,7 @@ body{
     .welcome-page-banner-1{
         width: 100%;
         height: 180px;
-        border-radius: 30px;
+      
     }
 
     ::-webkit-scrollbar {
@@ -775,8 +792,8 @@ body{
     }
 
     .profile-image-small{
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
     }
 
@@ -807,7 +824,7 @@ body{
         width: 200px;
         z-index: 10;
         background-color: white;
-        padding: 10px var(--padding) var(--padding) 20px;
+        padding: 15px 15px var(--padding) 20px;
         box-shadow: var(--shadow);
         z-index: 99999999999999999;
     }
@@ -817,7 +834,7 @@ body{
     }
 
     .material-icons-font{
-        font-size: 30px;
+
     }
 
     .bottom-controls{
@@ -829,7 +846,7 @@ body{
         display: flex !important;
         justify-content: space-around;
         align-items: center;
-        padding: 2%;
+        padding: var(--padding);
     }
     .bottom-controls-item{
         text-align: center;
