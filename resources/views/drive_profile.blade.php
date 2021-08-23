@@ -158,20 +158,22 @@
                 </div>
             </div>
         </div>
-        <p>
-            <div class="display-flex-normal gap-small">
-                <span class="material-icons-round icon-padding">
-                swipe
-                </span>
-                <div class="city-container">
-                    @foreach(json_decode($driveData->drive_cities, true) as $city)
-                        <div class="city">
-                            {{ $city }}
-                        </div>
-                    @endforeach
+        @if(sizeof(json_decode($driveData->drive_cities, true)) > 0)
+            <p>
+                <div class="display-flex-normal gap-small">
+                    <span class="material-icons-round icon-padding">
+                    swipe
+                    </span>
+                    <div class="city-container">
+                        @foreach(json_decode($driveData->drive_cities, true) as $city)
+                            <div class="city">
+                                {{ $city }}
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        </p>
+            </p>
+        @endif
         <p>
             <div class="display-flex-center-align gap-10">
                 <span class="material-icons-round">
