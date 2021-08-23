@@ -236,7 +236,7 @@
                             {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                         </div>
                         <p>
-                            <div id="requestInstant{{ $request->id }}" class="display-flex-normal gap-10" onclick="redirectTo('/drive/{{ $request->id }}/request')">
+                            <div id="requestInstant{{ $request->id }}" class="display-flex-normal gap-10" onclick="redirectTo('/drive/{{ $request->id }}/request/accepted')">
                                 <div>
                                     @if($rideD->ride_profile_image == "")
                                     <span class="material-icons-round empty-profile-medium">
