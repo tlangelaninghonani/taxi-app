@@ -279,8 +279,7 @@ let map;
     disableDefaultUI: true,
     fullscreenControl: true
   });
-  /*setInterval(function() {
-    }, 60 * 1000);*/
+  setInterval(function() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -299,6 +298,7 @@ let map;
       } else {
           console.log("Browser doesn't support Geolocation");
       }
+    }, 1000);
 }
 
 function initMapCurrentLocDrive() {
@@ -354,26 +354,26 @@ function initAutocomplete() {
 
     let markers = [];
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            markers.push(
-                new google.maps.Marker({
-                    position: {lat: position.coords.latitude, lng: position.coords.longitude},
-                    map: map,
-                    title: "Me",
-                    animation: google.maps.Animation.DROP,
-                })
+    setInterval(function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                };
+                const myLocation = new google.maps.Marker({
+                  position: {lat: position.coords.latitude, lng: position.coords.longitude},
+                  map: map,
+                  title: "Me",
+               
+              });
+              },
             );
-          },
-        );
-      } else {
-          console.log("Browser doesn't support Geolocation");
-      }
+          } else {
+              console.log("Browser doesn't support Geolocation");
+          }
+        }, 1000);
 
     // Create the search box and link it to the UI element.
     const inputFrom = document.getElementById("ridefrom");
