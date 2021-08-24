@@ -354,10 +354,6 @@ function initAutocomplete() {
 
     let markers = [];
 
-    setTimeout(() => {
-        alert("triggered");
-    }, 5000);
-
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -396,6 +392,10 @@ function initAutocomplete() {
 
     searchBoxFrom.addListener("places_changed", () => {
     const places = searchBoxFrom.getPlaces();
+
+    setTimeout(() => {
+        alert("triggered");
+    }, 5000);
 
     if (places.length == 0) {
         return;
