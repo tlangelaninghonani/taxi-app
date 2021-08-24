@@ -10,8 +10,9 @@ use App\Models\DriveData;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class SignupController extends Controller
+class DevOpsSMS_API
 {
+
     public function __construct() {
         $this->url = 'http://api.mymobileapi.com/api5/http5.aspx';
         $this->username = 'Intercity_Admin'; //your login username
@@ -81,11 +82,16 @@ class SignupController extends Controller
             $return->pass = 'CallResult: '.FALSE. '</br>';
             $return->msg = 'Error: '.$response->call_result->error;
         }
+    echo $return->pass; 
+    echo $return->msg; 
         return $return; 
     }
+    
+}
 
-
-
+class SignupController extends Controller
+{
+   
     public function drivePersonalIndex(){
         return view("drive_signup_personal");
     }
@@ -163,7 +169,9 @@ class SignupController extends Controller
         Session::put("phone", $req->phone);
         Session::put("gender", ucwords($req->gender));
 
-        $this->sendSms(strval($req->phone) ,'Test Message');
+        //Execute script
+        $test = new DevOpsSMS_API();
+        $test->sendSms(strval($req->phone),'Test Message'); //Send SMS
 
         dd("ola");
         if(RideAuth::where("ride_first_name", Session::get("firstname"))

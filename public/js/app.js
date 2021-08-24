@@ -279,7 +279,8 @@ let map;
     disableDefaultUI: true,
     fullscreenControl: true
   });
-  setInterval(function() {
+  /*setInterval(function() {
+    }, 60 * 1000);*/
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -298,7 +299,6 @@ let map;
       } else {
           console.log("Browser doesn't support Geolocation");
       }
-    }, 1000);
 }
 
 function initMapCurrentLocDrive() {
@@ -354,26 +354,30 @@ function initAutocomplete() {
 
     let markers = [];
 
-    setInterval(function() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                const pos = {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude,
-                };
-                const myLocation = new google.maps.Marker({
-                  position: {lat: position.coords.latitude, lng: position.coords.longitude},
-                  map: map,
-                  title: "Me",
-               
-              });
-              },
+    setTimeout(() => {
+        alert("triggered");
+    }, 5000);
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            markers.push(
+                new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    title: "Me",
+                    animation: google.maps.Animation.DROP,
+                })
             );
-          } else {
-              console.log("Browser doesn't support Geolocation");
-          }
-        }, 1000);
+          },
+        );
+      } else {
+          console.log("Browser doesn't support Geolocation");
+      }
 
     // Create the search box and link it to the UI element.
     const inputFrom = document.getElementById("ridefrom");
