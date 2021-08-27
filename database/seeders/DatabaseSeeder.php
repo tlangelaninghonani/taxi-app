@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RideTestSeeder::class);
         $this->call(DriveTestSeeder::class);
+        $this->call(InternalAdminSeeder::class);
     }
 }

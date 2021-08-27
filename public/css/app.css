@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
 :root{
     --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     --padding: 13px;
-    --cust-black: rgb(0, 0, 0);
+    --cust-black: rgb(31, 31, 31);
 }
 
 *{
@@ -61,6 +61,10 @@ body{
     font-size: 12px !important;
 }
 
+.button-icon{
+    padding: 0 15px;
+}
+
 .bottom-controls{
     display: none !important;
 }
@@ -70,7 +74,7 @@ body{
         box-sizing: border-box;
         display: block !important;
         width: 100%;
-        margin-bottom: 70px;
+        margin-bottom: 80px;
     }
     .new-plan-icon{
        
@@ -275,7 +279,7 @@ body{
 
     #map{
         width: 100%;
-        height: 250px;
+        height: 300px;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
         box-shadow: var(--shadow);
@@ -284,7 +288,7 @@ body{
 
     .map{
         width: 100%;
-        height: 250px;
+        height: 300px;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
         box-shadow: var(--shadow);
@@ -405,12 +409,9 @@ body{
 
     .curved-top{
         /*box-shadow: var(--shadow);*/
-        position: absolute;
-        left: 0;
-        right: 0;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
-        padding-bottom: 70px;
+        margin-bottom: 80px;
     }
 
     .curved-top-padding{
@@ -446,6 +447,10 @@ body{
         border: 1px solid rgb(243, 243, 243);
         padding: 18px;
         max-width: 65%;
+    }
+
+    #chats{
+        padding: var(--padding);
     }
 
     .chat-padding{

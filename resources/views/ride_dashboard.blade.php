@@ -133,16 +133,16 @@
                                     <div class="trunc-text">
                                         <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br>
                                         <div class="trunc-text">
-                                            <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
+                                            <span>Drives - <strong>{{ $driveD->drive_vehicle }} - </strong></span>
                                             <strong>{{ $driveD->drive_vehicle_type }}</strong>
                                         </div>
                                         <div class="display-flex-normal gender">
                                             @if($driveA->drive_gender == "Male")
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                <span>Gender - <strong>{{ $driveA->drive_gender }}</strong></span>
                                             @elseif($driveA->drive_gender == "Female")
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                <span>Gender - <strong>{{ $driveA->drive_gender }}</strong></span>
                                             @else
-                                                <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                <span>Gender - <strong>{{ $driveA->drive_gender }}</strong></span>
                                             @endif
                                         </div>
                                         <div class="rating-stars-small">
@@ -162,9 +162,39 @@
                                 </div>
                             </p>
                             <p>
+                                <div class="display-flex-center-align">
+                                    <span class="material-icons-round">
+                                    local_taxi
+                                    </span>
+                                    <div>
+                                        <span>Plate - {{ $driveD->drive_vehicle_plate }}</span><br>
+                                        <span>Color - {{ $driveD->drive_vehicle_color }}</span>
+                                    </div>
+                                </div>
+                            </p>
+                            <p>
                                 <div class="text-align-center">
                                     <span class="title">{{ $driveA->drive_first_name }} is on the way to pick you up</span>
                                 </div>
+                            </p>
+                            <form id="nextdriverform" action="/ride/{{ $requestInstant->id }}/request/instant/next" method="POST">
+                            @csrf
+                            @method("POST")
+                            </form>
+                            <p>
+                                <form action="/ride/{{ $requestInstant->id }}/request/instant/cancel" method="POST">
+                                @csrf
+                                @method("POST")
+                                    <div class="display-flex-normal">
+                                        <button>Cancel request</button>
+                                        <div class="text-align-center button-icon" onclick="submitForm('nextdriverform')">
+                                            <span class="material-icons-round">
+                                            skip_next
+                                            </span><br>
+                                            <span>Next</span>
+                                        </div>
+                                    </div>
+                                </form>
                             </p>
                         @else
                         <p>
@@ -172,14 +202,13 @@
                                 <span class="title">Waiting for drivers to accept your request</span>
                             </div>
                         </p>
-                        @endif
                         <p>
                             <form action="/ride/{{ $requestInstant->id }}/request/instant/cancel" method="POST">
                             @csrf
                             @method("POST")
-                                <button>Cancel request</button>
-                            </form>
+                            <button>Cancel request</button>
                         </p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -326,31 +355,32 @@
                             <span class="title">On trip wth {{ $driveAuth->drive_first_name." ".$driveAuth->drive_last_name }}...</span><br>
                         </div>
                         <div id="tripinfo" class="text-align-center ">
-                        <p>
-                            <div class="text-align-center">
-                                <div class="display-flex-justify-center">
-                                    <span class="title">Pick-up</span><br>
+                            <p>
+                                <div class="text-align-center">
+                                    <div class="display-flex-justify-center">
+                                        <span class="title">Pick-up</span><br>
+                                    </div>
+                                    <span>{{ $trip->ride_from }}</span><br>
+                                    <div class="display-flex-justify-center">
+                                        <span class="title">Drop</span><br>
+                                    </div>
+                                    <span>{{ $trip->ride_to }}</span>
                                 </div>
-                                <span>{{ $trip->ride_from }}</span><br>
-                                <div class="display-flex-justify-center">
-                                    <span class="title">Drop</span><br>
-                                </div>
-                                <span>{{ $trip->ride_to }}</span>
-                            </div>
-                        </p>
-                        <p>
-                            <span>Distance <strong id="tripdistance">{{ $trip->ride_distance }}</strong></span><br>
-                            <span>Estimated time <strong id="triptime">{{ $trip->ride_duration }}</strong></span><br>
-                            <span class="title">Charges R<strong class="title" id="tripcharges">{{$trip->ride_charges }}</strong></span>
-                        </p>
-                    </div>
-                    <form action="/ride/{{ $trip->id }}/request/trip/end" method="POST">
-                        @csrf
-                        @method("POST")
-                        <div class="display-flex-normal gap-10">
-                            <button>End trip</button>
+                            </p>
+                            <p>
+                                <span>Distance <strong id="tripdistance">{{ $trip->ride_distance }}</strong></span><br>
+                                <span>Estimated time <strong id="triptime">{{ $trip->ride_duration }}</strong></span><br>
+                                <span class="title">Charges R<strong class="title" id="tripcharges">{{$trip->ride_charges }}</strong></span>
+                            </p>
                         </div>
-                    </form>
+                        <form action="/ride/{{ $trip->id }}/request/trip/end" method="POST">
+                            @csrf
+                            @method("POST")
+                            <div class="display-flex-normal gap-10">
+                                <button>End trip</button>
+                            </div>
+                        </form>
+                    </p>
                 </div>
             </div>
             <script>

@@ -119,225 +119,344 @@
         </p>-->
         @if($driveData->drive_on_trip == false)
             <div class="curved-top padding-none">
-                <div id="map"></div>
-                @if(sizeof(json_decode($driveData->drive_cities, true)))
-                    <p>
-                        <div class="display-flex-normal gap-small">
-                            <span class="material-icons-round icon-padding">
-                            swipe
-                            </span>
-                            <div class="city-container">
-                                @foreach(json_decode($driveData->drive_cities, true) as $city)
-                                    <div class="city">
-                                        {{ $city }}
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </p>
-                @endif
-                @if(sizeof($requestInstants::all()) > 0)
-                    <p>
-                        <div class="display-flex-center gap">
-                            <div onclick="displayComp(this, 'requests')" class="display-flex-center-align">
-                                <span class="material-icons-round">
-                                local_taxi
-                                </span>
-                                <span>Requests</span>
-                            </div>
-                            <div onclick="displayComp(this, 'requestsaccepted')" class="display-flex-center-align">
-                                <span class="material-icons-round">
-                                check_circle
-                                </span>
-                                <span>Accepted & offers</span>
-                            </div>
-                        </div>
-                    </p>
-                    <div id="requests" class="app-padding" style="padding-top: 0">
-                        <div class="display-none">
-                            {{ $driveCity = false }}
-                        </div>
-                        @foreach($requestInstants::all() as $requestInstant)  
-                            @if(sizeof(json_decode($driveData->drive_cities, true)) > 0)
-                                @foreach(json_decode($driveData->drive_cities, true) as $city)
-                                    @if($requestInstant->ride_from == $city && $driveAuth->id != $requestInstant->drive_id)
-                                        <div class="display-none">
-                                            {{ $driveCity = true }}
-                                        </div>
-                                        @break
-                                    @endif
-                                @endforeach 
-                            @endif
-                            @if($driveCity)
-                                <div class="display-none">
-                                    {{ $rideA = $rideAuth::find($requestInstant->ride_id) }}
-                                    {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
-                                </div>
-                                <p>
-                                    <div id="requestInstant{{ $requestInstant->id }}" class="display-flex-normal gap-10" onclick="redirectTo('/drive/{{ $requestInstant->id }}/request/instant')">
-                                        <div>
-                                            @if($rideD->ride_profile_image == "")
-                                            <span class="material-icons-round empty-profile-medium">
-                                            account_circle
-                                            </span><br>
-                                            @else
-                                            <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
-                                            @endif  
-                                        </div>
-                                        <div class="trunc-text">
-                                            <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
-                                            <div class="display-flex-normal gender">
-                                                @if($rideA->ride_gender == "Male")
-                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                @elseif($rideA->ride_gender == "Female")
-                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                @else
-                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                @endif
-                                            </div>
-                                            <span>Pick-up <strong>{{ $requestInstant->ride_from }}</strong></span><br>
-                                            <span>Drop <strong>{{ $requestInstant->ride_to }}</strong></span>
-                                        </div>
-                                    </div>
-                                </p>
-                            @endif
-                        @endforeach
-                        @if(! $driveCity)
+                @if($requestInstant)
+                    <div id="map"></div>
+                        @if(sizeof(json_decode($driveData->drive_cities, true)))
                         <p>
-                            @if($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->count() == 0)
-                                <div class="text-align-center">
-                                    <span>No requests</span>
+                            <div class="display-flex-normal gap-small">
+                                <span class="material-icons-round icon-padding">
+                                swipe
+                                </span>
+                                <div class="city-container">
+                                    @foreach(json_decode($driveData->drive_cities, true) as $city)
+                                        <div class="city">
+                                            {{ $city }}
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @endif
+                            </div>
                         </p>
-                        @endif
-                        <!--<script>
-                            var xmlhttp = new XMLHttpRequest();
-                            setInterval(() => {
-                                xmlhttp.onreadystatechange = function() { 
-                                    if (this.readyState == 4 && this.status == 200) {
-                                        let requestsObj = JSON.parse(this.responseText).requests;
-                                        let requestsObj = JSON.parse(this.responseText).requests;
-                                        console.log(requestsObj);
-                                        for (let i = 1; i <= requestsObj.length; i++) {
-                                            if(! document.querySelector("#request"+requestsObj[i-1].id) && requestsObj[i-1].ride_accepted == false){
-                                                let pTag = document.createElement("p");
-                                                let requestDiv = document.createElement("div");
-
-                                                requestDiv.setAttribute("class", "display-flex-normal gap-10");
-                                                requestDiv.setAttribute("onclick", "redirectTo('/drive/"+requestObj[i-1].id+"/request')");
-                                                requestDiv.setAttribute("id", "request"+requestObj[i-1].id);
-
-                                                let emptyProfile = document.createElement("span");
-                                                emptyProfile.setAttribute("class", "material-icons-round empty-profile-medium");
-
-                                                let profileImg = document.createElement("img");
-                                                profileImg.setAttribute("class", "profile-image");
-                                                profileImg.setAttribute("src", );
-                                            }
-                                        }
-                                    }
-                                };
-                                xmlhttp.open("GET", "/drive/getrequests", true);
-                                xmlhttp.send();
-                            }, 5000);  
-                        </script>-->
+                    @endif
+                    <div class="display-none">
+                        {{ $rideA = $rideAuth::find($requestInstant->ride_id) }}
+                        {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                     </div>
-                    <div id="requestsaccepted" class="app-padding display-none" style="padding-top: 0">
-                        <div class="display-none">
-                            {{ $driveCityAccepted = false }}
-                        </div>
-                        @foreach($requestInstants::all() as $requestInstant)  
-                            @if(sizeof(json_decode($driveData->drive_cities, true)) > 0)
-                                @foreach(json_decode($driveData->drive_cities, true) as $city)
-                                    @if($requestInstant->ride_from == $city && $driveAuth->id == $requestInstant->drive_id)
-                                        <div class="display-none">
-                                            {{ $driveCityAccepted = true }}
-                                        </div>
-                                        @break
-                                    @endif
-                                @endforeach 
-                            @endif
-                            @if($driveCityAccepted)
-                                <div class="display-none">
-                                    {{ $rideA = $rideAuth::find($requestInstant->ride_id) }}
-                                    {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
+                    <div id="tripinfo" class="text-align-center ">
+                        <p>
+                            <div class="text-align-center">
+                                <div class="display-flex-justify-center">
+                                    <span class="title">Pick-up</span><br>
                                 </div>
-                                <p>
-                                    <div id="requestInstant{{ $requestInstant->id }}" class="display-flex-normal gap-10" onclick="redirectTo('/drive/{{ $requestInstant->id }}/request/instant')">
-                                        <div>
-                                            @if($rideD->ride_profile_image == "")
-                                            <span class="material-icons-round empty-profile-medium">
-                                            account_circle
-                                            </span><br>
-                                            @else
-                                            <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
-                                            @endif  
+                                <span>{{ $requestInstant->ride_from }}</span><br>
+                                <div class="display-flex-justify-center">
+                                    <span class="title">Drop</span><br>
+                                </div>
+                                <span>{{ $requestInstant->ride_to }}</span>
+                            </div>
+                        </p>
+                        <p>
+                            <span>Distance <strong id="tripdistance">{{ $requestInstant->ride_distance }}</strong></span><br>
+                            <span>Estimated time <strong id="triptime">{{ $requestInstant->ride_duration }}</strong></span><br>
+                            <span class="title">Charges R<strong class="title" id="tripcharges">{{ $requestInstant->ride_charges }}</strong></span>
+                        </p>
+                    </div>
+                    <p>
+                        <div class="display-flex-normal gap-10">
+                            <div>
+                                @if($rideD->ride_profile_image == "")
+                                <span class="material-icons-round empty-profile-medium">
+                                account_circle
+                                </span><br>
+                                @else
+                                <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                                @endif  
+                            </div>
+                            <div class="trunc-text">
+                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
+                                <div class="display-flex-normal gender">
+                                    @if($rideA->ride_gender == "Male")
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @elseif($rideA->ride_gender == "Female")
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @else
+                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                    @endif
+                                </div>
+                                <span>Pick-up <strong>{{ $requestInstant->ride_from }}</strong></span><br>
+                                <span>Drop <strong>{{ $requestInstant->ride_to }}</strong></span>
+                            </div>
+                        </div>
+                    </p>
+                    <div class="text-align-center app-padding">
+                        <span class="title">{{ $rideA->ride_first_name }} is waiting for your pick-up</span>
+                    </div>
+                    <script>
+                    function drawLine(){
+                        const map = new google.maps.Map(document.getElementById("map"), {
+                        center: { lat: -33.8688, lng: 151.2195 },
+                        zoom: 13,
+                        mapId: "4cce301a9d6797df",
+                        disableDefaultUI: true,
+                        fullscreenControl: true
+                        });
+
+                        let directionsService = new google.maps.DirectionsService();
+                        var directionsOptions = {
+                            polylineOptions: {
+                                strokeColor: 'red',
+                                strokeWeight: 2,
+                            }
+                        }
+                        let directionsRenderer = new google.maps.DirectionsRenderer(directionsOptions);
+                        directionsRenderer.setMap(map); // Existing map object displays directions
+                        // Create route from existing points used for markers
+                        const route = {
+                            origin: {lat: parseFloat("{{ $requestInstant->ride_from_lat }}"), lng: parseFloat("{{  $requestInstant->ride_from_lng }}")},
+                            destination: {lat: parseFloat("{{  $requestInstant->ride_to_lat }}"), lng: parseFloat("{{  $requestInstant->ride_to_lng }}")},
+                            travelMode: 'DRIVING'
+                        }
+
+                        directionsService.route(route,
+                            function(response, status) { // anonymous function to capture directions
+                            if (status !== 'OK') {
+                                window.alert('Directions request failed due to ' + status);
+                                return;
+                            } else {
+                                directionsRenderer.setDirections(response); // Add route to the map
+                                var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                                if (!directionsData) {
+                                window.alert('Directions request failed');
+                                return;
+                                }
+                            }
+                        });
+                    }
+                    </script>
+                    <script
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=drawLine&libraries=&v=weekly"
+                    async
+                    ></script>
+                @else
+                    <div id="map"></div>
+                    @if(sizeof(json_decode($driveData->drive_cities, true)))
+                        <p>
+                            <div class="display-flex-normal gap-small">
+                                <span class="material-icons-round icon-padding">
+                                swipe
+                                </span>
+                                <div class="city-container">
+                                    @foreach(json_decode($driveData->drive_cities, true) as $city)
+                                        <div class="city">
+                                            {{ $city }}
                                         </div>
-                                        <div class="trunc-text">
-                                            <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
-                                            <div class="display-flex-normal gender">
-                                                @if($rideA->ride_gender == "Male")
-                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                @elseif($rideA->ride_gender == "Female")
-                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                @else
-                                                    <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </p>
+                    @endif
+                    @if(sizeof($requestInstants::all()) > 0)
+                        <p>
+                            <div class="display-flex-center gap">
+                                <div onclick="displayComp(this, 'requests')" class="display-flex-center-align">
+                                    <span class="material-icons-round">
+                                    local_taxi
+                                    </span>
+                                    <span>Requests</span>
+                                </div>
+                                <div onclick="displayComp(this, 'requestsaccepted')" class="display-flex-center-align">
+                                    <span class="material-icons-round">
+                                    check_circle
+                                    </span>
+                                    <span>Accepted & offers</span>
+                                </div>
+                            </div>
+                        </p>
+                        <div id="requests" class="app-padding" style="padding-top: 0">
+                            <div class="display-none">
+                                {{ $driveCity = false }}
+                            </div>
+                            @foreach($requestInstants::all() as $requestInstant)  
+                                @if(sizeof(json_decode($driveData->drive_cities, true)) > 0)
+                                    @foreach(json_decode($driveData->drive_cities, true) as $city)
+                                        @if($requestInstant->ride_from == $city && $driveAuth->id != $requestInstant->drive_id)
+                                            <div class="display-none">
+                                                {{ $driveCity = true }}
                                             </div>
-                                            <span>Pick-up <strong>{{ $requestInstant->ride_from }}</strong></span><br>
-                                            <span>Drop <strong>{{ $requestInstant->ride_to }}</strong></span>
-                                        </div>
+                                            @break
+                                        @endif
+                                    @endforeach 
+                                @endif
+                                @if($driveCity)
+                                    <div class="display-none">
+                                        {{ $rideA = $rideAuth::find($requestInstant->ride_id) }}
+                                        {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                                     </div>
-                                </p>
-                            @endif
-                            @if(! $driveCityAccepted)
+                                    <p>
+                                        <div id="requestInstant{{ $requestInstant->id }}" class="display-flex-normal gap-10" onclick="redirectTo('/drive/{{ $requestInstant->id }}/request/instant')">
+                                            <div>
+                                                @if($rideD->ride_profile_image == "")
+                                                <span class="material-icons-round empty-profile-medium">
+                                                account_circle
+                                                </span><br>
+                                                @else
+                                                <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                                                @endif  
+                                            </div>
+                                            <div class="trunc-text">
+                                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
+                                                <div class="display-flex-normal gender">
+                                                    @if($rideA->ride_gender == "Male")
+                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                    @elseif($rideA->ride_gender == "Female")
+                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                    @else
+                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                    @endif
+                                                </div>
+                                                <span>Pick-up <strong>{{ $requestInstant->ride_from }}</strong></span><br>
+                                                <span>Drop <strong>{{ $requestInstant->ride_to }}</strong></span>
+                                            </div>
+                                        </div>
+                                    </p>
+                                @endif
+                            @endforeach
+                            @if(! $driveCity)
                             <p>
                                 @if($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->count() == 0)
                                     <div class="text-align-center">
-                                        <span>No accepted requests</span>
+                                        <span>No requests</span>
                                     </div>
                                 @endif
                             </p>
                             @endif
-                        @endforeach
-                        <!--<script>
-                            var xmlhttp = new XMLHttpRequest();
-                            setInterval(() => {
-                                xmlhttp.onreadystatechange = function() { 
-                                    if (this.readyState == 4 && this.status == 200) {
-                                        let requestsObj = JSON.parse(this.responseText).requests;
-                                        let requestsObj = JSON.parse(this.responseText).requests;
-                                        console.log(requestsObj);
-                                        for (let i = 1; i <= requestsObj.length; i++) {
-                                            if(! document.querySelector("#request"+requestsObj[i-1].id) && requestsObj[i-1].ride_accepted == false){
-                                                let pTag = document.createElement("p");
-                                                let requestDiv = document.createElement("div");
+                            <!--<script>
+                                var xmlhttp = new XMLHttpRequest();
+                                setInterval(() => {
+                                    xmlhttp.onreadystatechange = function() { 
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            let requestsObj = JSON.parse(this.responseText).requests;
+                                            let requestsObj = JSON.parse(this.responseText).requests;
+                                            console.log(requestsObj);
+                                            for (let i = 1; i <= requestsObj.length; i++) {
+                                                if(! document.querySelector("#request"+requestsObj[i-1].id) && requestsObj[i-1].ride_accepted == false){
+                                                    let pTag = document.createElement("p");
+                                                    let requestDiv = document.createElement("div");
 
-                                                requestDiv.setAttribute("class", "display-flex-normal gap-10");
-                                                requestDiv.setAttribute("onclick", "redirectTo('/drive/"+requestObj[i-1].id+"/request')");
-                                                requestDiv.setAttribute("id", "request"+requestObj[i-1].id);
+                                                    requestDiv.setAttribute("class", "display-flex-normal gap-10");
+                                                    requestDiv.setAttribute("onclick", "redirectTo('/drive/"+requestObj[i-1].id+"/request')");
+                                                    requestDiv.setAttribute("id", "request"+requestObj[i-1].id);
 
-                                                let emptyProfile = document.createElement("span");
-                                                emptyProfile.setAttribute("class", "material-icons-round empty-profile-medium");
+                                                    let emptyProfile = document.createElement("span");
+                                                    emptyProfile.setAttribute("class", "material-icons-round empty-profile-medium");
 
-                                                let profileImg = document.createElement("img");
-                                                profileImg.setAttribute("class", "profile-image");
-                                                profileImg.setAttribute("src", );
+                                                    let profileImg = document.createElement("img");
+                                                    profileImg.setAttribute("class", "profile-image");
+                                                    profileImg.setAttribute("src", );
+                                                }
                                             }
                                         }
-                                    }
-                                };
-                                xmlhttp.open("GET", "/drive/getrequests", true);
-                                xmlhttp.send();
-                            }, 5000);  
-                        </script>-->
-                    </div>
+                                    };
+                                    xmlhttp.open("GET", "/drive/getrequests", true);
+                                    xmlhttp.send();
+                                }, 5000);  
+                            </script>-->
+                        </div>
+                        <div id="requestsaccepted" class="app-padding display-none" style="padding-top: 0">
+                            <div class="display-none">
+                                {{ $driveCityAccepted = false }}
+                            </div>
+                            @foreach($requestInstants::all() as $requestInstant)  
+                                @if(sizeof(json_decode($driveData->drive_cities, true)) > 0)
+                                    @foreach(json_decode($driveData->drive_cities, true) as $city)
+                                        @if($requestInstant->ride_from == $city && $driveAuth->id == $requestInstant->drive_id)
+                                            <div class="display-none">
+                                                {{ $driveCityAccepted = true }}
+                                            </div>
+                                            @break
+                                        @endif
+                                    @endforeach 
+                                @endif
+                                @if($driveCityAccepted)
+                                    <div class="display-none">
+                                        {{ $rideA = $rideAuth::find($requestInstant->ride_id) }}
+                                        {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
+                                    </div>
+                                    <p>
+                                        <div id="requestInstant{{ $requestInstant->id }}" class="display-flex-normal gap-10" onclick="redirectTo('/drive/{{ $requestInstant->id }}/request/instant')">
+                                            <div>
+                                                @if($rideD->ride_profile_image == "")
+                                                <span class="material-icons-round empty-profile-medium">
+                                                account_circle
+                                                </span><br>
+                                                @else
+                                                <img class="profile-image" src="{{ $rideD->ride_profile_image }}" alt="">
+                                                @endif  
+                                            </div>
+                                            <div class="trunc-text">
+                                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br>
+                                                <div class="display-flex-normal gender">
+                                                    @if($rideA->ride_gender == "Male")
+                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                    @elseif($rideA->ride_gender == "Female")
+                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                    @else
+                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                    @endif
+                                                </div>
+                                                <span>Pick-up <strong>{{ $requestInstant->ride_from }}</strong></span><br>
+                                                <span>Drop <strong>{{ $requestInstant->ride_to }}</strong></span>
+                                            </div>
+                                        </div>
+                                    </p>
+                                @endif
+                                @if(! $driveCityAccepted)
+                                <p>
+                                    @if($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->count() == 0)
+                                        <div class="text-align-center">
+                                            <span>No accepted requests</span>
+                                        </div>
+                                    @endif
+                                </p>
+                                @endif
+                            @endforeach
+                            <!--<script>
+                                var xmlhttp = new XMLHttpRequest();
+                                setInterval(() => {
+                                    xmlhttp.onreadystatechange = function() { 
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            let requestsObj = JSON.parse(this.responseText).requests;
+                                            let requestsObj = JSON.parse(this.responseText).requests;
+                                            console.log(requestsObj);
+                                            for (let i = 1; i <= requestsObj.length; i++) {
+                                                if(! document.querySelector("#request"+requestsObj[i-1].id) && requestsObj[i-1].ride_accepted == false){
+                                                    let pTag = document.createElement("p");
+                                                    let requestDiv = document.createElement("div");
+
+                                                    requestDiv.setAttribute("class", "display-flex-normal gap-10");
+                                                    requestDiv.setAttribute("onclick", "redirectTo('/drive/"+requestObj[i-1].id+"/request')");
+                                                    requestDiv.setAttribute("id", "request"+requestObj[i-1].id);
+
+                                                    let emptyProfile = document.createElement("span");
+                                                    emptyProfile.setAttribute("class", "material-icons-round empty-profile-medium");
+
+                                                    let profileImg = document.createElement("img");
+                                                    profileImg.setAttribute("class", "profile-image");
+                                                    profileImg.setAttribute("src", );
+                                                }
+                                            }
+                                        }
+                                    };
+                                    xmlhttp.open("GET", "/drive/getrequests", true);
+                                    xmlhttp.send();
+                                }, 5000);  
+                            </script>-->
+                        </div>
+                    @endif
+                    <script
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initMapCurrentLocDrive&libraries=&v=weekly"
+                    async
+                    ></script>
                 @endif
-                <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initMapCurrentLocDrive&libraries=&v=weekly"
-                async
-                ></script>
             </div>
             <span class="display-none">{{ $totalRequestsFromRiders = 0 }}</span>
             @if($requests::where("drive_id", $driveAuth->id)->count() > 10)

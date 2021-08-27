@@ -77,6 +77,7 @@ Route::get("/ride/{id}/request/pending", [App\Http\Controllers\DataController::c
 Route::post("/ride/{id}/request/pickup", [App\Http\Controllers\DataController::class, "rideRequestPickup"]);
 Route::post("/ride/{id}/request/cancel", [App\Http\Controllers\DataController::class, "rideRequestCancel"]);
 Route::post("/ride/{id}/request/instant/cancel", [App\Http\Controllers\DataController::class, "rideRequestInstantCancel"]);
+Route::post("/ride/{id}/request/instant/next", [App\Http\Controllers\DataController::class, "rideRequestInstantNext"]);
 Route::get("/ride/offers", [App\Http\Controllers\DataController::class, "rideOffersIndex"]);
 Route::get("/ride/profile", [App\Http\Controllers\DataController::class, "rideProfileIndex"]);
 Route::post("/ride/profile/update", [App\Http\Controllers\DataController::class, "rideProfileUpdate"]);

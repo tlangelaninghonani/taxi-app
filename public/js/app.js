@@ -12,6 +12,10 @@ for (let i = 0; i < materialClass.length; i++) {
 var cities = new Array();
 
 function jsonCitiesAndSubmit(formId){
+    if(cities.length < 2){
+        alert("Choose a minimum of 2 cities you want to drive back-forth");
+        return
+    }
     document.querySelector("#cities").value = JSON.stringify(cities);
     document.querySelector("#"+formId).submit();
 }
@@ -392,10 +396,6 @@ function initAutocomplete() {
 
     searchBoxFrom.addListener("places_changed", () => {
     const places = searchBoxFrom.getPlaces();
-
-    setTimeout(() => {
-        alert("triggered");
-    }, 5000);
 
     if (places.length == 0) {
         return;

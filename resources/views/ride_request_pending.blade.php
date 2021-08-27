@@ -182,12 +182,6 @@
                 window.alert('Directions request failed');
                 return;
                 }
-                else {
-                    document.querySelector("#tripinfo").style.display = "block";
-                    document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
-                    document.querySelector("#triptime").innerHTML = directionsData.duration.text;
-                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
-                }
             }
         });
     }

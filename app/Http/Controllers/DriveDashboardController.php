@@ -28,6 +28,7 @@ class DriveDashboardController extends Controller
         $trip = RideRequest::where("drive_id", $driveAuth->id)->where("on_trip", true)->first();
 
         $notifications = Notification::where("drive_id", $driveAuth->id)->first();
+        $rideRequestInstant = RideRequestInstant::where("drive_id", $driveAuth->id)->first();
         
 
         return view("drive_dashboard", [
@@ -39,6 +40,7 @@ class DriveDashboardController extends Controller
             "trip" => $trip,
             "notifications" => $notifications,
             "requestInstants" => new RideRequestInstant(),
+            "requestInstant" => $rideRequestInstant,
         ]);
     }
 

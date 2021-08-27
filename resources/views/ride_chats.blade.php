@@ -65,12 +65,11 @@
         </div>
         @if($history::where("ride_id", $rideAuth->id)->exists() || $requests::where("ride_id", $rideAuth->id)->exists())
         <p>
-            <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers to chat with">
-            <div class="display-flex-center-align gap-small">
-                <span class="material-icons-round">
-                tune
-                </span>
-                <span class="title-small">Type Male/Female/Other to filter by gender</span>
+            <div class="app-padding">
+                <input type="text" onkeydown="search('driverscontainer', 'drivers', this.value)" placeholder="Search drivers to chat with">
+                <div class="text-align-center">
+                    <span class="title-small">Type Male/Female/Other to filter by gender</span>
+                </div>
             </div>
         </p>
         <p>
@@ -101,16 +100,16 @@
                                         <div onclick="submitForm('drivertochat{{ $driveA->id }}')">
                                             <span class="title">{{ $driveA->drive_first_name." ".$driveA->drive_last_name }}</span><br> 
                                             <div class="trunc-text">
-                                            <span>Drives <strong>{{ $driveD->drive_vehicle }} - </strong></span>
+                                            <span>Drives - <strong>{{ $driveD->drive_vehicle }} - </strong></span>
                                             <strong>{{ $driveD->drive_vehicle_type }}</strong>
                                             </div>
                                             <div id="{{ $driveA->drive_gender.$driveA->id }}" class="display-flex-normal gender">
                                                 @if($driveA->drive_gender == "Male")
-                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                    <span>Gender - <strong>{{ $driveA->drive_gender }}</strong></span>
                                                 @elseif($driveA->drive_gender == "Female")
-                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                    <span>Gender - <strong>{{ $driveA->drive_gender }}</strong></span>
                                                 @else
-                                                    <span>Gender <strong>{{ $driveA->drive_gender }}</strong></span>
+                                                    <span>Gender - <strong>{{ $driveA->drive_gender }}</strong></span>
                                                 @endif
                                             </div>
                                             <div class="rating-stars-small">

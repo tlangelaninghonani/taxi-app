@@ -170,6 +170,7 @@
     </div>
     <script src="{{ $links['js'] }}"></script>
     <script>
+        
         let chatsContainer = document.querySelector("#chats");
         let driverImg = "{{ $driveData->drive_profile_image }}";
         var xmlhttp = new XMLHttpRequest();
@@ -180,6 +181,7 @@
                     //console.log(chatsObj);
 
                     for (let i = 1; i <= chatsObj.length; i++) {
+                        
                         if(! document.querySelector("#chatdiv"+chatsObj[i-1].id) && chatsObj[i-1].from == "drive"){
                             if(document.querySelector("#nochats")){
                                 document.querySelector("#nochats").style.display = "none";

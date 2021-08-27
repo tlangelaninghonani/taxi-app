@@ -20,32 +20,32 @@
         </div>
         <div class="curved-top">
             <div id="map"></div>
-            <p>
-                <div class="text-align-center app-padding">
-                    <span class="title">Choose a maximum of 5 cities you want to drive back-forth</span>
-                </div>
-            </p>
-            <p>
+                <div class="app-padding">
+                <p>
+                    <div class="text-align-center app-padding">
+                        <span class="title">Choose a maximum of 5 cities you want to drive back-forth</span>
+                    </div>
+                </p>
                 <div id="citycontainer" class="city-container">
 
                 </div>
-            </p>
-            <p>
-                <form id="citiesform" action="/drive/signup/cities" method="POST">
-                    @csrf
-                    @method("POST")
-                    <div class="display-flex-normal gap-10">
-                        <input id="ridefrom" type="text" placeholder="Type a city">
-                        <input type="hidden" id="cities" name="cities">
-                        <span onclick="addCity()" class="material-icons-round black-background">
-                        add
-                        </span>
-                    </div>
-                    <p>
-                        <button type="button" onclick="jsonCitiesAndSubmit('citiesform')">Next</button>
-                    </p>
-                </form>
-            </p>
+                <p>
+                    <form id="citiesform" action="/drive/signup/cities" method="POST">
+                        @csrf
+                        @method("POST")
+                        <div class="display-flex-normal gap-10">
+                            <input id="ridefrom" type="text" placeholder="Type a city">
+                            <input type="hidden" id="cities" name="cities">
+                            <span onclick="addCity()" class="material-icons-round black-background">
+                            add
+                            </span>
+                        </div>
+                        <p>
+                            <button type="button" onclick="jsonCitiesAndSubmit('citiesform')">Next</button>
+                        </p>
+                    </form>
+                </p>
+            </div>
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>

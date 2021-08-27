@@ -80,12 +80,11 @@
         </div>
         @if($history::where("drive_id", $driveAuth->id)->exists() || $requests::where("drive_id", $driveAuth->id)->exists())
         <p>
-            <input type="text" onkeydown="search('riderscontainer', 'riders', this.value)" placeholder="Search riders">
-            <div class="display-flex-center-align gap-small">
-                <span class="material-icons-round">
-                tune
-                </span>
-                <span class="title-small">Type Male/Female/Other to filter by gender</span>
+            <div class="app-padding">
+                <input type="text" onkeydown="search('riderscontainer', 'riders', this.value)" placeholder="Search riders">
+                <div class="text-align-center">
+                    <span class="title-small">Type Male/Female/Other to filter by gender</span>
+                </div>
             </div>
         </p>
         <p>

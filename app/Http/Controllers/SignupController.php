@@ -17,7 +17,7 @@ class DevOpsSMS_API
         $this->url = 'http://api.mymobileapi.com/api5/http5.aspx';
         $this->username = 'Intercity_Admin'; //your login username
         $this->password = '!nterc!ty$M$'; //your login password
-        $this->time = '16:20';
+        $this->time = '21:09';
                 $this->validityperiod = '24';
     }
     
@@ -49,7 +49,7 @@ class DevOpsSMS_API
 
         );
         $response = $this->querySmsServer($data);
-        return $this->returnResult($response);
+        /*return $this->returnResult($response);*/
     }
     
     // query API server and return response in object format
@@ -63,8 +63,8 @@ class DevOpsSMS_API
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 2000); // response wait time
         curl_setopt($ch, CURLOPT_TIMEOUT_MS, 2000); // output response time
         $response = curl_exec($ch);
-        if (!$response) return NULL;
-        else return new SimpleXMLElement($response);
+        /*if (!$response) return NULL;
+        else return new \SimpleXMLElement($response);*/
     }
 
     // handle sms server response
@@ -169,11 +169,12 @@ class SignupController extends Controller
         Session::put("phone", $req->phone);
         Session::put("gender", ucwords($req->gender));
 
-        //Execute script
         $test = new DevOpsSMS_API();
-        $test->sendSms(strval($req->phone),'Test Message'); //Send SMS
+        $test->sendSms("0677228944",'Test Message'); //Send SMS
+        //$test->checkcredits(); //Check your credit balance
 
-        dd("ola");
+        dd("testing SMS API");
+
         if(RideAuth::where("ride_first_name", Session::get("firstname"))
         ->where("ride_last_name", Session::get("lastname"))
         ->where("ride_phone", $req->phone)->exists()){
