@@ -112,6 +112,16 @@
                 <form class="app-padding" action="/ride/plans" method="POST">
                     @csrf
                     @method("POST")
+                    @if($rideData->ride_promo > 0)
+                    <p>
+                        <div class="display-flex-center">  
+                            <span class="material-icons-round">
+                            card_giftcard
+                            </span>
+                            <span>R{{ $rideData->ride_promo }} off applied</span>
+                        </div>
+                    </p>
+                    @endif
                     <p>
                         <input type="text" name="ridefrom" id="ridefrom" placeholder="Pick-up" required>
                     </p>
@@ -166,7 +176,7 @@
                     <span class="title-small">History</span>
                 </a>
             </div>
-            <div class="bottom-controls-item">
+            <div class="bottom-controls-item focused">
                 <a href="/ride/plans">
                     <span class="material-icons-round">
                     travel_explore
@@ -201,6 +211,48 @@
         </div>
     </div>
     <script src="{{ $links['js'] }}"></script>
+    <script>
+        function drawLine(origin, destination, map, directionsRenderer){
+            let directionsService = new google.maps.DirectionsService();
+            directionsRenderer.setMap(map); // Existing map object displays directions
+            // Create route from existing points used for markers
+            const route = {
+                origin: origin,
+                destination: destination,
+                travelMode: 'DRIVING'
+            }
+            directionsService.route(route,
+                function(response, status) { // anonymous function to capture directions
+                if (status !== 'OK') {
+                    window.alert('Directions request failed due to ' + status);
+                    return;
+                } else {
+                    directionsRenderer.setDirections(response); // Add route to the map
+                    var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                    if (!directionsData) {
+                    window.alert('Directions request failed');
+                    return;
+                    }
+                    else {
+                    document.querySelector("#tripinfo").style.display = "block";
+                    document.querySelector("#mapbutton").style.display = "block";
+                    document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
+                    document.querySelector("#triptime").innerHTML = directionsData.duration.text;
+                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $admin->minimum_price }}") - parseInt("{{ $rideData->ride_promo }}")).toFixed(2);
+                    
+                    if(document.querySelector("#ridecharges")){
+                        document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $admin->minimum_price }}") - parseInt("{{ $rideData->ride_promo }}")).toFixed(2);
+                        document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
+                        document.querySelector("#ridetocoords").value = JSON.stringify(destination);
+                        document.querySelector("#ridedistance").value = directionsData.distance.text;
+                        document.querySelector("#rideduration").value = directionsData.duration.text;
+                    }
+                
+                }
+                }
+            });
+        }
+    </script>
     <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initAutocomplete&libraries=places&v=weekly"
     async

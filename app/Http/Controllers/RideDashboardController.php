@@ -11,6 +11,7 @@ use App\Models\DriveData;
 use App\Models\RideRequest;
 use App\Models\RideRequestInstant;
 use App\Models\Notification;
+use App\Models\InternalAdmin;
 
 class RideDashboardController extends Controller
 {
@@ -40,6 +41,7 @@ class RideDashboardController extends Controller
         $rideRequestInstant = RideRequestInstant::where("ride_id", $rideAuth->id)->first();
         $request = RideRequest::where("ride_id", $rideAuth->id)->where("on_trip")->first();
 
+        $admin = InternalAdmin::find(1);
         return view("ride_dashboard", [
             "rideAuth" => $rideAuth,
             "rideData" => $rideData,
@@ -50,6 +52,7 @@ class RideDashboardController extends Controller
             "trip" => $trip,
             "notifications" => $notifications,
             "requestInstant" => $rideRequestInstant,
+            "admin" => $admin
         ]);
     }
 }

@@ -18,6 +18,7 @@ class CreateRideDataTable extends Migration
             $table->integer("ride_id");
             $table->text("ride_profile_image")->nullable();
             $table->boolean("ride_on_trip")->default(false);
+            $table->decimal("ride_promo")->default(20);
             $table->timestamps();
         });
     }

@@ -78,7 +78,7 @@
                 </span>
            </div>
         </div>
-        @if($history::where("drive_id", $driveAuth->id)->exists() || $requests::where("drive_id", $driveAuth->id)->exists())
+        @if($history::where("drive_id", $driveAuth->id)->exists() || $requests::where("drive_id", $driveAuth->id)->exists() || $hasInstantRequest)
         <p>
             <div class="app-padding">
                 <input type="text" onkeydown="search('riderscontainer', 'riders', this.value)" placeholder="Search riders">
@@ -90,49 +90,90 @@
         <p>
             <div id="riderscontainer" class="padding-bottom-layout">
                 @foreach($rideAuth::all() as $rideToChat)
-                    @if($history::where("drive_id", $driveAuth->id)->where("ride_id", $rideToChat->id)->exists() || $requests::where("drive_id", $driveAuth->id)->where("ride_id", $rideToChat->id)->exists())
+                    @if($history::where("drive_id", $driveAuth->id)->where("ride_id", $rideToChat->id)->exists() || $requests::where("drive_id", $driveAuth->id)->where("ride_id", $rideToChat->id)->exists() || $hasInstantRequest)
                         <div style="display: none">
                             {{ $rideA = $rideAuth::find($rideToChat->id) }}
                             {{ $rideD = $rideData::where("ride_id", $rideA->id)->first() }}
                         </div>
-                        <div id="{{ $rideA->drive_first_name.$rideA->drive_last_name.$rideA->id.$rideA->drive_gender }}" class="riders">
-                            <p>
-                                <div class="display-flex-normal gap-10">
-                                    <div>
-                                        @if($rideD->drive_profile_image == "")
-                                        <span class="material-icons-round empty-profile-medium">
-                                        account_circle
-                                        </span>
-                                        @else
-                                        <img class="profile-image" src="{{ $rideD->drive_profile_image }}" alt="">
-                                        @endif
-                                    </div>
-                                    <div class="trunc-text">
-                                        <form id="ridetochat{{ $rideA->id }}" action="/drive/{{ $rideA->id }}/chat" method="POST">
-                                            @csrf
-                                            @method("POST")
-                                        </form>
-                                        <div onclick="submitForm('ridetochat{{ $rideA->id }}')">
-                                            <div class="trunc-text">
-                                                <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br> 
-                                                <div class="display-flex gender">
-                                                    @if($rideA->ride_gender == "Male")
-                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                    @elseif($rideA->ride_gender == "Female")
-                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                    @else
-                                                        <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
-                                                    @endif
-                                                </div>
-                                                <span>Phone <strong>{{ $rideA->ride_phone }}</strong></span>
-                                                <!--<span>Pick-up <strong>{{ $rideToChat->ride_from }}</strong></span><br>
-                                                <span>Drop <strong>{{ $rideToChat->ride_to }}</strong></span><br>-->
-                                            </div>  
+                        @if($hasInstantRequest->ride_id == $rideA->id)
+                            <div id="{{ $rideA->drive_first_name.$rideA->drive_last_name.$rideA->id.$rideA->drive_gender }}" class="riders">
+                                <p>
+                                    <div class="display-flex-normal gap-10">
+                                        <div>
+                                            @if($rideD->drive_profile_image == "")
+                                            <span class="material-icons-round empty-profile-medium">
+                                            account_circle
+                                            </span>
+                                            @else
+                                            <img class="profile-image" src="{{ $rideD->drive_profile_image }}" alt="">
+                                            @endif
+                                        </div>
+                                        <div class="trunc-text">
+                                            <form id="ridetochat{{ $rideA->id }}" action="/drive/{{ $rideA->id }}/chat" method="POST">
+                                                @csrf
+                                                @method("POST")
+                                            </form>
+                                            <div onclick="submitForm('ridetochat{{ $rideA->id }}')">
+                                                <div class="trunc-text">
+                                                    <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br> 
+                                                    <div class="display-flex gender">
+                                                        @if($rideA->ride_gender == "Male")
+                                                            <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                        @elseif($rideA->ride_gender == "Female")
+                                                            <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                        @else
+                                                            <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                        @endif
+                                                    </div>
+                                                    <span>Phone <strong>{{ $rideA->ride_phone }}</strong></span>
+                                                    <!--<span>Pick-up <strong>{{ $rideToChat->ride_from }}</strong></span><br>
+                                                    <span>Drop <strong>{{ $rideToChat->ride_to }}</strong></span><br>-->
+                                                </div>  
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </p>
-                        </div>
+                                </p>
+                            </div>
+                        @elseif($history::where("drive_id", $driveAuth->id)->where("ride_id", $rideToChat->id)->exists() || $requests::where("drive_id", $driveAuth->id)->where("ride_id", $rideToChat->id)->exists())
+                            <div id="{{ $rideA->drive_first_name.$rideA->drive_last_name.$rideA->id.$rideA->drive_gender }}" class="riders">
+                                <p>
+                                    <div class="display-flex-normal gap-10">
+                                        <div>
+                                            @if($rideD->drive_profile_image == "")
+                                            <span class="material-icons-round empty-profile-medium">
+                                            account_circle
+                                            </span>
+                                            @else
+                                            <img class="profile-image" src="{{ $rideD->drive_profile_image }}" alt="">
+                                            @endif
+                                        </div>
+                                        <div class="trunc-text">
+                                            <form id="ridetochat{{ $rideA->id }}" action="/drive/{{ $rideA->id }}/chat" method="POST">
+                                                @csrf
+                                                @method("POST")
+                                            </form>
+                                            <div onclick="submitForm('ridetochat{{ $rideA->id }}')">
+                                                <div class="trunc-text">
+                                                    <span class="title">{{ $rideA->ride_first_name." ".$rideA->ride_last_name }}</span><br> 
+                                                    <div class="display-flex gender">
+                                                        @if($rideA->ride_gender == "Male")
+                                                            <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                        @elseif($rideA->ride_gender == "Female")
+                                                            <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                        @else
+                                                            <span>Gender <strong>{{ $rideA->ride_gender }}</strong></span>
+                                                        @endif
+                                                    </div>
+                                                    <span>Phone <strong>{{ $rideA->ride_phone }}</strong></span>
+                                                    <!--<span>Pick-up <strong>{{ $rideToChat->ride_from }}</strong></span><br>
+                                                    <span>Drop <strong>{{ $rideToChat->ride_to }}</strong></span><br>-->
+                                                </div>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        @endif
                     @endif
                 @endforeach
             </div>
@@ -174,9 +215,9 @@
         <div class="bottom-controls-item">
             <a href="/drive/riders">
                 <span class="material-icons-round">
-                hail
+                travel_explore
                 </span><br>
-                <span class="title-small">Riders</span>
+                <span class="title-small">Plans</span>
             </a>
         </div>
         <div class="bottom-controls-item">

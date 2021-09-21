@@ -26,9 +26,6 @@
                         local_taxi
                         </span>
                     </div>
-                    <p>
-                        <span>Drive</span>
-                    </p>
                 </div>
                 <div class="text-align-center">
                     <div class="choose-ride-drive-item" onclick="redirectTo('/ride/signin')">
@@ -36,9 +33,6 @@
                         hail
                         </span>
                     </div>
-                    <p>
-                        <span>Ride</span>
-                    </p>
                 </div>
             </div>
         </div>

@@ -57,6 +57,8 @@ Route::post("/drive/{id}/chat", [App\Http\Controllers\DataController::class, "dr
 Route::post("/drive/{id}/chat/message", [App\Http\Controllers\DataController::class, "driveChat"]);
 Route::get("/drive/{id}/getchats", [App\Http\Controllers\DataController::class, "driveGetChats"]);
 Route::get("/drive/getrequests", [App\Http\Controllers\DriveDashboardController::class, "driveGetRequests"]);
+Route::post("/drive/{id}/request/instant/drive", [App\Http\Controllers\DataController::class, "driveRequestInstantDrive"]);
+Route::post("/drive/{id}/request/instant/cancel", [App\Http\Controllers\DataController::class, "driveRequestInstantCancel"]);
 
 Route::get("/ride/dashboard", [App\Http\Controllers\RideDashboardController::class, "index"]);
 Route::get("/ride/signin", [App\Http\Controllers\SigninController::class, "rideSigninIndex"]);
@@ -76,8 +78,8 @@ Route::get("/ride/{id}/request/accepted", [App\Http\Controllers\DataController::
 Route::get("/ride/{id}/request/pending", [App\Http\Controllers\DataController::class, "rideRequestPendingIndex"]);
 Route::post("/ride/{id}/request/pickup", [App\Http\Controllers\DataController::class, "rideRequestPickup"]);
 Route::post("/ride/{id}/request/cancel", [App\Http\Controllers\DataController::class, "rideRequestCancel"]);
-Route::post("/ride/{id}/request/instant/cancel", [App\Http\Controllers\DataController::class, "rideRequestInstantCancel"]);
 Route::post("/ride/{id}/request/instant/next", [App\Http\Controllers\DataController::class, "rideRequestInstantNext"]);
+Route::post("/ride/{id}/request/instant/cancel", [App\Http\Controllers\DataController::class, "rideRequestInstantCancel"]);
 Route::get("/ride/offers", [App\Http\Controllers\DataController::class, "rideOffersIndex"]);
 Route::get("/ride/profile", [App\Http\Controllers\DataController::class, "rideProfileIndex"]);
 Route::post("/ride/profile/update", [App\Http\Controllers\DataController::class, "rideProfileUpdate"]);
@@ -89,7 +91,7 @@ Route::get("/ride/chats", [App\Http\Controllers\DataController::class, "rideChat
 Route::post("/ride/{id}/chat", [App\Http\Controllers\DataController::class, "rideChatIndex"]);
 Route::post("/ride/{id}/chat/message", [App\Http\Controllers\DataController::class, "rideChat"]);
 Route::get("/ride/{id}/getchats", [App\Http\Controllers\DataController::class, "rideGetChats"]);
-
+Route::get("/ride/notifications", [App\Http\Controllers\DataController::class, "rideNotifications"]);
 
 
 

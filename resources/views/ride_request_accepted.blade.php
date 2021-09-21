@@ -112,6 +112,17 @@
                         <span>{{ $request->ride_to }}</span>
                     </div>
                 </p>
+                <p>
+                    <div class="display-flex-center-align">
+                        <span class="material-icons-round">
+                        local_taxi
+                        </span>
+                        <div>
+                            <span>Plate - {{ $driveData->drive_vehicle_plate }}</span><br>
+                            <span>Color - {{ $driveData->drive_vehicle_color }}</span>
+                        </div>
+                    </div>
+                </p>
                 <div id="tripinfo" class="text-align-center ">
                     <p>
                         <span>Distance <strong id="tripdistance">{{ $request->ride_distance }}</strong></span><br>

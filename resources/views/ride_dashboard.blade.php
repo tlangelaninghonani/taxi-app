@@ -41,7 +41,7 @@
                 </div>
             </p>
             <p>
-                <span>Send feedback</span>
+                <span>Send feedback</span><br>
             </p>
             <p>
                 <div class="display-flex-normal gap-small" onclick="redirectTo('/signout')">
@@ -191,7 +191,7 @@
                                             <span class="material-icons-round">
                                             skip_next
                                             </span><br>
-                                            <span>Next</span>
+                                            <span>Skip</span>
                                         </div>
                                     </div>
                                 </form>
@@ -250,12 +250,6 @@
                         window.alert('Directions request failed');
                         return;
                         }
-                        else {
-                            document.querySelector("#tripinfo").style.display = "block";
-                            document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
-                            document.querySelector("#triptime").innerHTML = directionsData.duration.text;
-                            document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
-                        }
                     }
                 });
             }
@@ -268,9 +262,20 @@
                 <div class="curved-top">
                     <div id="map"></div>
                     <div class="app-padding">
-                        <form action="/ride/request/instant" method="POST">
+                        @if($rideData->ride_promo > 0)
+                        <p>
+                            <div class="display-flex-center">  
+                                <span class="material-icons-round">
+                                card_giftcard
+                                </span>
+                                <span>R{{ $rideData->ride_promo }} off applied</span>
+                            </div>
+                        </p>
+                        @endif
+                        <form id="riderequestinstantform" action="/ride/request/instant" method="POST">
                             @csrf
                             @method("POST")
+                            <input type="hidden" id="ridetype" name="ridetype">
                             <p>
                                 <div class="display-flex-normal">
                                 </div>
@@ -293,27 +298,35 @@
                                     <p>
                                         <span class="title">Choose a <strong>sutaible</strong> ride for your trip</span>
                                     </p>
-                                </div>    
+                                </div>   
+                                <p>
+                                    <div class="text-align-center">
+                                        <span class="title-mid">Charges <strong >R</strong><strong class="title-mid" id="ridetypecharges"></strong></span>
+                                   </div>
+                                </p> 
+                                @if($rideData->ride_promo > 0)
+                                <p>
+                                    <div class="display-flex-center">  
+                                        <span class="material-icons-round">
+                                        card_giftcard
+                                        </span>
+                                        <span>R{{ $rideData->ride_promo }} off applied</span>
+                                    </div>
+                                </p>
+                                @endif
                                 <div class="box-shadow-abs">
-                                    <div class="choose-car">
+                                    <div class="choose-car" onclick="chooseRideTypeSubmitForm('x', 'riderequestinstantform')">
                                         <img src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_558,h_372/v1548646935/assets/64/93c255-87c8-4e2e-9429-cf709bf1b838/original/3.png" alt="">
                                         <div>
                                             <span class="title-mid">InterCityRides <strong>Go</strong></span><br>
-                                            <span class="title-small">2 door</span>
+                                            <span class="title-small">All to yourself</span>
                                         </div>
                                     </div>
-                                    <div class="choose-car">
-                                        <img src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_558,h_372/v1548646935/assets/64/93c255-87c8-4e2e-9429-cf709bf1b838/original/3.png" alt="">
-                                        <div>
-                                        <span class="title-mid">InterCityRides <strong>X</strong></span><br>
-                                            <span class="title-small">4 door</span>
-                                        </div>
-                                    </div>
-                                    <div class="choose-car">
+                                    <div class="choose-car" onclick="chooseRideTypeSubmitForm('xl', 'riderequestinstantform')">
                                         <img src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_558,h_372/v1548646918/assets/e9/2eeb8f-3764-4e26-8b17-5905a75e7e85/original/2.png" alt="">
                                         <div>
                                             <span class="title-mid">InterCityRides <strong>XL</strong></span><br>
-                                            <span class="title-small">2 door (SUV)</span>
+                                            <span class="title-small">Up to 6 people (+R30)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -332,11 +345,54 @@
                                 <input type="hidden" id="ridedistance" name="ridedistance">
                                 <input type="hidden" id="rideduration" name="rideduration">
 
-                                <button id="mapbutton" class="display-none">Request</button>
+                                <button id="mapbutton" type="button" onclick="closePopup('choosecarcontainer')" class="display-none">Request</button>
                             </p>
                         </form>
                     </div>
                 </div>
+                <script>
+                function drawLine(origin, destination, map, directionsRenderer){
+                    let directionsService = new google.maps.DirectionsService();
+                    directionsRenderer.setMap(map); // Existing map object displays directions
+                    // Create route from existing points used for markers
+                    const route = {
+                        origin: origin,
+                        destination: destination,
+                        travelMode: 'DRIVING'
+                    }
+                    directionsService.route(route,
+                        function(response, status) { // anonymous function to capture directions
+                        if (status !== 'OK') {
+                            window.alert('Directions request failed due to ' + status);
+                            return;
+                        } else {
+                            directionsRenderer.setDirections(response); // Add route to the map
+                            var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                            if (!directionsData) {
+                            window.alert('Directions request failed');
+                            return;
+                            }
+                            else {
+                            document.querySelector("#tripinfo").style.display = "block";
+                            document.querySelector("#mapbutton").style.display = "block";
+                            document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
+                            document.querySelector("#triptime").innerHTML = directionsData.duration.text;
+                            document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $admin->minimum_price }}") - parseInt("{{ $rideData->ride_promo }}")).toFixed(2);
+                            
+                            if(document.querySelector("#ridecharges")){
+                                document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $admin->minimum_price }}") - parseInt("{{ $rideData->ride_promo }}")).toFixed(2);
+                                document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
+                                document.querySelector("#ridetocoords").value = JSON.stringify(destination);
+                                document.querySelector("#ridedistance").value = directionsData.distance.text;
+                                document.querySelector("#rideduration").value = directionsData.duration.text;
+                                document.querySelector("#ridetypecharges").innerHTML = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $admin->minimum_price }}") - parseInt("{{ $rideData->ride_promo }}")).toFixed(2);
+                            }
+                        
+                        }
+                        }
+                    });
+                }
+                </script>
                 <script
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNarbofdMvrgaKRZ9e_LvJD2miCEOS6D0&callback=initAutocomplete&libraries=places&v=weekly"
                 async
@@ -421,12 +477,6 @@
                         window.alert('Directions request failed');
                         return;
                         }
-                        else {
-                            document.querySelector("#tripinfo").style.display = "block";
-                            document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
-                            document.querySelector("#triptime").innerHTML = directionsData.duration.text;
-                            document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * 3.50).toFixed(2);
-                        }
                     }
                 });
             }
@@ -438,7 +488,7 @@
         @endif
     </div>
     <div class="bottom-controls">
-        <div class="bottom-controls-item">
+        <div class="bottom-controls-item focused">
             <a href="/ride/dashboard">
                 <span class="material-icons-round">
                 home

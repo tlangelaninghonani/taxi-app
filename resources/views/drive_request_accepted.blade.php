@@ -11,11 +11,11 @@
 <body>
     <div class="container">
         <div class="nav">
-           <div class="display-flex">
-                <span class="material-icons-round">
-                apartment
+            <div class="display-flex-normal gap-10">
+                <span class="material-icons-round" onclick="redirectBack()">
+                arrow_back
                 </span>
-                <span class="app-name">InterCityRides</span>
+                <span class="">Accepted request from {{ $rideAuth->ride_first_name }}</span>
            </div>
            <div class="display-flex-normal gap-mid">
                 <span class="material-icons-round">

@@ -354,7 +354,7 @@
                 <span class="title-small">Plans</span>
             </a>
         </div>
-        <div class="bottom-controls-item">
+        <div class="bottom-controls-item focused">
             <a href="/ride/drivers">
                 <span class="material-icons-round">
                 local_taxi
@@ -383,7 +383,7 @@
     <script>
         setTimeout(() => {
             document.querySelector("#securitytip").style.display = "block";
-        }, 1000000);
+        }, 1000);
     </script>
 </body>
 </html>

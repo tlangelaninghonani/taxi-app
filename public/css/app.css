@@ -3,7 +3,7 @@
 :root{
     --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     --padding: 13px;
-    --cust-black: rgb(31, 31, 31);
+    --cust-black: black;
 }
 
 *{
@@ -156,9 +156,15 @@ body{
         align-items: center;
     }
 
+    .ridetype-icon{
+        padding: 10px;
+        border-bottom: 2px solid black;
+    }
+
     .display-flex-center{
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 5px;
     }
 
@@ -434,7 +440,7 @@ body{
         padding: 18px;
         border: none;
         border-radius: 30px;
-        background-color: rgb(245, 245, 245);
+        background-color: rgb(240, 240, 240);
     
     }
 
@@ -842,6 +848,10 @@ body{
 
     }
 
+    .focused{
+        border-top: 2px solid black;
+    }
+
     .bottom-controls{
         position: fixed;
         bottom: 0;
@@ -851,10 +861,12 @@ body{
         display: flex !important;
         justify-content: space-around;
         align-items: center;
-        padding: var(--padding);
+        padding: 0 var(--padding);
+        border-top: 1px solid rgb(241, 241, 241);
     }
     .bottom-controls-item{
         text-align: center;
+        padding: var(--padding) 0;
     }
 
     .display-flex-request-drive{

@@ -164,7 +164,7 @@
                 <span class="title-small">Drivers</span>
             </a>
         </div>
-        <div class="bottom-controls-item">
+        <div class="bottom-controls-item focused">
             <a href="/ride/offers">
                 <span class="material-icons-round">
                 local_offer

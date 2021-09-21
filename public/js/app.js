@@ -27,7 +27,7 @@ function addCity(){
         let cityDiv = document.createElement("div");
         cityDiv.setAttribute("class", "city");
         cityDiv.innerHTML = city;
-        cityContainer.appendChild(cityDiv);
+        cityContainer.prepend(cityDiv);
     
         cities.push(city);
 
@@ -37,6 +37,12 @@ function addCity(){
         
     }
     
+
+}
+
+function chooseRideTypeSubmitForm(ridetype, formId){
+    document.querySelector("#ridetype").value = ridetype;
+    document.querySelector("#riderequestinstantform").submit();
 
 }
 

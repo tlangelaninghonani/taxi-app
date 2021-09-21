@@ -12,6 +12,7 @@ use App\Models\DriveData;
 use App\Models\Chat;
 use App\Models\RideRequest;
 use App\Models\History;
+use App\Models\InternalAdmin;
 use App\Models\Review;
 use App\Models\Plan;
 use App\Models\RideRequestInstant;
@@ -54,6 +55,48 @@ class DataController extends Controller
         ]);
     }
 
+    public function driveRequestInstantDrive($id){
+        $requestInstant = RideRequestInstant::find($id);
+
+        $drive_id =  intval(Session::get("drive_id"));
+
+        $driveAuth = DriveAuth::findorfail($drive_id);
+        $driveData = DriveData::where("drive_id", $drive_id)->first();
+
+        $rideAuth = RideAuth::find($requestInstant->ride_id);
+        $rideData = RideData::where("ride_id", $rideAuth->id)->first();
+
+        $request = new RideRequest();
+        $request->drive_id = $driveAuth->id;
+        $request->ride_id = $rideAuth->id;
+        $request->ride_from = $requestInstant->ride_from;
+        $request->ride_to = $requestInstant->ride_to;
+        $request->ride_from_lat = $requestInstant->ride_from_lat;
+        $request->ride_from_lng = $requestInstant->ride_from_lng;
+        $request->ride_to_lat = $requestInstant->ride_to_lat;
+        $request->ride_to_lng = $requestInstant->ride_to_lng;
+        $request->ride_distance = $requestInstant->ride_distance;
+        $request->ride_duration = $requestInstant->ride_duration;
+        $request->ride_charges = $requestInstant->ride_charges;
+        $request->ride_accepted = true;
+        $request->pick_up_requested = true;
+        $request->pick_up_confirmed = true;
+        $request->on_trip = true;
+        $request->action = "request";
+        
+        $request->save();
+
+        $driveData->drive_on_trip = true;
+        $rideData->ride_on_trip = true;
+
+        $rideData->save();
+        $driveData->save();
+
+        return back();
+
+
+    }
+
     public function rate(Request $req, $id){
         $request = RideRequest::find($id);
 
@@ -91,6 +134,9 @@ class DataController extends Controller
             $driveData->drive_ratings = $req->ratings;
         }
         $review->comment = $req->comment;
+        
+        $rideData->ride_promo = 0;
+        $rideData->save();
 
         $review->save();
         $driveData->save();
@@ -263,11 +309,13 @@ class DataController extends Controller
 
         $rideAuth = RideAuth::findorfail($ride_id);
         $rideData = RideData::where("ride_id", $ride_id)->first();
+        $admin = InternalAdmin::find(1);
 
         return view("ride_plans", [
             "rideAuth" => $rideAuth,
             "rideData" => $rideData,
             "plans" => new Plan(),
+            "admin" => $admin
         ]);
     }
 
@@ -736,7 +784,7 @@ class DataController extends Controller
             "driveData" => $driveData,
             "history" => new History(),
             "requests" => new RideRequest(),
-            "requestInstants" => new RideRequestInstant(),
+            "hasInstantRequest" => RideRequestInstant::where("drive_id", "!=", "")->first()
         ]);
     }
 
@@ -777,7 +825,7 @@ class DataController extends Controller
             "rideData" => $rideData,
             "history" => new History(),
             "requests" => new RideRequest(),
-            "requestInstants" => new RideRequestInstant(),
+            "hasInstantRequest" => RideRequestInstant::where("ride_id", $rideAuth->id)->where("drive_id", "!=", "")->first()
         ]);
     }
 
@@ -983,6 +1031,7 @@ class DataController extends Controller
         $rideRequest->ride_distance = $req->ridedistance;
         $rideRequest->ride_duration = $req->rideduration;
         $rideRequest->ride_charges = $req->ridecharges;
+        $rideRequest->ride_type = $req->ridetype;
 
         $rideRequest->save();
 
@@ -998,8 +1047,18 @@ class DataController extends Controller
     public function rideRequestInstantCancel($id){
         DB::table("ride_request_instants")->where("id", $id)->delete();
 
-        return redirect("/ride/dashboard");
+        return back();
     }
+
+    public function driveRequestInstantCancel($id){
+        $requestInstant = RideRequestInstant::find($id);
+
+        $requestInstant->drive_id = "";
+        $requestInstant->save();
+
+        return back();
+    }
+
 
     public function rideRequestInstantNext($id){
         $ride_id =  intval(Session::get("ride_id"));

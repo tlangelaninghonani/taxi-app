@@ -30,7 +30,7 @@ class CreateRideRequestInstantsTable extends Migration
             $table->boolean("pick_up_requested")->default(false);
             $table->boolean("pick_up_confirmed")->default(false);
             $table->boolean("on_trip")->default(false);
-            $table->boolean('can_see')->default(true);
+            $table->boolean('ride_type')->nullable();
             $table->timestamps();
         });
     }

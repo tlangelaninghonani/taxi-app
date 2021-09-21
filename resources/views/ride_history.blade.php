@@ -131,7 +131,7 @@
                     <span class="title-small">Home</span>
                 </a>
             </div>
-            <div class="bottom-controls-item">
+            <div class="bottom-controls-item focused">
                 <a href="/ride/history">
                     <span class="material-icons-round">
                     watch_later

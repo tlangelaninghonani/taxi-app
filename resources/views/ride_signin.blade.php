@@ -33,11 +33,8 @@
                         <p>
                             <input type="tel" id="phone" name="phone" placeholder="Enter Phone" required>
                         </p>
-                        <p>
-                            <button type="button" onclick="showHideElement('signin-phone', 'signin-password')">Next</button>
-                        </p> 
                     </div>
-                    <div id="signin-password" class="display-none">
+                    <div id="signin-password" class="">
                         <p>
                             <input type="password" id="password" name="password" placeholder="Enter password" required>
                         </p>
@@ -50,10 +47,23 @@
                             </div>
                         </p>
                         <p>
-                            <button>Sign in</button>
+                            <div class="display-flex-normal">
+                                <div class="text-align-center button-icon" onclick="redirectTo('/ride/signup/personal/')">
+                                    <span class="material-icons-round">
+                                    person_add
+                                    </span>
+                                    <span>New</span>
+                                </div>
+                                <button>Sign in</button>
+                            </div>
                         </p>
                     </div>
                 </form>
+            </p>
+            <p>
+                <div class="text-align-center">
+                    <strong class="title-small">App from DevOpsFactory</strong>
+                </div>
             </p>
             <!--<p>
                 <div class="text-align-center">

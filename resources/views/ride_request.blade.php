@@ -98,6 +98,16 @@
         </p>
         <div class="curved-top">
             <div id="map"></div>
+            @if($rideData->ride_promo > 0)
+            <p>
+                <div class="display-flex-center">  
+                    <span class="material-icons-round">
+                    card_giftcard
+                    </span>
+                    <span>R{{ $rideData->ride_promo }} off applied</span>
+                </div>
+            </p>
+            @endif
             @if(sizeof(json_decode($driveData->drive_cities, true)) > 0)
                 <p>
                     <div class="display-flex-normal gap-small">
@@ -208,10 +218,10 @@
                     document.querySelector("#mapbutton").style.display = "block";
                     document.querySelector("#tripdistance").innerHTML = directionsData.distance.text;
                     document.querySelector("#triptime").innerHTML = directionsData.duration.text;
-                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $links['internalAdmin']->minimum_price }}")).toFixed(2);
+                    document.querySelector("#tripcharges").innerHTML = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $links['internalAdmin']->minimum_price }}") - parseInt("{{ $rideData->ride_promo }}")).toFixed(2);
                     
                     if(document.querySelector("#ridecharges")){
-                        document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $links['internalAdmin']->minimum_price }}")).toFixed(2);
+                        document.querySelector("#ridecharges").value = parseFloat((directionsData.distance.value/1000) * parseInt("{{ $links['internalAdmin']->minimum_price }}") - parseInt("{{ $rideData->ride_promo }}")).toFixed(2);
                         document.querySelector("#ridefromcoords").value = JSON.stringify(origin);
                         document.querySelector("#ridetocoords").value = JSON.stringify(destination);
                         document.querySelector("#ridedistance").value = directionsData.distance.text;

@@ -10,10 +10,33 @@
 </head>
 <body>
     <div class="container">
+        <div class="nav">
+            <div class="display-flex-normal gap-10">
+                <span class="">InterCityRides</span>
+           </div>
+           <div class="display-flex-normal gap-mid" onclick="redirectTo('/signin')">
+                <span class="material-icons-round">
+                account_circle
+                </span>
+                <span>Sign in</span>
+           </div>
+        </div>
         <div class="logo" id="logo">
+            <div class="nav">
+                <div class="display-flex-normal gap-10">
+                    <span class="">InterCityRides</span>
+            </div>
+            </div>
             <div class="text-align-center">
                 <img class="welcome-page-banner-1" src="https://blogapi.uber.com/wp-content/uploads/2020/06/uber-shield-blog_white.png" alt="">
-                <span class="title">Choose your own driver with <strong>InterCityRides</strong></span><br>
+                <div class="">
+                    <span class="title">Choose your own driver with <strong>InterCityRides</strong></span><br>
+                </div>
+                <p>
+                    <div class="text-align-center">
+                        <strong class="title-small">App from DevOpsFactory</strong>
+                    </div>
+                </p>
             </div>
         </div>
         <div>
@@ -24,13 +47,8 @@
                 <span class="title-large">Get where you like at your own pace</span>
             </div>
             <p>
-                <a href="/signin">
-                    <button>Sign in</button>
-                </a>
-            </p>
-            <p>
                 <div class="text-align-center">
-                    <strong class="cl-silver title-small">App from DevOpsFactory</strong>
+                    <strong class="title-small">App from DevOpsFactory</strong>
                 </div>
             </p>
         </div>

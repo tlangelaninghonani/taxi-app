@@ -121,7 +121,7 @@
             <div class="curved-top padding-none">
                 @if($requestInstant)
                     <div id="map"></div>
-                        @if(sizeof(json_decode($driveData->drive_cities, true)))
+                    @if(sizeof(json_decode($driveData->drive_cities, true)))
                         <p>
                             <div class="display-flex-normal gap-small">
                                 <span class="material-icons-round icon-padding">
@@ -190,6 +190,25 @@
                     <div class="text-align-center app-padding">
                         <span class="title">{{ $rideA->ride_first_name }} is waiting for your pick-up</span>
                     </div>
+                    <form id="nextdriverform" action="/drive/{{ $requestInstant->id }}/request/instant/cancel" method="POST">
+                    @csrf
+                    @method("POST")
+                    </form>
+                    <p>
+                        <form action="/drive/{{ $requestInstant->id }}/request/instant/drive" method="POST">
+                        @csrf
+                        @method("POST")
+                            <div class="display-flex-normal">
+                                <button>Drive</button>
+                                <div class="text-align-center button-icon" onclick="submitForm('nextdriverform')">
+                                    <span class="material-icons-round">
+                                    close
+                                    </span><br>
+                                    <span>Cancel</span>
+                                </div>
+                            </div>
+                        </form>
+                    </p>
                     <script>
                     function drawLine(){
                         const map = new google.maps.Map(document.getElementById("map"), {
@@ -255,6 +274,22 @@
                         </p>
                     @endif
                     @if(sizeof($requestInstants::all()) > 0)
+                        <div class="display-none">
+                            {{ $areRequests = false }}
+                        </div>
+                        @foreach($requestInstants::all() as $requestInstant)  
+                            @if(sizeof(json_decode($driveData->drive_cities, true)) > 0)
+                                @foreach(json_decode($driveData->drive_cities, true) as $city)
+                                    @if($requestInstant->ride_from == $city && $driveAuth->id != $requestInstant->drive_id)
+                                        <div class="display-none">
+                                            {{ $areRequests = true }}
+                                        </div>
+                                        @break 2
+                                    @endif
+                                @endforeach 
+                            @endif
+                        @endforeach
+                        @if($areRequests)
                         <p>
                             <div class="display-flex-center gap">
                                 <div onclick="displayComp(this, 'requests')" class="display-flex-center-align">
@@ -271,6 +306,7 @@
                                 </div>
                             </div>
                         </p>
+                        @endif
                         <div id="requests" class="app-padding" style="padding-top: 0">
                             <div class="display-none">
                                 {{ $driveCity = false }}
@@ -320,14 +356,16 @@
                                     </p>
                                 @endif
                             @endforeach
-                            @if(! $driveCity)
-                            <p>
-                                @if($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->count() == 0)
-                                    <div class="text-align-center">
-                                        <span>No requests</span>
-                                    </div>
+                            @if($areRequests)
+                                @if(! $driveCity)
+                                <p>
+                                    @if($requests::where("ride_accepted", false)->where("ride_id", $rideAuth->id)->count() == 0)
+                                        <div class="text-align-center">
+                                            <span>No requests</span>
+                                        </div>
+                                    @endif
+                                </p>
                                 @endif
-                            </p>
                             @endif
                             <!--<script>
                                 var xmlhttp = new XMLHttpRequest();
