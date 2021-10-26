@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
 :root{
     --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     --padding: 13px;
-    --cust-black: rgb(0, 0, 0);
+    --cust-black: black;
 }
 
 *{
@@ -61,6 +61,10 @@ body{
     font-size: 12px !important;
 }
 
+.button-icon{
+    padding: 0 15px;
+}
+
 .bottom-controls{
     display: none !important;
 }
@@ -70,7 +74,7 @@ body{
         box-sizing: border-box;
         display: block !important;
         width: 100%;
-        margin-bottom: 70px;
+        margin-bottom: 80px;
     }
     .new-plan-icon{
        
@@ -152,9 +156,15 @@ body{
         align-items: center;
     }
 
+    .ridetype-icon{
+        padding: 10px;
+        border-bottom: 2px solid black;
+    }
+
     .display-flex-center{
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 5px;
     }
 
@@ -275,7 +285,7 @@ body{
 
     #map{
         width: 100%;
-        height: 250px;
+        height: 300px;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
         box-shadow: var(--shadow);
@@ -284,7 +294,7 @@ body{
 
     .map{
         width: 100%;
-        height: 250px;
+        height: 300px;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
         box-shadow: var(--shadow);
@@ -392,7 +402,7 @@ body{
     }
 
     .gap-mid{
-        gap: 10px;
+        gap: 10px
     }
 
     .app-icon{
@@ -405,12 +415,9 @@ body{
 
     .curved-top{
         /*box-shadow: var(--shadow);*/
-        position: absolute;
-        left: 0;
-        right: 0;
         border-top-right-radius: 40px;
         border-top-left-radius: 40px;
-        padding-bottom: 70px;
+        margin-bottom: 80px;
     }
 
     .curved-top-padding{
@@ -433,7 +440,7 @@ body{
         padding: 18px;
         border: none;
         border-radius: 30px;
-        background-color: rgb(245, 245, 245);
+        background-color: rgb(240, 240, 240);
     
     }
 
@@ -446,6 +453,10 @@ body{
         border: 1px solid rgb(243, 243, 243);
         padding: 18px;
         max-width: 65%;
+    }
+
+    #chats{
+        padding: var(--padding);
     }
 
     .chat-padding{
@@ -837,6 +848,10 @@ body{
 
     }
 
+    .focused{
+        border-top: 2px solid black;
+    }
+
     .bottom-controls{
         position: fixed;
         bottom: 0;
@@ -846,10 +861,12 @@ body{
         display: flex !important;
         justify-content: space-around;
         align-items: center;
-        padding: var(--padding);
+        padding: 0 var(--padding);
+        border-top: 1px solid rgb(241, 241, 241);
     }
     .bottom-controls-item{
         text-align: center;
+        padding: var(--padding) 0;
     }
 
     .display-flex-request-drive{

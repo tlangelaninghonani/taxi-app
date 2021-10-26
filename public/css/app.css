@@ -760,7 +760,7 @@ body{
     }
 
     .choose-ride-drive{
-        font-size: 100px !important;
+        font-size: 80px !important;
     }
 
     .choose-ride-drive-container{
@@ -788,6 +788,7 @@ body{
         bottom: 0;
         background-color:white !important;
         z-index: 10;
+        padding: var(--padding);
     }
     
     .td-padding-right{

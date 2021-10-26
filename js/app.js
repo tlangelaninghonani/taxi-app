@@ -12,6 +12,10 @@ for (let i = 0; i < materialClass.length; i++) {
 var cities = new Array();
 
 function jsonCitiesAndSubmit(formId){
+    if(cities.length < 2){
+        alert("Choose a minimum of 2 cities you want to drive back-forth");
+        return
+    }
     document.querySelector("#cities").value = JSON.stringify(cities);
     document.querySelector("#"+formId).submit();
 }
@@ -23,7 +27,7 @@ function addCity(){
         let cityDiv = document.createElement("div");
         cityDiv.setAttribute("class", "city");
         cityDiv.innerHTML = city;
-        cityContainer.appendChild(cityDiv);
+        cityContainer.prepend(cityDiv);
     
         cities.push(city);
 
@@ -33,6 +37,12 @@ function addCity(){
         
     }
     
+
+}
+
+function chooseRideTypeSubmitForm(ridetype, formId){
+    document.querySelector("#ridetype").value = ridetype;
+    document.querySelector("#riderequestinstantform").submit();
 
 }
 
@@ -363,7 +373,7 @@ function initAutocomplete() {
             };
             markers.push(
                 new google.maps.Marker({
-                    position: {lat: position.coords.latitude, lng: position.coords.longitude},
+                    position: pos,
                     map: map,
                     title: "Me",
                     animation: google.maps.Animation.DROP,
